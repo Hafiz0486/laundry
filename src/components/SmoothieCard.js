@@ -1,30 +1,51 @@
 import supabase from "../config/supabaseClient"
 import { Link } from 'react-router-dom'
+import moment from "moment/moment"
 
-const SmoothieCard = ({ smoothie, onDelete }) => {
+const BonCard = ({ bon, onDelete }) => {
 
   const handleDelete = async () => {
     const { data, error } = await supabase
-      .from('smoothies')
+      .from('bon')
       .delete()
-      .eq('id', smoothie.id)
+      .eq('id', bon.id)
     
     if (error) {
       console.log(error)
     }
     if (data) {
       console.log(data)
-      onDelete(smoothie.id)
+      onDelete(bon.id)
     }
+
   }
+
+  var tanggal_datang = moment(bon.tgl_masuk).format("DD MMMM YYYY");
+
+  // Cek tanggal ambil jika sudah diambil atau belum
+  if (bon.tgl_ambil == null) {
+    var tanggal_diambil = "Belum diambil"
+  } 
+  else {
+    var tanggal_diambil = moment(bon.tgl_ambil).format("DD MMMM YYYY");
+  }
+
+  var idr = (bon.harga).toLocaleString('en-IN', { 
+		style: 'currency', 
+		currency: 'IDR' 
+  });
 
   return (
     <div className="smoothie-card">
-      <h3>{smoothie.title}</h3>
-      <p>{smoothie.method}</p>
-      <div className="rating">{smoothie.rating}</div>
+      <h3>Nama : {bon.nama}</h3>
+      <p>Pelayanan : {bon.pelayanan}</p>
+      <p>Tanggal datang : {tanggal_datang}</p>
+      <p>Tanggal datang : {tanggal_diambil}</p>
+      <p></p>
+      <p>Total harga : {idr}</p>
+      <div className="rating">{bon.kg}</div>
       <div className="buttons">
-        <Link to={"/" + smoothie.id}>
+        <Link to={"/" + bon.id}>
           <i className="material-icons">edit</i>
         </Link>
         <i className="material-icons" onClick={handleDelete}>delete</i>
@@ -33,4 +54,4 @@ const SmoothieCard = ({ smoothie, onDelete }) => {
   )
 }
 
-export default SmoothieCard
+export default BonCard

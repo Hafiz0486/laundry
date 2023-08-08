@@ -111,3 +111,72 @@ form button {
   font-family: "Poppins";
   cursor: pointer;
 }
+
+/* smoothie grid */
+
+.service-grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+}
+.servicecard-type1{
+  cursor: pointer;
+  display: flex;
+  background: white;
+  flex-direction: column;
+  min-width: 100%;
+  max-width: 100%;
+  text-align: center;
+  min-height: 100%;
+  border-radius: 1rem;
+  margin: 1.5 rem;
+  transition: 0.3s;
+
+  &:hover{
+    transform: scale(1.1);
+  }
+
+  .cradText *{
+    margin: 0.5rem;
+  }
+}
+
+.servicecard-type1 .buttons{
+  text-align: right;
+}
+.servicecard-type1 i {
+  color: #bbb;
+  margin-left: 10px;
+  font-size: 1.2em;
+  padding: 6px;
+  background: #eee;
+  border-radius: 50%;
+  cursor: pointer;
+  
+}
+
+
+.kartupelayanan {
+  cursor: pointer;
+  display: flex;
+  background: white;
+  flex-direction: column;
+  min-width: 200px;
+  max-width: 300px;
+  text-align: center;
+  min-height: 370px;
+  border-radius: 1rem;
+  margin: 1.5 rem;
+  transition: 0.3s;
+
+  &:hover{
+    transform: scale(1.1);
+  }
+
+  .cradText *{
+    margin: 0.5rem;
+  }
+}
+
+
