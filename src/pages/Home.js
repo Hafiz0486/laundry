@@ -2,12 +2,12 @@ import supabase from '../config/supabaseClient'
 import { useEffect, useState } from 'react'
 
 // components
-import SmoothieCard from '../components/SmoothieCard'
+import BonCard from '../components/SmoothieCard'
 
 const Home = () => {
   const [fetchError, setFetchError] = useState(null)
   const [smoothies, setSmoothies] = useState(null)
-  const [orderBy, setOrderBy] = useState('created_at')
+  const [orderBy, setOrderBy] = useState('dibuat')
 
   const handleDelete = (id) => {
     setSmoothies(prevSmoothies => {
@@ -15,10 +15,11 @@ const Home = () => {
     })
   }
 
+  // Mengambil data dari table bon
   useEffect(() => {
     const fetchSmoothies = async () => {
       const { data, error } = await supabase
-        .from('smoothies')
+        .from('bon')
         .select()
         .order(orderBy, {ascending: false})
       
@@ -43,13 +44,14 @@ const Home = () => {
         <div className="smoothies">
           <div className="order-by">
             <p>Order by:</p>
-            <button onClick={() => setOrderBy('created_at')}>Time Created</button>
-            <button onClick={() => setOrderBy('title')}>Title</button>
-            <button onClick={() => setOrderBy('rating')}>Rating</button>
+            <button onClick={() => setOrderBy('dibuat')}>Dibuat</button>
+            <button onClick={() => setOrderBy('nama')}>Nama</button>
+            <button onClick={() => setOrderBy('kg')}>Kg</button>
           </div>
+
           <div className="smoothie-grid">
-            {smoothies.map(smoothie => (
-              <SmoothieCard key={smoothie.id} smoothie={smoothie} onDelete={handleDelete} />
+            {smoothies.map(bon => (
+              <BonCard key={bon.id} bon={bon} onDelete={handleDelete} />
             ))}
           </div>
         </div>
