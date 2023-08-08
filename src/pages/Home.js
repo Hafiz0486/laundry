@@ -2,7 +2,7 @@ import supabase from '../config/supabaseClient'
 import { useEffect, useState } from 'react'
 
 // components
-import BonCard from '../components/SmoothieCard'
+import BonCard from '../components/BonCard'
 
 const Home = () => {
   const [fetchError, setFetchError] = useState(null)
@@ -43,13 +43,13 @@ const Home = () => {
       {smoothies && (
         <div className="smoothies">
           <div className="order-by">
-            <p>Order by:</p>
+            <p class="order-by">Order by:</p>
             <button onClick={() => setOrderBy('dibuat')}>Dibuat</button>
             <button onClick={() => setOrderBy('nama')}>Nama</button>
             <button onClick={() => setOrderBy('kg')}>Kg</button>
           </div>
 
-          <div className="smoothie-grid">
+          <div className="laundry-grid">
             {smoothies.map(bon => (
               <BonCard key={bon.id} bon={bon} onDelete={handleDelete} />
             ))}

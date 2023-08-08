@@ -40,8 +40,7 @@ const Home = () => {
       {fetchError && (<p>{fetchError}</p>)}
       {services && (
         <div className="services">
-
-          <div className="service-grid">
+          <div className="laundry-grid">
             {services.map(pelayanan => (
               <ServiceCard key={pelayanan.id} pelayanan={pelayanan} onDelete={handleDelete} />
             ))}

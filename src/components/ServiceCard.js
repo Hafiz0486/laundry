@@ -25,12 +25,11 @@ const ServiceCard = ({ pelayanan, onDelete }) => {
   });
 
   return (
-    <div className="servicecard-type1">
-      <img src="https://jurnalpost.com/wp-content/uploads/2022/07/tips-beli-sepatu.jpg"></img>
-      <h3>Nama : {pelayanan.nama}</h3>
-      <p>Pelayanan : {pelayanan.ukuran}</p>
-      <p></p>
-      <p>Total harga : {idr}</p>
+    <div className="laundry-card">
+      <img src="https://jurnalpost.com/wp-content/uploads/2022/07/tips-beli-sepatu.jpg" width="100%" height="50%"></img>
+      <h4>Pelayanan : {pelayanan.nama}</h4>
+      <p class="card">Ukuran : {pelayanan.ukuran}</p>
+      <p class="card">Harga : {idr}</p>
       <div className="buttons">
         <Link to={"/" + pelayanan.id}>
           <i className="material-icons">edit</i>

@@ -3,9 +3,44 @@
 :root {
   --primary: #12bca2;
   --secondary: #6d15df;
+
+  --fs-xl: 0.5rem;
 }
-h1,h2,h3 {
-  margin: 0;
+
+@media (min-width : 0.55rem) {
+  :root {
+    --fs-xl: 0.5rem;
+  }
+}
+p.card {
+  margin-bottom: -5px;
+  line-height: 10px;
+}
+
+p.order-by{
+  margin-top: -5px;
+}
+h1 {
+  font-size: clamp(1.125rem, 0.8625rem + 0.5833vw, 1.5625rem);
+}
+
+h2 {
+  font-size: clamp(1rem, 0.7375rem + 0.5833vw, 1.4375rem);
+}
+
+h3 {
+  font-size: clamp(0.875rem, 0.6125rem + 0.5833vw, 1.3125rem);
+}
+
+h4 {
+  font-size: clamp(0.75rem, 0.4875rem + 0.5833vw, 1.1875rem);
+  margin-top: 5px;
+  margin-bottom: -1px;
+  line-height: 10px;
+}
+
+h5 {
+  font-size: clamp(0.625rem, 0.3625rem + 0.5833vw, 1.0625rem);
 }
 
 body {
@@ -34,37 +69,53 @@ nav h1 {
 }
 
 /* smoothie grid */
-.smoothie-grid {
-  margin-top: 40px;
+.laundry-grid {
+  margin-top: 30px;
+  
+  --grid-layout-gap: 10px;
+  --grid-column-count: 4; /* This gets overridden by an inline style. */
+  --grid-item--min-width: 150px; /* This gets overridden by an inline style. */
+  
+  /**
+   * Calculated values.
+   */
+  --gap-count: calc(var(--grid-column-count) - 1);
+  --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
+  --grid-item--max-width: calc((75% - var(--total-gap-width)) / var(--grid-column-count));
+
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 40px;
+  grid-template-columns: repeat(auto-fill, minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr));
+  grid-gap: var(--grid-layout-gap);
+  font-size: clamp(0.625rem, 0.3625rem + 0.5833vw, 1.0625rem);
+  gap: 25px;
 }
-.smoothie-card {
-  width: 100%;
+.laundry-card {
+  width: 1vp;
   padding: 10px;
   background: #fff;
   box-sizing: border-box;
   border-radius: 6px;
   position: relative;
 }
-.smoothie-card .rating {
+
+.laundry-card .rating {
   position: absolute;
   top: -10px;
   right: -10px;
   background: var(--secondary);
   color: #fff;
   border-radius: 6px;
-  width: 40px;
+  width: 25%;
   height: 0;
   padding: 20px 0;
   line-height: 0px;
   text-align: center;
 }
-.smoothie-card .buttons {
+.laundry-card .buttons {
   text-align: right;
+  margin-top: 25px;
 }
-.smoothie-card i {
+.laundry-card i {
   color: #bbb;
   margin-left: 10px;
   font-size: 1.2em;
@@ -111,72 +162,3 @@ form button {
   font-family: "Poppins";
   cursor: pointer;
 }
-
-/* smoothie grid */
-
-.service-grid {
-  margin-top: 40px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 40px;
-}
-.servicecard-type1{
-  cursor: pointer;
-  display: flex;
-  background: white;
-  flex-direction: column;
-  min-width: 100%;
-  max-width: 100%;
-  text-align: center;
-  min-height: 100%;
-  border-radius: 1rem;
-  margin: 1.5 rem;
-  transition: 0.3s;
-
-  &:hover{
-    transform: scale(1.1);
-  }
-
-  .cradText *{
-    margin: 0.5rem;
-  }
-}
-
-.servicecard-type1 .buttons{
-  text-align: right;
-}
-.servicecard-type1 i {
-  color: #bbb;
-  margin-left: 10px;
-  font-size: 1.2em;
-  padding: 6px;
-  background: #eee;
-  border-radius: 50%;
-  cursor: pointer;
-  
-}
-
-
-.kartupelayanan {
-  cursor: pointer;
-  display: flex;
-  background: white;
-  flex-direction: column;
-  min-width: 200px;
-  max-width: 300px;
-  text-align: center;
-  min-height: 370px;
-  border-radius: 1rem;
-  margin: 1.5 rem;
-  transition: 0.3s;
-
-  &:hover{
-    transform: scale(1.1);
-  }
-
-  .cradText *{
-    margin: 0.5rem;
-  }
-}
-
-

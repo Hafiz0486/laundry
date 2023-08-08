@@ -13,7 +13,7 @@ function App() {
       <nav>
         <h1>Kamal Laundry</h1>
         <Link to="/">Home</Link>
-        <Link to="/create">Create New Smoothie</Link>
+        <Link to="/create">Create New</Link>
         <Link to="/pelayanan">Pelayanan</Link>
       </nav>
       <Routes>

@@ -36,7 +36,8 @@ const BonCard = ({ bon, onDelete }) => {
   });
 
   return (
-    <div className="smoothie-card">
+    <div className="laundry-card">
+      {/* <img src="https://jurnalpost.com/wp-content/uploads/2022/07/tips-beli-sepatu.jpg" width="100%" height="50%"></img> */}
       <h3>Nama : {bon.nama}</h3>
       <p>Pelayanan : {bon.pelayanan}</p>
       <p>Tanggal datang : {tanggal_datang}</p>
