@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 import supabase from '../config/supabaseClient'
 import { useEffect, useState } from 'react'
 
@@ -22,7 +24,7 @@ const Home = () => {
         .select()
       
       if (error) {
-        setFetchError('Could not fetch the smoothies')
+        setFetchError('Could not fetch the service')
         setServices(null)
       }
       if (data) {
@@ -40,6 +42,12 @@ const Home = () => {
       {fetchError && (<p>{fetchError}</p>)}
       {services && (
         <div className="services">
+
+          <navcs>
+            <Link to="/createservice">Create New</Link>
+            
+          </navcs> 
+
           <div className="laundry-grid">
             {services.map(pelayanan => (
               <ServiceCard key={pelayanan.id} pelayanan={pelayanan} onDelete={handleDelete} />

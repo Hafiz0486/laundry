@@ -2,9 +2,19 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
 
 // pages
 import Home from "./pages/Home"
-import Create from "./pages/Create"
+import Bon from "./pages/Bon"
 import Update from "./pages/Update"
-import Pelayanan from "./pages/Pelayanan"
+import Service from "./pages/Service"
+import CreateService from "./pages/CreateService"
+
+// variable
+var bon ="/bon"
+var service ="/service"
+// var consumer ="/consumer"
+// var transaction ="/transaction"
+
+// var update ="/update"
+// var create ="/create"
 
 
 function App() {
@@ -13,13 +23,14 @@ function App() {
       <nav>
         <h1>Kamal Laundry</h1>
         <Link to="/">Home</Link>
-        <Link to="/create">Create New</Link>
-        <Link to="/pelayanan">Pelayanan</Link>
-      </nav>
+        <Link to={bon}>Bon</Link>
+        <Link to={service}>Service</Link>
+      </nav> 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/create" element={<Create />} />
-        <Route path="/pelayanan" element={<Pelayanan />} />
+        <Route path={bon} element={<Bon />} />
+        <Route path={service} element={<Service />} />
+        <Route path="/createservice" element={<CreateService />} />
         <Route path="/:id" element={<Update />} />
       </Routes>
     </BrowserRouter>

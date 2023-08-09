@@ -26,7 +26,7 @@ const ServiceCard = ({ pelayanan, onDelete }) => {
 
   return (
     <div className="laundry-card">
-      <img src="https://jurnalpost.com/wp-content/uploads/2022/07/tips-beli-sepatu.jpg" width="100%" height="50%"></img>
+      <img src="https://jurnalpost.com/wp-content/uploads/2022/07/tips-beli-sepatu.jpg" alt="pelayanan" width="100%" height="50%"></img>
       <h4>Pelayanan : {pelayanan.nama}</h4>
       <p class="card">Ukuran : {pelayanan.ukuran}</p>
       <p class="card">Harga : {idr}</p>

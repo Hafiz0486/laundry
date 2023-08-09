@@ -6,18 +6,18 @@ import BonCard from '../components/BonCard'
 
 const Home = () => {
   const [fetchError, setFetchError] = useState(null)
-  const [smoothies, setSmoothies] = useState(null)
+  const [bons, setBons] = useState(null)
   const [orderBy, setOrderBy] = useState('dibuat')
 
   const handleDelete = (id) => {
-    setSmoothies(prevSmoothies => {
-      return prevSmoothies.filter(sm => sm.id !== id)
+    setBons(prevBons => {
+      return prevBons.filter(sm => sm.id !== id)
     })
   }
 
   // Mengambil data dari table bon
   useEffect(() => {
-    const fetchSmoothies = async () => {
+    const fetchBons = async () => {
       const { data, error } = await supabase
         .from('bon')
         .select()
@@ -25,24 +25,25 @@ const Home = () => {
       
       if (error) {
         setFetchError('Could not fetch the smoothies')
-        setSmoothies(null)
+        setBons(null)
       }
       if (data) {
-        setSmoothies(data)
+        setBons(data)
         setFetchError(null)
       }
     }
 
-    fetchSmoothies()
+    fetchBons()
 
   }, [orderBy])
 
   return (
     <div className="page home">
       {fetchError && (<p>{fetchError}</p>)}
-      {smoothies && (
-        <div className="smoothies">
-          <div className="order-by">
+      {bons && (
+        <div className="bon">
+
+          <div className="order-by" >
             <p class="order-by">Order by:</p>
             <button onClick={() => setOrderBy('dibuat')}>Dibuat</button>
             <button onClick={() => setOrderBy('nama')}>Nama</button>
@@ -50,7 +51,7 @@ const Home = () => {
           </div>
 
           <div className="laundry-grid">
-            {smoothies.map(bon => (
+            {bons.map(bon => (
               <BonCard key={bon.id} bon={bon} onDelete={handleDelete} />
             ))}
           </div>

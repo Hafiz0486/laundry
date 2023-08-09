@@ -6,22 +6,26 @@ const Update = () => {
   const { id } = useParams()
   const navigate = useNavigate()
 
-  const [title, setTitle] = useState('')
-  const [method, setMethod] = useState('')
-  const [rating, setRating] = useState('')
+  const [nama, setNama] = useState('')
+  const [pelayanan, setPelayanan] = useState('')
+  const [tgl_datang, setTglDatang] = useState('')
+  const [tgl_ambil, setTglAmbil] = useState('')
+  const [jml, setJml] = useState('')
+  const [kg, setKg] = useState('')
+  const [harga, setHarga] = useState('')
   const [formError, setFormError] = useState(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!title || !method || !rating) {
+    if (!nama || !pelayanan || !harga) {
       setFormError('Please fill in all the fields correctly.')
       return
     }
 
     const { data, error } = await supabase
-      .from('smoothies')
-      .update({ title, method, rating })
+      .from('bon')
+      .update({ nama, pelayanan, tgl_datang, tgl_ambil, jml, kg, harga })
       .eq('id', id)
 
     if (error) {
@@ -34,9 +38,9 @@ const Update = () => {
   }
 
   useEffect(() => {
-    const fetchSmoothie = async () => {
+    const fetchBon = async () => {
       const { data, error } = await supabase
-        .from('smoothies')
+        .from('bon')
         .select()
         .eq('id', id)
         .single()
@@ -45,46 +49,85 @@ const Update = () => {
         navigate('/', { replace: true })
       }
       if (data) {
-        setTitle(data.title)
-        setMethod(data.method)
-        setRating(data.rating)
+        setNama(data.nama)
+        setPelayanan(data.pelayanan)
+        setTglDatang(data.tgl_datang)
+        setTglAmbil(data.tgl_ambil)
+        setPelayanan(data.pelayanan)
+        setJml(data.jml)
+        setKg(data.kg)
+        setHarga(data.harga)
       }
     }
 
-    fetchSmoothie()
+    fetchBon()
   }, [id, navigate])
 
   return (
     <div className="page create">
       <form onSubmit={handleSubmit}>
-        <label htmlFor="title">Title:</label>
+
+        <label htmlFor="nama">Nama : </label>
         <input 
           type="text" 
-          id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          id="nama"
+          value={nama}
+          onChange={(e) => setNama(e.target.value)}
         />
 
-        <label htmlFor="method">Method:</label>
+        <label htmlFor="nama">Tanggal Masuk : </label>
+        <input 
+          type="text" 
+          id="nama"
+          value={nama}
+          onChange={(e) => setNama(e.target.value)}
+        />
+
+        <label htmlFor="nama">Tanggal Ambil : </label>
+        <input 
+          type="text" 
+          id="nama"
+          value={nama}
+          onChange={(e) => setNama(e.target.value)}
+        />
+
+        <label htmlFor="pelayanan">Pelayanan : </label>
         <textarea 
-          id="method"
-          value={method}
-          onChange={(e) => setMethod(e.target.value)}
+          id="pelayanan"
+          value={pelayanan}
+          onChange={(e) => setPelayanan(e.target.value)}
         />
 
-        <label htmlFor="rating">Rating:</label>
+        <label htmlFor="nama">Jumlah : </label>
+        <input 
+          type="text" 
+          id="nama"
+          value={nama}
+          onChange={(e) => setNama(e.target.value)}
+        />
+
+        <label htmlFor="nama">Berat (Kg) : </label>
+        <input 
+          type="text" 
+          id="nama"
+          value={nama}
+          onChange={(e) => setNama(e.target.value)}
+        />
+
+        <label htmlFor="harga">Harga : </label>
         <input 
           type="number"
-          id="rating"
-          value={rating}
-          onChange={(e) => setRating(e.target.value)}
+          id="harga"
+          value={harga}
+          onChange={(e) => setHarga(e.target.value)}
         />
 
-        <button>Update Smoothie Recipe</button>
+        <button>Update Bon</button>
 
         {formError && <p className="error">{formError}</p>}
       </form>
     </div>
+
   )
 }
 
