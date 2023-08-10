@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import supabase from "../config/supabaseClient"
 
-const Create = () => {
+const Membuat = () => {
   const navigate = useNavigate()
 
   const [title, setTitle] = useState('')
@@ -67,4 +67,4 @@ const Create = () => {
   )
 }
 
-export default Create
+export default Membuat

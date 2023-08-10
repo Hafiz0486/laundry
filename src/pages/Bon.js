@@ -2,45 +2,50 @@ import supabase from '../config/supabaseClient'
 import { useEffect, useState } from 'react'
 
 // components
-import BonCard from '../components/BonCard'
+import Kartu from '../components/Kartu'
+
+const pages = 'bon'
 
 const Bon = () => {
   const [fetchError, setFetchError] = useState(null)
-  const [bons, setBons] = useState(null)
+  const [tables, setTables] = useState(null)
   const [orderBy, setOrderBy] = useState('dibuat')
 
   const handleDelete = (id) => {
-    setBons(prevBons => {
-      return prevBons.filter(sm => sm.id !== id)
+    setTables(prevTables => {
+      return prevTables.filter(sm => sm.id !== id)
     })
   }
 
   // Mengambil data dari table bon
   useEffect(() => {
-    const fetchBons = async () => {
+    const fetchTables = async () => {
       const { data, error } = await supabase
-        .from('bon')
+        .from(pages)
         .select()
         .order(orderBy, {ascending: false})
       
       if (error) {
-        setFetchError('Could not fetch the smoothies')
-        setBons(null)
+        setFetchError('Could not fetch the bon')
+        setTables(null)
       }
       if (data) {
-        setBons(data)
+        
+        setTables(data)
         setFetchError(null)
       }
     }
 
-    fetchBons()
+    fetchTables()
 
   }, [orderBy])
+
+  
 
   return (
     <div className="page home">
       {fetchError && (<p>{fetchError}</p>)}
-      {bons && (
+      {tables && (
         <div className="bon">
 
           <div className="order-by" >
@@ -51,10 +56,11 @@ const Bon = () => {
           </div>
 
           <div className="laundry-grid">
-            {bons.map(bon => (
-              <BonCard key={bon.id} bon={bon} onDelete={handleDelete} />
+            {tables.map(table => (
+              <Kartu key={table.id} table={table} pages={pages} onDelete={handleDelete} />
             ))}
           </div>
+
         </div>
       )}
     </div>

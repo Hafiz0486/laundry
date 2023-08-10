@@ -4,59 +4,61 @@ import supabase from '../config/supabaseClient'
 import { useEffect, useState } from 'react'
 
 // components
-import ServiceCard from '../components/ServiceCard'
+import Card from "../components/Kartu"
 
-const Home = () => {
+const pages = 'pelayanan'
+
+const Pelayanan = () => {
   const [fetchError, setFetchError] = useState(null)
-  const [services, setServices] = useState(null)
+  const [tables, setTables] = useState(null)
 
   const handleDelete = (id) => {
-    setServices(prevServices => {
-      return prevServices.filter(sm => sm.id !== id)
+    setTables(prevTable => {
+      return prevTable.filter(sm => sm.id !== id)
     })
   }
 
   // Mengambil data dari table bon
   useEffect(() => {
-    const fetchServices = async () => {
+    const fetchTables = async () => {
       const { data, error } = await supabase
-        .from('pelayanan')
+        .from(pages)
         .select()
       
       if (error) {
+        setTables(null)
         setFetchError('Could not fetch the service')
-        setServices(null)
       }
       if (data) {
-        setServices(data)
+        setTables(data)
         setFetchError(null)
       }
     }
 
-    fetchServices()
+    fetchTables()
 
   }, [])
 
   return (
     <div className="page home">
       {fetchError && (<p>{fetchError}</p>)}
-      {services && (
+      {tables && (
         <div className="services">
 
           <navcs>
             <Link to="/createservice">Create New</Link>
-            
           </navcs> 
 
           <div className="laundry-grid">
-            {services.map(pelayanan => (
-              <ServiceCard key={pelayanan.id} pelayanan={pelayanan} onDelete={handleDelete} />
+            {tables.map(table => (
+              <Card key={table.id} table={table} pages={pages} onDelete={handleDelete} />
             ))}
           </div>
+          
         </div>
       )}
     </div>
   )
 }
 
-export default Home
+export default Pelayanan
