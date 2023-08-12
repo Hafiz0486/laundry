@@ -62,13 +62,12 @@ const Kartu = ({ table, pages, onDelete }) => {
         </div>
       </div>
     )
-  } 
-  
-  if (pages == 'pelayanan') {
+  }  else if (pages == 'pelayanan') {
     return (
       <div className="laundry-card">
         <img src="https://jurnalpost.com/wp-content/uploads/2022/07/tips-beli-sepatu.jpg" alt="pelayanan" width="100%" height="50%"></img>
         <h4>Pelayanan : {table.nama}</h4>
+        <p class="card">kategori : {table.kategori}</p>
         <p class="card">Ukuran : {table.ukuran}</p>
         <p class="card">Harga : {idr}</p>
         <div className="buttons">

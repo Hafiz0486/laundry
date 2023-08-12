@@ -28,7 +28,7 @@ h4 {
   font-size: clamp(0.75rem, 0.4875rem + 0.5833vw, 1.1875rem);
   margin-top: 5px;
   margin-bottom: -1px;
-  line-height: 10px;
+  line-height: 20px;
 }
 
 h5 {

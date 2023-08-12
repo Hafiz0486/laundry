@@ -10,7 +10,6 @@ const Memperbarui = () => {
   // variable penampung field
   const [nama, setNama] = useState('')
   const [pelayanan, setPelayanan] = useState('')
-  const [ukuran, setUkuran] = useState('')
   const [tgl_masuk, setTglMasuk] = useState('')
   const [tgl_ambil, setTglAmbil] = useState('')
   const [jml, setJml] = useState('')
@@ -18,6 +17,9 @@ const Memperbarui = () => {
   const [harga, setHarga] = useState('')
   const [update, setUpdate] = useState('')
   const [formError, setFormError] = useState(null)
+
+  const [kategori, setKategori] = useState('')
+  const [ukuran, setUkuran] = useState('')
 
   // fungsi untuk submit data
   const handleSubmit = async (e) => {
@@ -34,11 +36,11 @@ const Memperbarui = () => {
 
     // jika pages adalah table pelayanan
     if (pages === 'pelayanan') {
-      if (!nama || !harga || !ukuran) {
+      if (!nama || !kategori || !harga || !ukuran) {
         setFormError('Please fill in all the fields correctly.')
         return
       }
-      var listquery = { nama, harga, ukuran }
+      var listquery = { nama, kategori, ukuran, harga }
     }
 
 
@@ -53,7 +55,7 @@ const Memperbarui = () => {
     if (data) {
       setFormError(null)
       if (pages === 'pelayanan') {
-        navigate('/service')
+        navigate('/pelayanan')
       }
 
       if (pages === 'bon'){
@@ -94,6 +96,7 @@ const Memperbarui = () => {
 
         if (pages === 'pelayanan') {
           setNama(data.nama)
+          setKategori(data.kategori)
           setHarga(data.harga)
           setUkuran(data.ukuran)
           setUpdate(Date.now())
@@ -173,9 +176,7 @@ const Memperbarui = () => {
       </div>
   
     )
-  }
-
-  if (pages == 'pelayanan') {
+  } else if (pages == 'pelayanan') {
     return (
       <div className="page create">
         <form onSubmit={handleSubmit}>
@@ -188,12 +189,12 @@ const Memperbarui = () => {
             onChange={(e) => setNama(e.target.value)}
           />
 
-          <label htmlFor="harga">Harga : </label>
+          <label htmlFor="kategori">Kategori : </label>
           <input 
-            type="number"
-            id="harga"
-            value={harga}
-            onChange={(e) => setHarga(e.target.value)}
+            type="text" 
+            id="kategori"
+            value={kategori}
+            onChange={(e) => setKategori(e.target.value)}
           />
 
           <label htmlFor="ukuran">Ukuran : </label>
@@ -203,8 +204,16 @@ const Memperbarui = () => {
             value={ukuran}
             onChange={(e) => setUkuran(e.target.value)}
           />
+
+          <label htmlFor="harga">Harga : </label>
+          <input 
+            type="number"
+            id="harga"
+            value={harga}
+            onChange={(e) => setHarga(e.target.value)}
+          />
   
-          <button>Update Service</button>
+          <button>Update Pelayanan</button>
   
           {formError && <p className="error">{formError}</p>}
         </form>

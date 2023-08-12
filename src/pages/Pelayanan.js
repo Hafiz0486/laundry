@@ -11,6 +11,7 @@ const pages = 'pelayanan'
 const Pelayanan = () => {
   const [fetchError, setFetchError] = useState(null)
   const [tables, setTables] = useState(null)
+  const [orderBy, setOrderBy] = useState('dibuat')
 
   const handleDelete = (id) => {
     setTables(prevTable => {
@@ -24,6 +25,7 @@ const Pelayanan = () => {
       const { data, error } = await supabase
         .from(pages)
         .select()
+        .order(orderBy, {ascending: false})
       
       if (error) {
         setTables(null)
@@ -37,7 +39,7 @@ const Pelayanan = () => {
 
     fetchTables()
 
-  }, [])
+  }, [orderBy])
 
   return (
     <div className="page home">
@@ -45,9 +47,16 @@ const Pelayanan = () => {
       {tables && (
         <div className="services">
 
-          <navcs>
+          <div className="order-by" >
+            <p class="order-by">Order by:</p>
+            <button onClick={() => setOrderBy('dibuat')}>Dibuat</button>
+            <button onClick={() => setOrderBy('nama')}>Nama</button>
+            <button onClick={() => setOrderBy('kg')}>Kg</button>
+          </div>
+
+          <div>
             <Link pages={pages} to={"/"+ pages +"/membuat"} className="create">Membuat Baru</Link>
-          </navcs> 
+          </div> 
 
           <div className="laundry-grid">
             {tables.map(table => (

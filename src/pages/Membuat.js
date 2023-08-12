@@ -13,12 +13,14 @@ const Membuat = () => {
   const [id_pelayanan, setIdPelayanan] = useState('')
   const [nama, setNama] = useState('')
   const [pelayanan, setPelayanan] = useState('')
-  const [ukuran, setUkuran] = useState('')
   const [tgl_masuk, setTglMasuk] = useState('')
   const [tgl_ambil, setTglAmbil] = useState('')
   const [jml, setJml] = useState('')
   const [kg, setKg] = useState('')
   const [harga, setHarga] = useState('')
+
+  const [kategori, setKategori] = useState('')
+  const [ukuran, setUkuran] = useState('')
 
   const [formError, setFormError] = useState(null)
 
@@ -43,7 +45,7 @@ const Membuat = () => {
         setFormError('There is a data that wrong.')
         return
       }
-      var listquery = { nama, harga, ukuran }
+      var listquery = { nama, kategori, ukuran, harga }
     }
 
     const { data, error } = await supabase
@@ -102,6 +104,16 @@ const Membuat = () => {
             value={pelayanan}
             onChange={(e) => setPelayanan(e.target.value)}
           />
+
+          <div class="form-group">
+            <label for="sel1">Select list:</label>
+            <select class="form-control" id="sel1">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+            </select>
+          </div>
   
           <label htmlFor="jml">Jumlah : </label>
           <input 
@@ -149,6 +161,14 @@ const Membuat = () => {
             onChange={(e) => setNama(e.target.value)}
           />
 
+          <label htmlFor="kategori">Kategori : </label>
+          <input 
+            type="text" 
+            id="kategori"
+            value={kategori}
+            onChange={(e) => setKategori(e.target.value)}
+          />
+
           <label htmlFor="ukuran">Ukuran : </label>
           <input 
             type="text" 
@@ -164,8 +184,6 @@ const Membuat = () => {
             value={harga}
             onChange={(e) => setHarga(e.target.value)}
           />
-
-          
   
           <button>Membuat Pelayanan</button>
   
