@@ -46,7 +46,7 @@ const Pelayanan = () => {
         <div className="services">
 
           <navcs>
-            <Link to="/createservice">Create New</Link>
+            <Link pages={pages} to={"/"+ pages +"/membuat"} className="create">Membuat Baru</Link>
           </navcs> 
 
           <div className="laundry-grid">

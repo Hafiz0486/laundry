@@ -108,7 +108,7 @@ const Memperbarui = () => {
 
   if (pages === 'bon') {
     return (
-      <div className="page create">
+      <div className="page memperbarui">
         <form onSubmit={handleSubmit}>
   
           <label htmlFor="nama">Nama : </label>

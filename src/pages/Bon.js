@@ -1,3 +1,6 @@
+// Koneksi
+import { Link } from "react-router-dom"
+
 import supabase from '../config/supabaseClient'
 import { useEffect, useState } from 'react'
 
@@ -46,6 +49,7 @@ const Bon = () => {
     <div className="page home">
       {fetchError && (<p>{fetchError}</p>)}
       {tables && (
+        
         <div className="bon">
 
           <div className="order-by" >
@@ -54,6 +58,19 @@ const Bon = () => {
             <button onClick={() => setOrderBy('nama')}>Nama</button>
             <button onClick={() => setOrderBy('kg')}>Kg</button>
           </div>
+
+          <div>
+            <Link to={'/'+ pages +"/membuat"} className="create" pages={pages}>Mamebuat Baru</Link>
+          </div>
+
+          {/* <div>
+            <Link className="create" 
+            to={{
+              pathname: ("/"+ pages +"/membuat"),
+              state: pages,
+              }}>
+                Mamebuat Baru</Link>
+          </div> */}
 
           <div className="laundry-grid">
             {tables.map(table => (

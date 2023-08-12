@@ -5,7 +5,7 @@ import Home from "./pages/Home"
 import Bon from "./pages/Bon"
 import Pelayanan from "./pages/Pelayanan"
 import Memperbarui from "./pages/Memperbarui"
-import CreateService from "./pages/CreateService"
+import Membuat from "./pages/Membuat"
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
         <Route path="/laundry" element={<Home />} />
         <Route path="/bon" element={<Bon />} />
         <Route path="/pelayanan" element={<Pelayanan />} />
-        <Route path="/createservice" element={<CreateService />} />
+        <Route path="/:pages/membuat" element={<Membuat />} />
         <Route path="/:pages/memperbarui-:id" element={<Memperbarui />} />
       </Routes>
     </BrowserRouter>

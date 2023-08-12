@@ -1,6 +1,5 @@
 import supabase from "../config/supabaseClient"
 import { Link } from 'react-router-dom'
-import moment from "moment/moment"
 
 // pages adalah table
 // tablequery adalah query table dari pages

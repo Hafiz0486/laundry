@@ -159,7 +159,7 @@ form button {
 
 /* Button navigate */
 
-navcs a {
+.create {
   background: var(--primary);
   color: #fff;
   border: 0;
@@ -168,3 +168,4 @@ navcs a {
   font-family: "Poppins";
   cursor: pointer;
 }
+
