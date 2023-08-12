@@ -149,6 +149,14 @@ const Membuat = () => {
             onChange={(e) => setNama(e.target.value)}
           />
 
+          <label htmlFor="ukuran">Ukuran : </label>
+          <input 
+            type="text" 
+            id="ukuran"
+            value={ukuran}
+            onChange={(e) => setUkuran(e.target.value)}
+          />
+
           <label htmlFor="harga">Harga : </label>
           <input 
             type="number"
@@ -157,13 +165,7 @@ const Membuat = () => {
             onChange={(e) => setHarga(e.target.value)}
           />
 
-          <label htmlFor="ukuran">Ukuran : </label>
-          <input 
-            type="text" 
-            id="ukuran"
-            value={ukuran}
-            onChange={(e) => setUkuran(e.target.value)}
-          />
+          
   
           <button>Membuat Pelayanan</button>
   
