@@ -42,7 +42,7 @@ const Pelayanan = () => {
   }, [orderBy])
 
   return (
-    <div className="page home">
+    <div className="page">
       {fetchError && (<p>{fetchError}</p>)}
       {tables && (
         <div className="services">
@@ -54,8 +54,8 @@ const Pelayanan = () => {
             <button onClick={() => setOrderBy('kg')}>Kg</button>
           </div>
 
-          <div>
-            <Link pages={pages} to={"/"+ pages +"/membuat"} className="create">Membuat Baru</Link>
+          <div className="tombol-membuat">
+            <Link to={"/"+ pages +"/membuat"} pages={pages} className="membuat-pelayanan">Membuat Baru</Link>
           </div> 
 
           <div className="laundry-grid">

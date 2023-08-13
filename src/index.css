@@ -3,6 +3,7 @@
 :root {
   --primary: #12bca2;
   --secondary: #6d15df;
+  --card-height: 370px
 }
 
 
@@ -17,9 +18,11 @@ p.card {
   line-height: 10px;
 }
 
-p.order-by{
-  margin-top: 30px;
+p.card-pelayanan {
+  margin-bottom: -5px;
+  line-height: 25px;
 }
+
 h1 {
   font-size: clamp(1.125rem, 0.8625rem + 0.5833vw, 1.5625rem);
 }
@@ -67,12 +70,14 @@ nav h1 {
   max-width: 1200px;
   margin: 10px auto;
   padding: 10px;
+  
 }
 
 
 /* smoothie grid */
 .laundry-grid {
-  margin-top: 30px;
+  
+  margin-top: 20px;
   
   --grid-layout-gap: 10px;
   --grid-column-count: 4; /* This gets overridden by an inline style. */
@@ -91,7 +96,8 @@ nav h1 {
   font-size: clamp(0.625rem, 0.3625rem + 0.5833vw, 1.0625rem);
   gap: 25px;
 }
-.laundry-card {
+.laundry-card-bon {
+  height: auto; /* The height will adjust based on the content */
   width: 1vp;
   padding: 10px;
   background: #fff;
@@ -100,7 +106,17 @@ nav h1 {
   position: relative;
 }
 
-.laundry-card .rating {
+.laundry-card-pelayanan {
+  height: 290px; /* The height will adjust based on the content */
+  width: 1vp;
+  padding: 10px;
+  background: #fff;
+  box-sizing: border-box;
+  border-radius: 6px;
+  position: relative;
+}
+
+.laundry-card-bon .rating {
   position: absolute;
   top: -10px;
   right: -10px;
@@ -113,11 +129,27 @@ nav h1 {
   line-height: 0px;
   text-align: center;
 }
-.laundry-card .buttons {
+
+.laundry-card-bon .buttons {
   text-align: right;
-  margin-top: 25px;
 }
-.laundry-card i {
+
+.laundry-card-pelayanan .buttons {
+  text-align: right;
+  margin-top: 5px;
+}
+
+.laundry-card-bon i {
+  color: #bbb;
+  margin-left: 10px;
+  font-size: 1.2em;
+  padding: 6px;
+  background: #eee;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.laundry-card-pelayanan i {
   color: #bbb;
   margin-left: 10px;
   font-size: 1.2em;
@@ -168,7 +200,20 @@ form button {
 
 /* Button navigate */
 
-.create {
+.membuat-bon {
+  background: var(--primary);
+  color: #fff;
+  border: 0;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-family: "Poppins";
+  cursor: pointer;
+}
+
+.tombol-membuat {
+  margin-top: 15px;
+}
+.membuat-pelayanan {
   background: var(--primary);
   color: #fff;
   border: 0;
@@ -215,8 +260,10 @@ form button {
 
 button.remove-button {
   margin-right: 10px;
+  background-color: #6d15df;
 }
 
 button.add-button {
   margin-left: 10px;
+  background-color: #6d15df;
 }

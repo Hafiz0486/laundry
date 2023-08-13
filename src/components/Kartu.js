@@ -41,7 +41,7 @@ const Kartu = ({ table, pages, onDelete }) => {
   
   if (pages === 'bon') {
     return (
-      <div className="laundry-card">
+      <div className="laundry-card-bon">
         <h3>Nama : {table.nama}</h3>
         <p>Pelayanan : {table.pelayanan}</p>
         <p>Tanggal datang : {table.tgl_masuk}</p>
@@ -59,12 +59,12 @@ const Kartu = ({ table, pages, onDelete }) => {
     )
   }  else if (pages === 'pelayanan') {
     return (
-      <div className="laundry-card">
+      <div className="laundry-card-pelayanan">
         <img src="https://jurnalpost.com/wp-content/uploads/2022/07/tips-beli-sepatu.jpg" alt="pelayanan" width="100%" height="50%"></img>
         <h4>Pelayanan : {table.nama}</h4>
-        <p class="card">kategori : {table.kategori}</p>
-        <p class="card">Ukuran : {table.ukuran}</p>
-        <p class="card">Harga : {idr}</p>
+        <p class="card-pelayanan">kategori : {table.kategori}</p>
+        <p class="card-pelayanan">Ukuran : {table.ukuran}</p>
+        <p class="card-pelayanan">Harga : {idr}</p>
         <div className="buttons">
           <Link to={"/" + pages + "/memperbarui-" + table.id}>
             <i className="material-icons">edit</i>

@@ -46,7 +46,7 @@ const Bon = () => {
   
 
   return (
-    <div className="page home">
+    <div className="page">
       {fetchError && (<p>{fetchError}</p>)}
       {tables && (
         
@@ -59,8 +59,8 @@ const Bon = () => {
             <button onClick={() => setOrderBy('kg')}>Kg</button>
           </div>
 
-          <div>
-            <Link to={'/'+ pages +"/membuat"} className="create" pages={pages}>Mamebuat Baru</Link>
+          <div className="tombol-membuat ">
+            <Link to={'/'+ pages +"/membuat"} className="membuat-bon" pages={pages}>Mamebuat Baru</Link>
           </div>
 
           {/* <div>
