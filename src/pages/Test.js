@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
 import supabase from "../config/supabaseClient"
 
-function Test() {
+const Test = () => {
   const [nama, setNama] = useState('')
+  const [ttl_keseluruhan, setTotalKeseluruhan] = useState('')
+  const [bayar, setBayar] = useState('')
+  const [jns_pembayaran, setJenisPembyaran] = useState('')
+  const [kembalian, setKembalian] = useState('')
 
   const [ukuranOptions, setUkuranOptions] = useState([]);
   const [namapelayananOption, setNamaPelayananOptions] = useState([]);
@@ -162,18 +166,30 @@ function Test() {
       total: item.total
     }));
 
-    var today = Date.now()
-    var queriesTransaksi = { nama, today }
+    // var tgl_pembayaran
+    // var kembali
+    // var today = Date.now()
 
-    const { dataTransaksi, errorTransaksi } = await supabase
-      .from('new_bon')
-      .insert(queriesTransaksi);
+    // if (bayar != null || bayar != '') {
+    //   tgl_pembayaran = Date.now()
+    //   if (ttl_keseluruhan == bayar || ttl_keseluruhan > 0) {
+    //     kembalian = 0
+    //   } else if (bayar > ttl_keseluruhan) {
+    //     kembalian = bayar - ttl_keseluruhan
+    //   }
+    // }
+    
+    // var queriesTransaksi = { id_konsumen, nama, today, ttl_keseluruhan, bayar, jns_pembayaran, tgl_pembayaran, kembalian }
 
-    if (errorTransaksi) {
-      console.error('Error inserting data:', errorTransaksi);
-    } else {
-      console.log('Data inserted:', dataTransaksi);
-    }
+    // const { dataTransaksi, errorTransaksi } = await supabase
+    //   .from('transaksi')
+    //   .insert(queriesTransaksi);
+
+    // if (errorTransaksi) {
+    //   console.error('Error inserting data:', errorTransaksi);
+    // } else {
+    //   console.log('Data inserted:', dataTransaksi);
+    // }
     
     const { dataBon, errorBon } = await supabase
       .from('new_bon')
@@ -222,27 +238,64 @@ function Test() {
   }
   
   
+ 
   return (
-    <div className="App">
-      <form onSubmit={submit}>
+    <div className="transaksi">
+      {/* onSubmit={submit} */}
+      <form className="information">
+      <h1 align="center">Informasi</h1>
+      <label htmlFor="nama">Nama Konsumen : </label>
+      <input 
+        type="text" 
+        id="nama"
+        value={nama}
+        onChange={(e) => setNama(e.target.value)}
+      />
 
-        <h2 align="center">Konsumen</h2>
-        <h1>=========================</h1>
+      <label htmlFor={`ttl_keseluruhan`}>Total Keseluruhan : </label>
+      <input 
+        type="number" 
+        id={`ttl_keseluruhan`}
+        name="ttl_keseluruhan"
+        value={ttl_keseluruhan}
+        onChange={(e) => setTotalKeseluruhan(e.target.value)}
+      />
 
-        {/* Data pertama nama konsumen */}
-        <label htmlFor="nama">Nama Konsumen : </label>
-        <input 
-          type="text" 
-          id="nama"
-          value={nama}
-          onChange={(e) => setNama(e.target.value)}
-        />
+      <label htmlFor={`bayar`}>Bayar : </label>
+      <input 
+        type="number" 
+        id={`bayar`}
+        name="bayar"
+        value={bayar}
+        onChange={(e) => setBayar(e.target.value)}
+      />
 
+      <label htmlFor={`jns_pembayaran`}>Jenis Pembyaran : </label>
+      <input 
+        type="number" 
+        id={`jns_pembayaran`}
+        name="jns_pembayaran"
+        value={jns_pembayaran}
+        onChange={(e) => setJenisPembyaran(e.target.value)}
+      />
+
+      <label htmlFor={`kembalian`}>Kembalian : </label>
+      <input 
+        type="number" 
+        id={`kembalian`}
+        name="kembalian"
+        value={kembalian}
+        onChange={(e) => setKembalian(e.target.value)}
+      />
+
+      </form>
+      {/* onSubmit={submit} */}
+      <form className="create-bon" onSubmit={submit}>
         {formFields.map((form, index) => (
           <div key={index}>
 
             <h2 align="center" >Pelayanan : {index + 1}</h2>
-            <h1>=========================</h1>
+            <h1>===========</h1>
 
             {/* Data kedua nama pelayanan */}
             <p>Nama Pelayanan</p>
@@ -354,15 +407,14 @@ function Test() {
               onChange={event => handleFormChange(event, index)}
             />
 
-            <button type="button" onClick={() => removeFields(index)}>Remove</button>
+            <button type="button" onClick={() => removeFields(index)} className="remove-button">Remove</button>
+            <button onClick={addFields} className="add-button">Add more</button>
           </div>
         ))}
       </form>
-      <button onClick={addFields}>Add more</button>
-      <br />
       <button onClick={submit}>Submit</button>
     </div>
   );
 }
 
-export default Test;
+export default Test
