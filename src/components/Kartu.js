@@ -21,30 +21,25 @@ const Kartu = ({ table, pages, onDelete }) => {
 
   }
 
-  if (pages == 'bon') {
+  if (pages === 'bon') {
 
-    tanggal_diambil = table.tgl_ambil
+    
 
     // Cek tanggal ambil jika sudah diambil atau belum
-    if (table.tgl_ambil == null) {
+    if (table.tgl_ambil === null) {
       var tanggal_diambil = "Belum diambil"
-    } 
+    } else {
+      tanggal_diambil = table.tgl_ambil
+    }
 
-    var idr = (table.harga).toLocaleString('en-IN', { 
-      style: 'currency', 
-      currency: 'IDR' 
-    });
+  } 
 
-  }
+  var idr = (table.harga).toLocaleString('en-IN', { 
+    style: 'currency', 
+    currency: 'IDR' 
+  });
   
-  if (pages == 'pelayanan') {
-    var idr = (table.harga).toLocaleString('en-IN', { 
-      style: 'currency', 
-      currency: 'IDR' 
-    });
-  }
-  
-  if (pages == 'bon') {
+  if (pages === 'bon') {
     return (
       <div className="laundry-card">
         <h3>Nama : {table.nama}</h3>
@@ -62,7 +57,7 @@ const Kartu = ({ table, pages, onDelete }) => {
         </div>
       </div>
     )
-  }  else if (pages == 'pelayanan') {
+  }  else if (pages === 'pelayanan') {
     return (
       <div className="laundry-card">
         <img src="https://jurnalpost.com/wp-content/uploads/2022/07/tips-beli-sepatu.jpg" alt="pelayanan" width="100%" height="50%"></img>

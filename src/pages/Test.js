@@ -12,7 +12,7 @@ function Test() {
 
   const [formFields, setFormFields] = useState([
     // Menambah variabel array sesuai field pada table
-    { nama: '', ukuran: '', pengerjaan: '', jml: '', berat: '', harga: '', total: ''}
+    { nama: '', kategori: '', ukuran: '', pengerjaan: '', jml: '', berat: '', harga: '', total: ''}
   ]);
 
   useEffect(() => {
@@ -128,7 +128,7 @@ function Test() {
   const submit = async (e) => {
     e.preventDefault();
 
-    // Prepare the list of queries
+    // Menyiapkan queri sesuai field pada tabel yang di input
     const queries = formFields.map(item => ({
       nama: item.nama,
       ukuran: item.ukuran,
@@ -153,6 +153,7 @@ function Test() {
   const addFields = () => {
     const object = { 
       nama: '',
+      kategori: '',
       ukuran: '', 
       pengerjaan: '', 
       jml: '', 
@@ -199,12 +200,22 @@ function Test() {
               value={form.nama} // Tambahkan value dari state formFields
               onChange={(event) => handleFormChange(event, index)}
             >
+              <option value="default">----- Pilih Pelayanan -----</option>
               {namapelayananOption.map((namapelayanan, optionIndex) => (
                 <option key={optionIndex} value={namapelayanan}>
                   {namapelayanan}
                 </option>
               ))}
             </select>
+
+            <label htmlFor={`kategori${index}`}>Kategori : </label>
+            <input 
+              type="text" 
+              id={`kategori${index}`}
+              name="kategori"
+              value={form.kategori}
+              onChange={event => handleFormChange(event, index)}
+            />
 
 
             {/* Data ketiga ukuran */}
@@ -216,6 +227,7 @@ function Test() {
               value={form.ukuran} // Tambahkan value dari state formFields
               onChange={(event) => handleFormChange(event, index)}
             >
+              <option value="default">----- Pilih Ukuran -----</option>
               {ukuranOptions.map((ukuran, optionIndex) => (
                 <option key={optionIndex} value={ukuran}>
                   {ukuran}
@@ -232,6 +244,7 @@ function Test() {
               value={form.pengerjaan} // Tambahkan value dari state formFields
               onChange={(event) => handleFormChange(event, index)}
             >
+              <option value="default">----- Pilih Pengerjaan -----</option>
               {pengerjaanOptions.map((pengerjaan, optionIndex) => (
                 <option key={optionIndex} value={pengerjaan}>
                   {pengerjaan}
