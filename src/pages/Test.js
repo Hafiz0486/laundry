@@ -178,7 +178,7 @@ function Test() {
     const object = {
       nama: '',
       kategori: '',
-      ukuran: '',
+      ukuran: '', // Ganti dengan ukuran default yang diinginkan
       pengerjaan: '',
       jml: '',
       berat: '',
@@ -187,6 +187,7 @@ function Test() {
     };
     setFormFields([...formFields, object]);
   }
+  
 
   const removeFields = (index) => {
     const newData = [...formFields];
@@ -194,7 +195,21 @@ function Test() {
     setFormFields(newData);
   }
 
-
+  async function fetchUkuranOptions() {
+    const { data, error } = await supabase
+      .from('pelayanan')
+      .select('ukuran, kategori');
+  
+    if (error) {
+      console.error('Error fetching ukuran options:', error);
+    } else {
+      const uniqueUkuran = [...new Set(data.map(item => item.ukuran))];
+      setUkuranOptions(uniqueUkuran);
+      setKategoriOptions(data);
+    }
+  }
+  
+  
   return (
     <div className="App">
       <form onSubmit={submit}>
@@ -241,20 +256,30 @@ function Test() {
 
             {/* Data ketiga ukuran */}
             <br></br>
-            <p>Ukuran</p>
             <select className="form-control"
-              id={`sel1`}
-              name="ukuran" // Tambahkan ukuran sesuai field yang ingin diubah
-              value={form.ukuran} // Tambahkan value dari state formFields
-              onChange={(event) => handleFormChange(event, index)}
-            >
-              <option value="default">----- Pilih Ukuran -----</option>
-              {ukuranOptions.map((ukuran, optionIndex) => (
-                <option key={optionIndex} value={ukuran}>
-                  {ukuran}
-                </option>
-              ))}
-            </select>
+  id={`sel1`}
+  name="ukuran"
+  value={form.ukuran}
+  onChange={(event) => handleFormChange(event, index)}
+>
+  <option value="default">----- Pilih Ukuran -----</option>
+  {ukuranOptions.map((ukuran, optionIndex) => {
+    const selectedKategori = kategoriOptions.find(item => item.nama === form.nama);
+    if (
+      (selectedKategori && selectedKategori.kategori === 'Kiloan' && ukuran === 'Normal') ||
+      (selectedKategori && selectedKategori.kategori === 'Satuan' && ukuran !== 'Normal')
+    ) {
+      return (
+        <option key={optionIndex} value={ukuran}>
+          {ukuran}
+        </option>
+      );
+    }
+    return null;
+  })}
+</select>
+
+
 
             {/* Data keempat pengerjaan */}
             <br></br>
