@@ -282,7 +282,7 @@ function Test() {
               name="jml"
               value={form.jml}
               onChange={event => handleFormChange(event, index)}
-              disabled={form.kategori !== 'Satuan'}
+              disabled={form.kategori !== 'Satuan' || form.ukuran == '' || form.pengerjaan == ''}
             />
 
             {/* Data keenam berat */}
@@ -293,7 +293,7 @@ function Test() {
               name="berat"
               value={form.berat}
               onChange={event => handleFormChange(event, index)}
-              disabled={form.kategori !== 'Kiloan'}
+              disabled={form.kategori !== 'Kiloan' || form.ukuran == '' || form.pengerjaan == ''}
             />
 
 

@@ -4,6 +4,14 @@
   --primary: #12bca2;
   --secondary: #6d15df;
 }
+
+
+input:disabled {
+  background-color: lightgray;
+  color: rgb(0, 0, 0);
+}
+
+
 p.card {
   margin-bottom: -5px;
   line-height: 10px;
