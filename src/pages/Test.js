@@ -6,24 +6,24 @@ function Test() {
 
   const [ukuranOptions, setUkuranOptions] = useState([]);
   const [namapelayananOption, setNamaPelayananOptions] = useState([]);
-  const [pengerjaanOptions, setPengerjaanOptions] = useState([]);
   const [kategoriOptions, setKategoriOptions] = useState([]);
+  const [pengerjaanOptions, setPengerjaanOptions] = useState([]);
   const [hargaOptions, setHargaOptions] = useState([]);
 
   const [formFields, setFormFields] = useState([
-    // Menambah variabel array sesuai field pada table
-    { nama: '', kategori: '', ukuran: '', pengerjaan: '', jml: '', berat: '', harga: '', total: ''}
+    { nama: '', kategori: '', ukuran: '', pengerjaan: '', jml: '', berat: '', harga: '', total: '' }
   ]);
 
+  const [defaultHarga, setDefaultHarga] = useState(0); // State untuk menyimpan harga default
+  const [jenisSatuan, setJenisSatuan] = useState(''); // State untuk menyimpan jenis satuan
+
   useEffect(() => {
-    // Ambil data ukuran dari tabel pelayanan di Supabase
     async function fetchNamaPelayananOptions() {
       const { data, error } = await supabase
         .from('pelayanan')
-        .select('nama'); // Ganti dengan kolom yang sesuai di tabel pelayanan
-  
+        .select('nama');
       if (error) {
-        console.error('Error fetching ukuran options:', error);
+        console.error('Error fetching nama pelayanan options:', error);
       } else {
         const uniqueNamaPelayanan = [...new Set(data.map(item => item.nama))];
         setNamaPelayananOptions(uniqueNamaPelayanan);
@@ -62,14 +62,12 @@ function Test() {
     async function fetchKategoriOptions() {
       const { data, error } = await supabase
         .from('pelayanan')
-        .select('kategori'); // Ganti dengan kolom yang sesuai di tabel pelayanan
-  
+        .select('nama, kategori'); // Ganti dengan kolom yang sesuai di tabel pelayanan
+    
       if (error) {
         console.error('Error fetching kategori options:', error);
       } else {
-        // Ambil unik kategori dan set ke state kategoriOptions
-        const uniqueKategori = [...new Set(data.map(item => item.kategori))];
-        setKategoriOptions(uniqueKategori);
+        setKategoriOptions(data);
       }
     }
 
@@ -86,7 +84,7 @@ function Test() {
       }
     }
   
-    fetchNamaPelayananOptions()
+    fetchNamaPelayananOptions();
     fetchHargaOptions();
     fetchKategoriOptions();
     fetchUkuranOptions();
@@ -94,16 +92,15 @@ function Test() {
   }, []);
 
   const handleFormChange = (event, index) => {
-  const newData = [...formFields];
-  newData[index][event.target.name] = event.target.value;
-  
-    // Ambil nama pelayanan, ukuran, dan pengerjaan dari form
+    const newData = [...formFields];
+    newData[index][event.target.name] = event.target.value;
+
     const selectedNamaPelayanan = newData[index].nama;
     const selectedUkuran = newData[index].ukuran;
     const selectedPengerjaan = newData[index].pengerjaan;
-  
-    console.log("Selected:", selectedNamaPelayanan, selectedUkuran, selectedPengerjaan);
-  
+    const selectedBerat = newData[index].berat;
+    const selectedJumlah = newData[index].jml;
+
     // Cari harga yang sesuai dari tabel pelayanan
     const hargaData = hargaOptions.find(
       item =>
@@ -111,24 +108,51 @@ function Test() {
         item.ukuran === selectedUkuran &&
         item.pengerjaan === selectedPengerjaan
     );
-  
-    console.log("Harga Data:", hargaData);
-  
-    // Jika harga ditemukan, set nilai harga di newData
+
+    const kategoriData = kategoriOptions.find(item => item.nama === selectedNamaPelayanan);
+
+    // Set harga default dan jenis satuan berdasarkan pelayanan yang dipilih
+    if (selectedNamaPelayanan) {
+      const selectedPelayanan = hargaOptions.find(
+        item =>
+          item.nama === selectedNamaPelayanan &&
+          item.ukuran === selectedUkuran &&
+          item.pengerjaan === selectedPengerjaan
+      );
+
+      if (selectedPelayanan) {
+        setDefaultHarga(selectedPelayanan.harga);
+        setJenisSatuan(selectedPelayanan.jenis);
+      }
+    }
+
     if (hargaData) {
       newData[index].harga = hargaData.harga;
     }
-  
+
+    if (kategoriData) {
+      newData[index].kategori = kategoriData.kategori;
+
+      if (kategoriData.kategori === 'Kiloan') {
+        newData[index].jml = '';
+        newData[index].berat = selectedBerat;
+        newData[index].ttl = defaultHarga * selectedBerat;
+      } else {
+        newData[index].berat = '';
+        newData[index].jml = selectedJumlah;
+        newData[index].ttl = defaultHarga * selectedJumlah;
+      }
+    }
+
+    console.log("Selected:", selectedNamaPelayanan, selectedUkuran, selectedPengerjaan);
+    console.log("Harga Data:", hargaData);
     console.log("New Data:", newData);
-  
     setFormFields(newData);
   }
-  
 
   const submit = async (e) => {
     e.preventDefault();
 
-    // Menyiapkan queri sesuai field pada tabel yang di input
     const queries = formFields.map(item => ({
       nama: item.nama,
       ukuran: item.ukuran,
@@ -140,8 +164,8 @@ function Test() {
     }));
 
     const { data, error } = await supabase
-    .from('new_bon')
-    .insert(queries);
+      .from('new_bon')
+      .insert(queries);
 
     if (error) {
       console.error('Error inserting data:', error);
@@ -151,14 +175,14 @@ function Test() {
   }
 
   const addFields = () => {
-    const object = { 
+    const object = {
       nama: '',
       kategori: '',
-      ukuran: '', 
-      pengerjaan: '', 
-      jml: '', 
-      berat: '', 
-      harga: '', 
+      ukuran: '',
+      pengerjaan: '',
+      jml: '',
+      berat: '',
+      harga: '',
       total: ''
     };
     setFormFields([...formFields, object]);
@@ -169,6 +193,7 @@ function Test() {
     newData.splice(index, 1);
     setFormFields(newData);
   }
+
 
   return (
     <div className="App">
@@ -208,14 +233,10 @@ function Test() {
               ))}
             </select>
 
-            <label htmlFor={`kategori${index}`}>Kategori : </label>
-            <input 
-              type="text" 
-              id={`kategori${index}`}
-              name="kategori"
-              value={form.kategori}
-              onChange={event => handleFormChange(event, index)}
-            />
+            <br></br>
+            <label>Kategori : </label>
+            <span> {form.kategori}</span>
+            <br></br>
 
 
             {/* Data ketiga ukuran */}
@@ -261,10 +282,10 @@ function Test() {
               name="jml"
               value={form.jml}
               onChange={event => handleFormChange(event, index)}
+              disabled={form.kategori !== 'Satuan'}
             />
 
             {/* Data keenam berat */}
-
             <label htmlFor={`berat${index}`}>Berat : </label>
             <input 
               type="number" 
@@ -272,7 +293,9 @@ function Test() {
               name="berat"
               value={form.berat}
               onChange={event => handleFormChange(event, index)}
+              disabled={form.kategori !== 'Kiloan'}
             />
+
 
             {/* Data ketujuh harga */}
             <label htmlFor={`harga${index}`}>Harga : </label>
