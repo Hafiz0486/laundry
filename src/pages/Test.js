@@ -153,24 +153,36 @@ function Test() {
   const submit = async (e) => {
     e.preventDefault();
 
-    const queries = formFields.map(item => ({
+    const queriesBOn = formFields.map(item => ({
+      nama_konsumen: nama,
       nama: item.nama,
-      ukuran: item.ukuran,
-      pengerjaan: item.pengerjaan,
+      ukuran: item.ukuran,  
       jml: item.jml,
       berat: item.berat,
-      harga: item.harga,
       total: item.total
     }));
 
-    const { data, error } = await supabase
-      .from('new_bon')
-      .insert(queries);
+    var today = Date.now()
+    var queriesTransaksi = { nama, today }
 
-    if (error) {
-      console.error('Error inserting data:', error);
+    const { dataTransaksi, errorTransaksi } = await supabase
+      .from('new_bon')
+      .insert(queriesTransaksi);
+
+    if (errorTransaksi) {
+      console.error('Error inserting data:', errorTransaksi);
     } else {
-      console.log('Data inserted:', data);
+      console.log('Data inserted:', dataTransaksi);
+    }
+    
+    const { dataBon, errorBon } = await supabase
+      .from('new_bon')
+      .insert(queriesBOn);
+
+    if (errorBon) {
+      console.error('Error inserting data:', errorBon);
+    } else {
+      console.log('Data inserted:', dataBon);
     }
   }
 
@@ -257,27 +269,27 @@ function Test() {
             {/* Data ketiga ukuran */}
             <br></br>
             <select className="form-control"
-  id={`sel1`}
-  name="ukuran"
-  value={form.ukuran}
-  onChange={(event) => handleFormChange(event, index)}
->
-  <option value="default">----- Pilih Ukuran -----</option>
-  {ukuranOptions.map((ukuran, optionIndex) => {
-    const selectedKategori = kategoriOptions.find(item => item.nama === form.nama);
-    if (
-      (selectedKategori && selectedKategori.kategori === 'Kiloan' && ukuran === 'Normal') ||
-      (selectedKategori && selectedKategori.kategori === 'Satuan' && ukuran !== 'Normal')
-    ) {
-      return (
-        <option key={optionIndex} value={ukuran}>
-          {ukuran}
-        </option>
-      );
-    }
-    return null;
-  })}
-</select>
+              id={`sel1`}
+              name="ukuran"
+              value={form.ukuran}
+              onChange={(event) => handleFormChange(event, index)}
+            >
+              <option value="default">----- Pilih Ukuran -----</option>
+              {ukuranOptions.map((ukuran, optionIndex) => {
+                const selectedKategori = kategoriOptions.find(item => item.nama === form.nama);
+                if (
+                  (selectedKategori && selectedKategori.kategori === 'Kiloan' && ukuran === 'Normal') ||
+                  (selectedKategori && selectedKategori.kategori === 'Satuan' && ukuran !== 'Normal')
+                ) {
+                  return (
+                    <option key={optionIndex} value={ukuran}>
+                      {ukuran}
+                    </option>
+                  );
+                }
+                return null;
+              })}
+            </select>
 
 
 
