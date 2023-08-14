@@ -161,7 +161,7 @@ nav h1 {
 
 /* forms */
 form {
-  background: #fff;
+  background: #ffffff;
   padding: 20px;
   max-width: 480px;
   margin: 0 auto;
@@ -184,6 +184,10 @@ form button {
   font-family: "Poppins";
   cursor: pointer;
   margin-bottom: 20px;
+}
+
+.form-group {
+  margin: 0 0 20px 0;
 }
 
 /* order-by buttons */
@@ -223,47 +227,76 @@ form button {
   cursor: pointer;
 }
 
-.form-group {
-  margin: 0 0 20px 0;
+:root {
+  --clamp-size-from-information : 30rem;
 }
 
-/* Apply general styles to the container */
-.transaksi {
-  display: grid;
-  gap: 10px;
-  margin: 0 auto; /* Center horizontally */
-}
-
-/* Styles for the "information" form */
-.information {
-  min-width: 370px;
-  width: 50%;
-  max-width: 95%;
-  margin-top: 10px;
-  background-color: var(--primary);
+form.information {
+  max-width: clamp(var(--clamp-size-from-information), 1rem + 1vw, 1rem);
+  margin: 10px 10px 10px 10px;
+  background-color: #12bca2;
   padding: 20px;
-  border: 1px solid gray;
+  border-radius: 6px;
+}
+
+.create-bon-grid {
+  max-width: 100%;
+  background-color: transparent;
+  margin-top: 20px;
+  
+  --grid-layout-gap: 10px;
+  --grid-column-count: 4; /* This gets overridden by an inline style. */
+  --grid-item--min-width: 150px; /* This gets overridden by an inline style. */
+  
+  /**
+   * Calculated values.
+   */
+  --gap-count: calc(var(--grid-column-count) - 1);
+  --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
+  --grid-item--max-width: calc((75% - var(--total-gap-width)) / var(--grid-column-count));
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr));
+  grid-gap: var(--grid-layout-gap);
+  font-size: clamp(0.625rem, 0.3625rem + 0.5833vw, 1.0625rem);
+  gap: 10px;
+
+}
+
+.create-bon-grid form.create-bon-card {
+  line-height: 10px;
+  height: 100%; /* Allow the card to expand vertically */
+  padding: 10px;
+  background-color: #12bca2;
   box-sizing: border-box;
-  align-self: flex-start;
+  border-radius: 6px;
+  position: relative;
 }
 
-/* Styles for the "bon" form */
-.create-bon {
-  min-width: 370px;
-  margin-left: 10px;
+.transaksi button {
+  height: 35px;
+  width: 100%;
   margin-right: 10px;
-  background-color: var(--primary);
-  border: 1px solid blue;
-  box-sizing: border-box;
-  align-self: flex-start;
+  background: #6d15df;
+  color: #fff;
+  border: 0;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-family: "Poppins";
+  cursor: pointer;
 }
 
-button.remove-button {
-  margin-right: 10px;
-  background-color: #6d15df;
+p.create-bon {
+  line-height: 0px;
 }
 
-button.add-button {
-  margin-left: 10px;
-  background-color: #6d15df;
+p.create-bon {
+  line-height: 0px;
+  margin-top: -5px;
+}
+
+p.create-bon-fc {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  line-height: 30px;
 }

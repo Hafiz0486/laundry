@@ -241,7 +241,6 @@ const Test = () => {
  
   return (
     <div className="transaksi">
-      {/* onSubmit={submit} */}
       <form className="information">
       <h1 align="center">Informasi</h1>
       <label htmlFor="nama">Nama Konsumen : </label>
@@ -287,18 +286,21 @@ const Test = () => {
         value={kembalian}
         onChange={(e) => setKembalian(e.target.value)}
       />
-
       </form>
-      {/* onSubmit={submit} */}
-      <form className="create-bon" onSubmit={submit}>
-        {formFields.map((form, index) => (
+      
+      {/* Form bon */}
+
+      <div className="create-bon-grid" >
+          {formFields.map((form, index) => (
+            <div className="create-bon-card-container" key={index}>
+            <form className="create-bon-card" onSubmit={(e) => submit(e, index)}>
           <div key={index}>
 
             <h2 align="center" >Pelayanan : {index + 1}</h2>
             <h1>===========</h1>
 
             {/* Data kedua nama pelayanan */}
-            <p>Nama Pelayanan</p>
+            <p  className="create-bon-fc">Nama Pelayanan</p>
             <select className="form-control"
               id={`sel1`}
               name="nama" // Tambahkan name sesuai field yang ingin diubah
@@ -320,7 +322,7 @@ const Test = () => {
 
 
             {/* Data ketiga ukuran */}
-            <br></br>
+            <p  className="create-bon-fc">Ukuran : </p>
             <select className="form-control"
               id={`sel1`}
               name="ukuran"
@@ -347,8 +349,7 @@ const Test = () => {
 
 
             {/* Data keempat pengerjaan */}
-            <br></br>
-            <p>Pengerjaan</p>
+            <p  className="create-bon-fc">Pengerjaan</p>
             <select className="form-control"
               id={`sel1`}
               name="pengerjaan" // Tambahkan pengerjaan sesuai field yang ingin diubah
@@ -364,8 +365,9 @@ const Test = () => {
             </select>
             
             <br></br>
+            <br></br>
             {/* Data kelima jml */}
-            <label htmlFor={`jml${index}`}>Jumlah : </label>
+            <p  className='create-bon' htmlFor={`jml${index}`}>Jumlah : </p>
             <input 
               type="number" 
               id={`jml${index}`}
@@ -376,7 +378,7 @@ const Test = () => {
             />
 
             {/* Data keenam berat */}
-            <label htmlFor={`berat${index}`}>Berat : </label>
+            <p  className='create-bon' htmlFor={`berat${index}`}>Berat : </p>
             <input 
               type="number" 
               id={`berat${index}`}
@@ -388,7 +390,7 @@ const Test = () => {
 
 
             {/* Data ketujuh harga */}
-            <label htmlFor={`harga${index}`}>Harga : </label>
+            <p className='create-bon' htmlFor={`harga${index}`}>Harga : </p>
             <input 
               type="number" 
               id={`harga${index}`}
@@ -398,7 +400,7 @@ const Test = () => {
             />
 
             {/* Data kedelapan total */}
-            <label htmlFor={`ttl${index}`}>Total : </label>
+            <p className='create-bon' htmlFor={`ttl${index}`}>Total : </p>
             <input 
               type="number" 
               id={`ttl${index}`}
@@ -410,8 +412,10 @@ const Test = () => {
             <button type="button" onClick={() => removeFields(index)} className="remove-button">Remove</button>
             <button onClick={addFields} className="add-button">Add more</button>
           </div>
+          </form>
+          </div>
         ))}
-      </form>
+      </div>
       <button onClick={submit}>Submit</button>
     </div>
   );
