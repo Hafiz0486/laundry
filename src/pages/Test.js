@@ -4,7 +4,7 @@ import supabase from "../config/supabaseClient"
 const Test = () => {
   const [nama, setNama] = useState('')
   const [ttl_keseluruhan, setTotalKeseluruhan] = useState('')
-  const [bayar, setBayar] = useState('')
+  const [pembayaran, setPembayaran] = useState('')
   const [jns_pembayaran, setJenisPembyaran] = useState('')
   const [kembalian, setKembalian] = useState('')
 
@@ -138,11 +138,11 @@ const Test = () => {
       newData[index].kategori = kategoriData.kategori;
 
       if (kategoriData.kategori === 'Kiloan') {
-        newData[index].jml = '';
+        newData[index].jml = 0;
         newData[index].berat = selectedBerat;
         newData[index].ttl = defaultHarga * selectedBerat;
       } else {
-        newData[index].berat = '';
+        newData[index].berat = 0;
         newData[index].jml = selectedJumlah;
         newData[index].ttl = defaultHarga * selectedJumlah;
       }
@@ -156,50 +156,110 @@ const Test = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-
-    const queriesBOn = formFields.map(item => ({
-      nama_konsumen: nama,
-      nama: item.nama,
-      ukuran: item.ukuran,  
-      jml: item.jml,
-      berat: item.berat,
-      total: item.total
-    }));
-
-    // var tgl_pembayaran
-    // var kembali
-    // var today = Date.now()
-
-    // if (bayar != null || bayar != '') {
-    //   tgl_pembayaran = Date.now()
-    //   if (ttl_keseluruhan == bayar || ttl_keseluruhan > 0) {
-    //     kembalian = 0
-    //   } else if (bayar > ttl_keseluruhan) {
-    //     kembalian = bayar - ttl_keseluruhan
-    //   }
-    // }
     
-    // var queriesTransaksi = { id_konsumen, nama, today, ttl_keseluruhan, bayar, jns_pembayaran, tgl_pembayaran, kembalian }
+    var tgl_datang = new Date(Date.now())
+    // var ttl_keseluruhan = 0
+    var tgl_pembayaran = new Date()
+    var jns_pembayaran
+    var kembalian
 
-    // const { dataTransaksi, errorTransaksi } = await supabase
-    //   .from('transaksi')
-    //   .insert(queriesTransaksi);
-
-    // if (errorTransaksi) {
-    //   console.error('Error inserting data:', errorTransaksi);
-    // } else {
-    //   console.log('Data inserted:', dataTransaksi);
-    // }
-    
-    const { dataBon, errorBon } = await supabase
-      .from('new_bon')
-      .insert(queriesBOn);
-
-    if (errorBon) {
-      console.error('Error inserting data:', errorBon);
-    } else {
-      console.log('Data inserted:', dataBon);
+    if (pembayaran == 0) {
+      jns_pembayaran = null
+      kembalian = 0
+      tgl_pembayaran = null
     }
+    
+    const queriesTransaksi = {nama, tgl_datang, ttl_keseluruhan, tgl_pembayaran, jns_pembayaran, kembalian}
+
+    // console.log(queriesTransaksi)
+
+    const { dataTransaksi, errorTransaksi } = await supabase
+      .from('transaksi')
+      .insert([queriesTransaksi]);
+
+    if (errorTransaksi) {
+      console.error('Error inserting data:', errorTransaksi);
+    } else {
+      console.log('Data inserted:', dataTransaksi);
+      
+    }
+    
+    async function fetchLastIdTransaction() {
+      try {
+        const { data, error } = await supabase
+          .from('transaksi')
+          .select('id')
+          .order('id', { ascending: false })
+          .limit(1);
+        
+        if (error) {
+          throw error;
+        }
+        
+        if (data.length > 0) {
+          const id_transaksi = data[0].id;
+          console.log('Last transaction ID:', id_transaksi);
+          return id_transaksi;
+        } else {
+          console.log('No transactions found.');
+          return null;
+        }
+      } catch (error) {
+        console.error('Error fetching transaction data:', error);
+        return null;
+      }
+    }
+    
+    async function createQueriesBOn() {
+      const id_transaksi = await fetchLastIdTransaction();
+      
+      if (id_transaksi !== null) {
+        const queriesBOn = formFields.map(item => ({ 
+          nama_konsumen: item.nama,
+          jml: item.jml,
+          berat: item.berat,
+          total: item.ttl,
+          id_transaksi: id_transaksi
+        }));
+        
+        return queriesBOn;
+      } else {
+        console.log('Unable to create queriesBOn due to missing transaction ID.');
+        return null;
+      }
+    }
+    
+    async function insertDataToSupabase() {
+      const queriesBOn = await createQueriesBOn();
+    
+      if (queriesBOn !== null) {
+        const { dataBon, errorBon } = await supabase
+          .from('new_bon')
+          .insert(queriesBOn);
+    
+        if (errorBon) {
+          console.error('Error inserting data:', errorBon);
+        } else {
+          console.log('Data inserted:', dataBon);
+        }
+      } else {
+        console.log('No data to insert.');
+      }
+    }
+    
+    insertDataToSupabase();
+
+    async function main() {
+      try {
+        await insertDataToSupabase();
+      } catch (error) {
+        console.error('Error in main:', error);
+      }
+    }
+    
+    // Panggil fungsi main() untuk memulai proses
+    main();
+    
   }
 
   const addFields = () => {
@@ -237,48 +297,45 @@ const Test = () => {
     }
   }
   
-  
- 
   return (
     <div className="transaksi">
       <form className="information">
       <h1 align="center">Informasi</h1>
-      <label htmlFor="nama">Nama Konsumen : </label>
+      <p className="create-informasi" htmlFor="nama">Nama Konsumen : </p>
       <input 
         type="text" 
         id="nama"
         value={nama}
         onChange={(e) => setNama(e.target.value)}
       />
-
-      <label htmlFor={`ttl_keseluruhan`}>Total Keseluruhan : </label>
+      
+      <p className="create-informasi" htmlFor="ttl_keseluruhan">Total Keseluruhan : </p>
       <input 
         type="number" 
-        id={`ttl_keseluruhan`}
-        name="ttl_keseluruhan"
+        id="ttl_keseluruhan"
         value={ttl_keseluruhan}
         onChange={(e) => setTotalKeseluruhan(e.target.value)}
       />
 
-      <label htmlFor={`bayar`}>Bayar : </label>
+      <p className="create-informasi" htmlFor={`pembayaran`}>Pembayaran : </p>
       <input 
         type="number" 
-        id={`bayar`}
-        name="bayar"
-        value={bayar}
-        onChange={(e) => setBayar(e.target.value)}
+        id={`pembayaran`}
+        name="pembayaran"
+        value={pembayaran}
+        onChange={(e) => setPembayaran(e.target.value)}
       />
 
-      <label htmlFor={`jns_pembayaran`}>Jenis Pembyaran : </label>
+      <p className="create-informasi" htmlFor={`jns_pembayaran`}>Jenis Pembayaran : </p>
       <input 
-        type="number" 
+        type="text" 
         id={`jns_pembayaran`}
         name="jns_pembayaran"
         value={jns_pembayaran}
         onChange={(e) => setJenisPembyaran(e.target.value)}
       />
 
-      <label htmlFor={`kembalian`}>Kembalian : </label>
+      <p className="create-informasi" htmlFor={`kembalian`}>Kembalian : </p>
       <input 
         type="number" 
         id={`kembalian`}
@@ -296,18 +353,19 @@ const Test = () => {
             <form className="create-bon-card" onSubmit={(e) => submit(e, index)}>
           <div key={index}>
 
+            <form className='title'>
             <h2 align="center" >Pelayanan : {index + 1}</h2>
-            <h1>===========</h1>
+            </form>
 
             {/* Data kedua nama pelayanan */}
             <p  className="create-bon-fc">Nama Pelayanan</p>
-            <select className="form-control"
+            <select className={`form-control custom-select`}
               id={`sel1`}
               name="nama" // Tambahkan name sesuai field yang ingin diubah
               value={form.nama} // Tambahkan value dari state formFields
               onChange={(event) => handleFormChange(event, index)}
             >
-              <option value="default">----- Pilih Pelayanan -----</option>
+              <option className="create-bon" value="default">Pilih Pelayanan</option>
               {namapelayananOption.map((namapelayanan, optionIndex) => (
                 <option key={optionIndex} value={namapelayanan}>
                   {namapelayanan}
@@ -315,21 +373,19 @@ const Test = () => {
               ))}
             </select>
 
-            <br></br>
-            <label>Kategori : </label>
-            <span> {form.kategori}</span>
-            <br></br>
+            <p className="create-bon-fc">Kategori : <span className="create-bon-fc"> {form.kategori}</span></p>
+            
 
 
             {/* Data ketiga ukuran */}
             <p  className="create-bon-fc">Ukuran : </p>
-            <select className="form-control"
+            <select className={`form-control custom-select`}
               id={`sel1`}
               name="ukuran"
               value={form.ukuran}
               onChange={(event) => handleFormChange(event, index)}
             >
-              <option value="default">----- Pilih Ukuran -----</option>
+              <option className="create-bon" value="default">Pilih Ukuran</option>
               {ukuranOptions.map((ukuran, optionIndex) => {
                 const selectedKategori = kategoriOptions.find(item => item.nama === form.nama);
                 if (
@@ -346,23 +402,22 @@ const Test = () => {
               })}
             </select>
 
-
-
             {/* Data keempat pengerjaan */}
             <p  className="create-bon-fc">Pengerjaan</p>
-            <select className="form-control"
+            <select className={`form-control custom-select`}
               id={`sel1`}
-              name="pengerjaan" // Tambahkan pengerjaan sesuai field yang ingin diubah
-              value={form.pengerjaan} // Tambahkan value dari state formFields
+              name="pengerjaan"
+              value={form.pengerjaan}
               onChange={(event) => handleFormChange(event, index)}
             >
-              <option value="default">----- Pilih Pengerjaan -----</option>
+              <option value="default">Pilih Pengerjaan </option>
               {pengerjaanOptions.map((pengerjaan, optionIndex) => (
                 <option key={optionIndex} value={pengerjaan}>
                   {pengerjaan}
                 </option>
               ))}
             </select>
+
             
             <br></br>
             <br></br>
@@ -416,7 +471,7 @@ const Test = () => {
           </div>
         ))}
       </div>
-      <button onClick={submit}>Submit</button>
+      <button className="submittransaksi" onClick={submit}>Submit</button>
     </div>
   );
 }

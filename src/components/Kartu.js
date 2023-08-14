@@ -23,8 +23,6 @@ const Kartu = ({ table, pages, onDelete }) => {
 
   if (pages === 'bon') {
 
-    
-
     // Cek tanggal ambil jika sudah diambil atau belum
     if (table.tgl_ambil === null) {
       var tanggal_diambil = "Belum diambil"
@@ -34,20 +32,26 @@ const Kartu = ({ table, pages, onDelete }) => {
 
   } 
 
-  var idr = (table.harga).toLocaleString('en-IN', { 
-    style: 'currency', 
-    currency: 'IDR' 
-  });
+  if (pages !== 'transaksi'){
+    var idr = (table.harga).toLocaleString('en-IN', { 
+      style: 'currency', 
+      currency: 'IDR' 
+    });
+  }
+  
   
   if (pages === 'bon') {
     return (
       <div className="laundry-card-bon">
-        <h3>Nama : {table.nama}</h3>
-        <p>Pelayanan : {table.pelayanan}</p>
-        <p>Tanggal datang : {table.tgl_masuk}</p>
-        <p>Tanggal datang : {tanggal_diambil}</p>
+        <p>Nama : {table.nama}</p>
+        <p>Tanggal Datang : {table.tgl_masuk}</p>
+        <p>Tanggal Ambil : {tanggal_diambil}</p>
+        <p>Total Keseluruhan :</p>
         <p></p>
-        <p>Total harga : {idr}</p>
+        <p>Tanggal Pembayaran :</p>
+        <p>Pembayaran :</p>
+        <p>Jenis Pembayaran :</p>
+        <p>Kembalian : {idr}</p>
         <div className="rating">{table.kg}</div>
         <div className="buttons">
           <Link to={"/"+ pages +"/memperbarui-" + table.id}>
@@ -67,6 +71,20 @@ const Kartu = ({ table, pages, onDelete }) => {
         <p class="card-pelayanan">Harga : {idr}</p>
         <div className="buttons">
           <Link to={"/" + pages + "/memperbarui-" + table.id}>
+            <i className="material-icons">edit</i>
+          </Link>
+          <i className="material-icons" onClick={handleDelete}>delete</i>
+        </div>
+      </div>
+    )
+  } else if (pages === 'transaksi') {
+    return (
+      <div className="laundry-card-bon">
+        <p>Nama : {table.nama}</p>
+        <p>Tanggal Datang : {table.tgl_datang}</p>
+        <p>Total Keseluruhan : {table.ttl_keseluruhan}</p>
+        <div className="buttons">
+          <Link to={"/"+ pages +"/memperbarui-" + table.id}>
             <i className="material-icons">edit</i>
           </Link>
           <i className="material-icons" onClick={handleDelete}>delete</i>

@@ -25,10 +25,12 @@ p.card-pelayanan {
 
 h1 {
   font-size: clamp(1.125rem, 0.8625rem + 0.5833vw, 1.5625rem);
+  font-weight: bold;
 }
 
 h2 {
   font-size: clamp(1rem, 0.7375rem + 0.5833vw, 1.4375rem);
+  font-weight: bold;
 }
 
 h3 {
@@ -228,7 +230,7 @@ form button {
 }
 
 :root {
-  --clamp-size-from-information : 30rem;
+  --clamp-size-from-information : 40rem;
 }
 
 form.information {
@@ -240,9 +242,9 @@ form.information {
 }
 
 .create-bon-grid {
-  max-width: 100%;
+  margin-left: 10px;
+  margin-right: 10px;
   background-color: transparent;
-  margin-top: 20px;
   
   --grid-layout-gap: 10px;
   --grid-column-count: 4; /* This gets overridden by an inline style. */
@@ -259,12 +261,14 @@ form.information {
   grid-template-columns: repeat(auto-fill, minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr));
   grid-gap: var(--grid-layout-gap);
   font-size: clamp(0.625rem, 0.3625rem + 0.5833vw, 1.0625rem);
-  gap: 10px;
+  gap: -5px;
 
 }
 
 .create-bon-grid form.create-bon-card {
   line-height: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
   height: 100%; /* Allow the card to expand vertically */
   padding: 10px;
   background-color: #12bca2;
@@ -274,9 +278,10 @@ form.information {
 }
 
 .transaksi button {
+  margin-top: -5px;
+  margin-bottom: 10px;
   height: 35px;
   width: 100%;
-  margin-right: 10px;
   background: #6d15df;
   color: #fff;
   border: 0;
@@ -286,17 +291,51 @@ form.information {
   cursor: pointer;
 }
 
-p.create-bon {
-  line-height: 0px;
+button.submittransaksi {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  height: 35px;
+  width: 100%;
+  background: #6d15df;
+  color: #fff;
+  border: 0;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-family: "Poppins";
+  cursor: pointer;
+}
+
+p.create-informasi {
+  font-size: clamp(1rem, 0.625rem + 0.8333vw, 1.25rem);
+  margin-top: 5px;
+  margin-bottom: 5px;
+  line-height: 30px;
 }
 
 p.create-bon {
+  font-size: clamp(0.9375rem, 0.4688rem + 1.0417vw, 1.25rem);
   line-height: 0px;
   margin-top: -5px;
 }
 
+span.create-bon-fc{
+  font-size: clamp(0.9375rem, 0.4688rem + 1.0417vw, 1.25rem);
+}
 p.create-bon-fc {
+  font-size: clamp(0.9375rem, 0.4688rem + 1.0417vw, 1.25rem);
   margin-top: 5px;
   margin-bottom: 5px;
   line-height: 30px;
+}
+
+form.title{
+  width: 100%;
+  height: clamp(2.5rem, 1rem + 1vw, 1rem);
+  padding: 10px;
+  background-color: #6d15df;
+  color: #ffffff;
+}
+
+.custom-select {
+  font-size: clamp(0.875rem, 0.3125rem + 1.25vw, 1.25rem);
 }

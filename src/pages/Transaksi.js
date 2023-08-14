@@ -7,9 +7,9 @@ import { useEffect, useState } from 'react'
 // components
 import Kartu from '../components/Kartu'
 
-const pages = 'bon'
+const pages = 'transaksi'
 
-const Bon = () => {
+const Transaksi = () => {
   const [fetchError, setFetchError] = useState(null)
   const [tables, setTables] = useState(null)
   const [orderBy, setOrderBy] = useState('dibuat')
@@ -20,7 +20,7 @@ const Bon = () => {
     })
   }
 
-  // Mengambil data dari table bon
+  // Mengambil data dari table transaksi
   useEffect(() => {
     const fetchTables = async () => {
       const { data, error } = await supabase
@@ -75,4 +75,4 @@ const Bon = () => {
   )
 }
 
-export default Bon
+export default Transaksi
