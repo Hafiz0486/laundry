@@ -54,7 +54,7 @@ const Kartu = ({ table, pages, onDelete }) => {
         <p>Kembalian : {idr}</p>
         <div className="rating">{table.kg}</div>
         <div className="buttons">
-          <Link to={"/"+ pages +"/memperbarui-" + table.id}>
+          <Link to={"/laundry/"+ pages +"/memperbarui-" + table.id}>
             <i className="material-icons">edit</i>
           </Link>
           <i className="material-icons" onClick={handleDelete}>delete</i>
@@ -70,7 +70,7 @@ const Kartu = ({ table, pages, onDelete }) => {
         <p class="card-pelayanan">Ukuran : {table.ukuran}</p>
         <p class="card-pelayanan">Harga : {idr}</p>
         <div className="buttons">
-          <Link to={"/" + pages + "/memperbarui-" + table.id}>
+          <Link to={"/laundry/" + pages + "/memperbarui-" + table.id}>
             <i className="material-icons">edit</i>
           </Link>
           <i className="material-icons" onClick={handleDelete}>delete</i>
@@ -84,7 +84,7 @@ const Kartu = ({ table, pages, onDelete }) => {
         <p>Tanggal Datang : {table.tgl_datang}</p>
         <p>Total Keseluruhan : {table.ttl_keseluruhan}</p>
         <div className="buttons">
-          <Link to={"/"+ pages +"/memperbarui-" + table.id}>
+          <Link to={"/laundry/"+ pages +"/memperbarui-" + table.id}>
             <i className="material-icons">edit</i>
           </Link>
           <i className="material-icons" onClick={handleDelete}>delete</i>

@@ -55,7 +55,7 @@ const Pelayanan = () => {
           </div>
 
           <div className="tombol-membuat">
-            <Link to={"/"+ pages +"/membuat"} pages={pages} className="membuat-pelayanan">Membuat Baru</Link>
+            <Link to={"/laundry/"+ pages +"/membuat"} pages={pages} className="membuat-pelayanan">Membuat Baru</Link>
           </div> 
 
           <div className="laundry-grid">

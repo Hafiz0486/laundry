@@ -8,6 +8,7 @@ import Memperbarui from "./pages/Memperbarui"
 import Membuat from "./pages/Membuat"
 import Test from "./pages/Test"
 import Transaksi from "./pages/Transaksi"
+import MembuatTransaksi from "./pages/MembuatTransaksi"
 
 function App() {
   return (
@@ -15,20 +16,21 @@ function App() {
       <nav>
         <h1>Kamal Laundry</h1>
         <Link to="/laundry">Home</Link>
-        <Link to="/bon">Bon</Link>
-        <Link to="/pelayanan">Pelayanan</Link>
-        <Link to="/test">Test</Link>
-        <Link to="/transaksi">Transaksi</Link>
+        <Link to="/laundry/bon">Bon</Link>
+        <Link to="/laundry/pelayanan">Pelayanan</Link>
+        <Link to="/laundry/test">Test</Link>
+        <Link to="/laundry/transaksi">Transaksi</Link>
       </nav> 
       <Routes>
         <Route path="/laundry" element={<Home />} />
-        <Route path="/bon" element={<Bon />} />
-        <Route path="/pelayanan" element={<Pelayanan />} />
-        <Route path="/test" element={<Test />} />
-        <Route path="/transaksi" element={<Transaksi />} />
+        <Route path="/laundry/bon" element={<Bon />} />
+        <Route path="/laundry/pelayanan" element={<Pelayanan />} />
+        <Route path="/laundry/test" element={<Test />} />
+        <Route path="/laundry/transaksi" element={<Transaksi />} />
 
-        <Route path="/:pages/membuat" element={<Membuat />} />
-        <Route path="/:pages/memperbarui-:id" element={<Memperbarui />} />
+        <Route path="/laundry/:pages/membuattransaksi" element={<MembuatTransaksi />} />
+        <Route path="/laundry/:pages/membuat" element={<Membuat />} />
+        <Route path="/laundry/:pages/memperbarui-:id" element={<Memperbarui />} />
       </Routes>
     </BrowserRouter>
   );
