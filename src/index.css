@@ -132,6 +132,20 @@ nav h1 {
   text-align: center;
 }
 
+.laundry-card-pelayanan .rating {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: var(--secondary);
+  color: #fff;
+  border-radius: 6px;
+  width: 35%;
+  height: 0;
+  padding: 20px 0;
+  line-height: 0px;
+  text-align: center;
+}
+
 .laundry-card-bon .buttons {
   text-align: right;
 }
@@ -139,6 +153,7 @@ nav h1 {
 .laundry-card-pelayanan .buttons {
   text-align: right;
   margin-top: 5px;
+  margin-bottom: 0px;
 }
 
 .laundry-card-bon i {

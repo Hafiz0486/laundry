@@ -38,7 +38,8 @@
             async function fetchNamaPelayananOptions() {
             const { data, error } = await supabase
                 .from('pelayanan')
-                .select('nama');
+                .select('nama')
+                .order('dibuat');
             if (error) {
                 console.error('Error fetching nama pelayanan options:', error);
             } else {
@@ -272,7 +273,7 @@
             
             if (queriesBOn !== null) {
                 const { dataBon, errorBon } = await supabase
-                .from('new_bon')
+                .from('bon')
                 .insert(queriesBOn);
             
                 if (errorBon) {

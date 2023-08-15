@@ -21,6 +21,7 @@ const Membuat = () => {
 
   const [kategori, setKategori] = useState('')
   const [ukuran, setUkuran] = useState('')
+  const [pengerjaan, setPengerjaan] = useState('')
 
   const [formError, setFormError] = useState(null)
 
@@ -45,7 +46,7 @@ const Membuat = () => {
         setFormError('There is a data that wrong.')
         return
       }
-      var listquery = { nama, kategori, ukuran, harga }
+      var listquery = { nama, kategori, ukuran, pengerjaan, harga }
     }
 
     const { data, error } = await supabase
@@ -58,13 +59,13 @@ const Membuat = () => {
     }
     if (data) {
       console.log(data)
-      setFormError(null)
+      setFormError(nama+' ukuran '+ukuran+' pengerjaan '+pengerjaan+' Data Success Inserted')
       if (pages === 'pelayanan') {
-        navigate('/'+ pages)
+        navigate('/laundry/'+ pages)
       }
       
       if (pages === 'bon'){
-        navigate('/'+ pages)
+        navigate('/laundry/'+ pages)
       }
     }
   }
@@ -175,6 +176,14 @@ const Membuat = () => {
             id="ukuran"
             value={ukuran}
             onChange={(e) => setUkuran(e.target.value)}
+          />
+
+          <label htmlFor="pengerjaan">Pengerjaan : </label>
+          <input 
+            type="text" 
+            id="pengerjaan"
+            value={pengerjaan}
+            onChange={(e) => setPengerjaan(e.target.value)}
           />
 
           <label htmlFor="harga">Harga : </label>

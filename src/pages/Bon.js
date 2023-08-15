@@ -1,18 +1,16 @@
-// Koneksi
+import { useEffect, useState } from "react"
+import { useParams, useNavigate } from 'react-router-dom'
+import supabase from "../config/supabaseClient"
 import { Link } from "react-router-dom"
 
-import supabase from '../config/supabaseClient'
-import { useEffect, useState } from 'react'
-
-// components
-import Kartu from '../components/Kartu'
-
-const pages = 'bon'
+import KartuBon from "../components/KartuBon"
 
 const Bon = () => {
+  const { id } = useParams();
+
+  
   const [fetchError, setFetchError] = useState(null)
   const [tables, setTables] = useState(null)
-  const [orderBy, setOrderBy] = useState('dibuat')
 
   const handleDelete = (id) => {
     setTables(prevTables => {
@@ -20,20 +18,18 @@ const Bon = () => {
     })
   }
 
-  // Mengambil data dari table bon
   useEffect(() => {
     const fetchTables = async () => {
       const { data, error } = await supabase
-        .from(pages)
-        .select()
-        .order(orderBy, {ascending: false})
-      
+        .from('bon')
+        .select('id_transaksi')
+        .eq('id_transaksi', id); // Filter berdasarkan ID transaksi
+
       if (error) {
         setFetchError('Could not fetch the bon')
         setTables(null)
       }
       if (data) {
-        
         setTables(data)
         setFetchError(null)
       }
@@ -41,34 +37,22 @@ const Bon = () => {
 
     fetchTables()
 
-  }, [orderBy])
+  }, [id]) 
 
-  
-
-  return (
+  return(
     <div className="page">
       {fetchError && (<p>{fetchError}</p>)}
       {tables && (
-        
-        <div className="bon">
+        <div className="services">
 
-          <div className="order-by" >
-            <p class="order-by">Order by:</p>
-            <button onClick={() => setOrderBy('dibuat')}>Dibuat</button>
-            <button onClick={() => setOrderBy('nama')}>Nama</button>
-            <button onClick={() => setOrderBy('kg')}>Kg</button>
-          </div>
-
-          <div className="tombol-membuat ">
-            <Link to={'/'+ pages +"/membuat"} className="membuat-bon" pages={pages}>Mamebuat Baru</Link>
-          </div>
+        <p>Test ID Transaksi: {id}</p>
 
           <div className="laundry-grid">
             {tables.map(table => (
-              <Kartu key={table.id} table={table} pages={pages} onDelete={handleDelete} />
+              <KartuBon key={table.id_transaksi} table={table} onDelete={handleDelete} />
             ))}
           </div>
-
+          
         </div>
       )}
     </div>
