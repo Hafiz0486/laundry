@@ -4,7 +4,7 @@ import supabase from '../config/supabaseClient'
 import { useEffect, useState } from 'react'
 
 // components
-import Card from "../components/Kartu"
+import Kartu from "../components/Kartu"
 
 const pages = 'pelayanan'
 
@@ -51,7 +51,7 @@ const Pelayanan = () => {
 
           <div className="laundry-grid">
             {tables.map(table => (
-              <Card key={table.id} table={table} pages={pages} onDelete={handleDelete} />
+              <Kartu key={table.id} table={table} pages={pages} onDelete={handleDelete} />
             ))}
           </div>
           

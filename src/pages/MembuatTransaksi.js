@@ -200,6 +200,7 @@
             var tgl_pembayaran = new Date()
             var jns_pembayaran
             var kembalian
+            var dibuat = new Date(Date.now())
 
             if (pembayaran == 0) {
             jns_pembayaran = null
@@ -207,7 +208,7 @@
             tgl_pembayaran = null
             }
             
-            const queriesTransaksi = {nama, tgl_datang, ttl_keseluruhan, tgl_pembayaran, jns_pembayaran, kembalian}
+            const queriesTransaksi = {nama, tgl_datang, ttl_keseluruhan, tgl_pembayaran, jns_pembayaran, kembalian, dibuat}
 
             // console.log(queriesTransaksi)
 
@@ -248,17 +249,18 @@
             }
             }
             
+
             async function createQueriesBOn() {
                 const id_transaksi = await fetchLastIdTransaction();
             
                 if (id_transaksi !== null) {
                     const queriesBOn = formFields.map(item => ({ 
                     id_pelayanan: item.id_pelayanan,
-                    nama_konsumen: item.nama,
+                    nama_konsumen: nama,
                     jml: item.jml,
                     berat: item.berat,
                     total: item.ttl,
-                    id_transaksi: id_transaksi
+                    id_transaksi: id_transaksi,
                     }));
                 
                 return queriesBOn;

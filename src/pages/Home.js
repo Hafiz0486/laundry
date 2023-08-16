@@ -1,8 +1,7 @@
-
 const Home = () => {
   return(
-    <div>============In Progress===============</div>
-  );
+    <div>==========IN Progress==========</div>
+  )
 }
 
 export default Home

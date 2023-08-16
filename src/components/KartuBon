@@ -5,57 +5,16 @@ import { useEffect, useState } from 'react'
 // pages adalah table
 // tablequery adalah query table dari pages
 const KartuBon = ({ table, onDelete }) => {
-  const [tables, setTables] = useState(null)
-  const [fetchError, setFetchError] = useState(null)
-
-  const handleDelete = async () => {
-    const { id } = useParams();
-    
-    const { data, error } = await supabase
-      .from('bon')
-      .delete()
-      .eq('id_transaksi', table.id)
-    
-    if (error) {
-      console.log(error)
-    }
-    if (data) {
-      console.log(data)
-      onDelete(table.id)
-    }
-
-  }
   
-  useEffect(() => {
 
-    const fetchBon = async () => {
-      const { data, error } = await supabase
-        .from('bon')
-        .select()
-        .eq('id_transaksi', table.id)
-      
-      if (error) {
-        setFetchError('Could not fetch the bon')
-        setTables(null)
-      }
-      if (data) {
-        
-        setTables(data)
-        setFetchError(null)
-      }
-    }
-
-    fetchBon()
-
-  }, [])
-  
   return(
-    <div className="laundry-card-bon">
-        <p>Nama : {table.nama_konsumen}</p>
-
+    <div className="laundry-card-pelayanan">
+        <h4>Pelayanan : </h4>
+        <p class="card-pelayanan">kategori : </p>
+        <p class="card-pelayanan">Ukuran : </p>
+        <p class="card-pelayanan">Harga : </p>
       </div>
   )
-  
 }
 
 export default KartuBon

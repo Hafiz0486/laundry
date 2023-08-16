@@ -1,55 +1,62 @@
-import { useEffect, useState } from "react"
-import { useParams, useNavigate } from 'react-router-dom'
-import supabase from "../config/supabaseClient"
-import { Link } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 
-import KartuBon from "../components/KartuBon"
+import supabase from '../config/supabaseClient'
+import { useEffect, useState } from 'react'
+// components
+import Kartu from "../components/Kartu"
+
+const pages = 'bon'
 
 const Bon = () => {
-  const { id } = useParams();
-
-  
+  const { id } = useParams()
   const [fetchError, setFetchError] = useState(null)
   const [tables, setTables] = useState(null)
 
   const handleDelete = (id) => {
-    setTables(prevTables => {
-      return prevTables.filter(sm => sm.id !== id)
+    setTables(prevTable => {
+      return prevTable.filter(sm => sm.id !== id)
     })
   }
 
+  // Mengambil data dari table bon
   useEffect(() => {
-    const fetchTables = async () => {
-      const { data, error } = await supabase
-        .from('bon')
-        .select('id_transaksi')
-        .eq('id_transaksi', id); // Filter berdasarkan ID transaksi
 
-      if (error) {
-        setFetchError('Could not fetch the bon')
-        setTables(null)
+      const fetchTables = async () => {
+        const { data, error } = await supabase
+          .from(pages)
+          .select()
+          .eq('id_transaksi', id)
+
+        if (error) {
+          setTables(null)
+          setFetchError('Could not fetch the service')
+        }
+        if (data) {
+          setTables(data)
+          setFetchError(null)
+        }
       }
-      if (data) {
-        setTables(data)
-        setFetchError(null)
-      }
-    }
+      fetchTables()
+    
+  }, [id])
 
-    fetchTables()
-
-  }, [id]) 
-
-  return(
+  return (
     <div className="page">
       {fetchError && (<p>{fetchError}</p>)}
       {tables && (
         <div className="services">
 
-        <p>Test ID Transaksi: {id}</p>
+          <div className="tombol-membuat">
+            <Link to={"/laundry/transaksi"} className="membuat-pelayanan">Kembali</Link>
+          </div> 
+
+          <div className="tombol-membuat">
+            <Link to={"/laundry/"+ pages +"/membuat"} pages={pages} className="membuat-pelayanan">Membuat Baru</Link>
+          </div> 
 
           <div className="laundry-grid">
             {tables.map(table => (
-              <KartuBon key={table.id_transaksi} table={table} onDelete={handleDelete} />
+              <Kartu key={table.id} table={table} pages={pages} id_transaksi={id} onDelete={handleDelete} />
             ))}
           </div>
           
