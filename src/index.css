@@ -69,19 +69,14 @@ nav h1 {
   color: #fff;
 }
 .page {
-  max-width: 1200px;
-  margin: 10px auto;
   padding: 10px;
-  
 }
-
 
 /* smoothie grid */
 .laundry-grid {
   
-  margin-top: 20px;
-  
-  --grid-layout-gap: 10px;
+  margin: 20px 0px 0px 0px;
+  --grid-layout-gap: clamp(1.2rem, 1rem + 1vw, 1rem);
   --grid-column-count: 4; /* This gets overridden by an inline style. */
   --grid-item--min-width: 150px; /* This gets overridden by an inline style. */
   
@@ -96,12 +91,53 @@ nav h1 {
   grid-template-columns: repeat(auto-fill, minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr));
   grid-gap: var(--grid-layout-gap);
   font-size: clamp(0.625rem, 0.3625rem + 0.5833vw, 1.0625rem);
-  gap: 25px;
+}
+
+.laundry-card-konsumen {
+  height: 100%; /* The height will adjust based on the content */
+  width: clamp(1rem, 1rem);
+  padding: 10px 10px 10px 10px;
+  background: #fff;
+  box-sizing: border-box;
+  border-radius: 6px;
+  position: relative;
+}
+
+.laundry-card-konsumen .rating {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: var(--secondary);
+  color: #fff;
+  border-radius: 6px;
+  width: auto;
+  padding: 15px 15px 15px 15px;
+  height: 0;
+  line-height: 0px;
+  text-align: center;
+}
+
+
+.laundry-card-konsumen .buttons {
+  text-align: right;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.laundry-card-konsumen i {
+  color: #bbb;
+  margin-left: 10px;
+  font-size: 1.2em;
+  padding: 6px;
+  background: #eee;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .laundry-card-bon {
+  margin-top: 10px;
   height: auto; /* The height will adjust based on the content */
-  width: 1vp;
+  width: clamp(1rem, 1rem);
   padding: 20% 10px 10% 10px;
   background: #fff;
   box-sizing: border-box;
@@ -115,7 +151,7 @@ p.bon {
 
 .laundry-card-pelayanan {
   height: 290px; /* The height will adjust based on the content */
-  width: 1vp;
+  width: clamp(1rem, 1rem);
   padding: 10px;
   background: #fff;
   box-sizing: border-box;
@@ -133,12 +169,12 @@ p.bon {
 .status {
   z-index: +1;
   position: absolute;
-  top: -5%;
+  top: -7%;
   left: 14%; /* Pusatkan horizontal */
   transform: translateX(-50%); /* Geser ke kiri sejauh setengah lebar */
   background-color: #12bca2;
   color: #fff;
-  border-radius: 6px;
+  border-radius: 15px;
   width: 30%;
   height: 20px;
   line-height: 20px;
@@ -270,6 +306,62 @@ p.bon {
 }
 
 .laundry-card-pelayanan i {
+  color: #bbb;
+  margin-left: 10px;
+  font-size: 1.2em;
+  padding: 6px;
+  background: #eee;
+  border-radius: 50%;
+  cursor: pointer;
+
+}
+                                                  /* CSS laundry */
+                                                   /* TRANSAKSI */
+
+p.transaksi {
+  margin: 5% 0 5% 0;
+}
+
+.laundry-card-transaksi {
+  height: auto; /* The height will adjust based on the content */
+  width: clamp(1rem, 1rem);
+  padding: 10px;
+  background: #fff;
+  box-sizing: border-box;
+  line-height: 15px;
+  border-radius: 6px;
+  position: relative;
+}
+
+.laundry-card-transaksi .rating {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: var(--secondary);
+  color: #fff;
+  border-radius: 6px;
+  width: auto;
+  padding: 15px 15px 15px 15px;
+  height: 0;
+  line-height: 0px;
+  text-align: center;
+}
+
+.order-by-transaksi {
+  width: clamp(20rem, 1rem + 1vw, 1rem);
+  display: flex;
+  align-items: center;
+}
+
+.order-by-transaksi button {
+  margin-right: 5px; /* Add spacing between the buttons */
+}
+
+.laundry-card-transaksi .buttons {
+  text-align: right;
+}
+
+.laundry-card-transaksi i {
   color: #bbb;
   margin-left: 10px;
   font-size: 1.2em;

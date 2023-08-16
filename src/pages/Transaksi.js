@@ -50,10 +50,10 @@ const Transaksi = () => {
       {fetchError && (<p>{fetchError}</p>)}
       {tables && (
         
-        <div className="bon">
+        <div className="transaksi">
 
-          <div className="order-by" >
-            <p class="order-by">Order by:</p>
+          <p>Order By</p>
+          <div className="order-by-transaksi" >
             <button onClick={() => setOrderBy('dibuat')}>Dibuat</button>
             <button onClick={() => setOrderBy('nama')}>Nama</button>
             <button onClick={() => setOrderBy('kg')}>Kg</button>

@@ -1,7 +1,7 @@
 {
   "homepage": "https://Hafiz0486.github.io/laundry",
-  "name": "supasmoothies",
-  "version": "0.1.0",
+  "name": "laundry",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@supabase/supabase-js": "^1.35.7",

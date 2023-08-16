@@ -23,6 +23,10 @@ const Membuat = () => {
   const [ukuran, setUkuran] = useState('')
   const [pengerjaan, setPengerjaan] = useState('')
 
+  const [keanggotaan, setKeanggotaan] = useState('')
+  const [tlp, setTelepon] = useState('')
+  const [kelamin, setKelamin] = useState('')
+
   const [formError, setFormError] = useState(null)
 
   const handleSubmit = async (e) => {
@@ -31,7 +35,7 @@ const Membuat = () => {
      // jika pages adalah table bon
      if (pages === 'bon') {
       if ((!nama || !tgl_masuk || !pelayanan)) {
-        setFormError('There is a data that wrong.')
+        setFormError('Data is not complete.')
         return
       }
 
@@ -43,10 +47,18 @@ const Membuat = () => {
     // jika pages adalah table pelayanan
     if (pages === 'pelayanan') {
       if (!nama || !harga || !ukuran) {
-        setFormError('There is a data that wrong.')
+        setFormError('Data is not complete.')
         return
       }
-      var listquery = { nama, kategori, ukuran, pengerjaan, harga }
+      var listquery = { nama, keanggotaan, ukuran, pengerjaan, harga }
+    }
+
+    if (pages === 'konsumen') {
+      if (!nama || !keanggotaan ) {
+        setFormError('Data is not complete.')
+        return
+      }
+      var listquery = { nama, keanggotaan}
     }
 
     const { data, error } = await supabase
@@ -67,87 +79,14 @@ const Membuat = () => {
       if (pages === 'bon'){
         navigate('/laundry/'+ pages)
       }
+
+      if (pages === 'konsumen'){
+        navigate('/laundry/'+ pages)
+      }
     }
   }
 
-  if (pages === 'bon') {
-    return (
-      <div className="page membuat">
-        <form onSubmit={handleSubmit}>
-  
-          <label htmlFor="nama">Nama : </label>
-          <input 
-            type="text" 
-            id="nama"
-            value={nama}
-            onChange={(e) => setNama(e.target.value)}
-          />
-  
-          <label htmlFor="tgl_masuk">Tanggal Masuk : </label>
-          <input 
-            type="date" 
-            id="tgl_masuk"
-            value = {tgl_masuk}
-            onChange={(e) => setTglMasuk(e.target.value)}
-          />
-  
-          <label htmlFor="tgl_ambil">Tanggal Ambil : </label>
-          <input 
-            type="date" 
-            id="tgl_ambil"
-            value={tgl_ambil}
-            onChange={(e) => setTglAmbil(e.target.value)}
-          />
-  
-          <label htmlFor="pelayanan">Pelayanan : </label>
-          <textarea 
-            id="pelayanan"
-            value={pelayanan}
-            onChange={(e) => setPelayanan(e.target.value)}
-          />
-
-          <div class="form-group">
-            <label for="sel1">Select list:</label>
-            <select class="form-control" id="sel1">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-            </select>
-          </div>
-  
-          <label htmlFor="jml">Jumlah : </label>
-          <input 
-            type="text" 
-            id="jml"
-            value={jml}
-            onChange={(e) => setJml(e.target.value)}
-          />
-  
-          <label htmlFor="kg">Berat (Kg) : </label>
-          <input 
-            type="text" 
-            id="kg"
-            value={kg}
-            onChange={(e) => setKg(e.target.value)}
-          />
-  
-          <label htmlFor="harga">Harga : </label>
-          <input 
-            type="number"
-            id="harga"
-            value={harga}
-            onChange={(e) => setHarga(e.target.value)}
-          />
-
-          <button>Membuat Bon</button>
-  
-          {formError && <p className="error">{formError}</p>}
-        </form>
-      </div>
-  
-    )
-  }
+  // page input pelayanan
 
   if (pages == 'pelayanan') {
     return (
@@ -201,6 +140,51 @@ const Membuat = () => {
       </div>
       )
     }
+  
+    if (pages == 'konsumen') {
+      return (
+        <div className="page membuat">
+          <form onSubmit={handleSubmit}>
+    
+            <label htmlFor="nama">Nama : </label>
+            <input 
+              type="text" 
+              id="nama"
+              value={nama}
+              onChange={(e) => setNama(e.target.value)}
+            />
+  
+            <label htmlFor="keanggotaan">Keanggotaan : </label>
+            <input 
+              type="text" 
+              id="keanggotaan"
+              value={keanggotaan}
+              onChange={(e) => setKeanggotaan(e.target.value)}
+            />
+  
+            <label htmlFor="tlp">No. Telepon : </label>
+            <input 
+              type="text" 
+              id="tlp"
+              value={tlp}
+              onChange={(e) => setTelepon(e.target.value)}
+            />
+  
+            <label htmlFor="kelamin">Jenis Kelamin : </label>
+            <input 
+              type="text" 
+              id="kelamin"
+              value={kelamin}
+              onChange={(e) => setKelamin(e.target.value)}
+            />
+  
+            <button>Membuat Konsumen</button>
+    
+            {formError && <p className="error">{formError}</p>}
+          </form>
+        </div>
+        )
+      }
 
 }
 export default Membuat

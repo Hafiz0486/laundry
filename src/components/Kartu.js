@@ -12,25 +12,25 @@
     const [tables, setTables] = useState(null)
     const [fetchError, setFetchError] = useState(null)
 
-    useEffect(() => {
-      async function fetchPelayananData() {
-        const { data, error } = await supabase
-          .from('pelayanan')
-          .select('id, nama, pengerjaan')
-          .eq('id', table.id_pelayanan);
+    // useEffect(() => {
+    //   async function fetchPelayananData() {
+    //     const { data, error } = await supabase
+    //       .from('pelayanan')
+    //       .select('id, nama, pengerjaan')
+    //       .eq('id', table.id_pelayanan);
   
-        if (error) {
-          setPelayananData(null);
-          setFetchPelayananError('Could not fetch the service data');
-        }
-        if (data) {
-          setPelayananData(data[0]); // Ambil hanya data pertama karena menggunakan id unik
-          setFetchPelayananError(null);
-        }
-      }
+    //     if (error) {
+    //       setPelayananData(null);
+    //       setFetchPelayananError('Could not fetch the service data');
+    //     }
+    //     if (data) {
+    //       setPelayananData(data[0]); // Ambil hanya data pertama karena menggunakan id unik
+    //       setFetchPelayananError(null);
+    //     }
+    //   }
   
-      fetchPelayananData();
-    }, [table.id_pelayanan]);
+    //   fetchPelayananData();
+    // }, [table.id_pelayanan]);
 
     const handleDelete = async () => {
       const { data, error } = await supabase
@@ -57,9 +57,9 @@
         <div className="laundry-card-pelayanan">
           <img src="https://jurnalpost.com/wp-content/uploads/2022/07/tips-beli-sepatu.jpg" alt="pelayanan" width="100%" height="50%"></img>
           <h4>Pelayanan : {table.nama}</h4>
-          <p class="card-pelayanan">kategori : {table.kategori}</p>
-          <p class="card-pelayanan">Ukuran : {table.ukuran}</p>
-          <p class="card-pelayanan">Harga : {idr}</p>
+          <p className="card-pelayanan">kategori : {table.kategori}</p>
+          <p className="card-pelayanan">Ukuran : {table.ukuran}</p>
+          <p className="card-pelayanan">Harga : {idr}</p>
           <div className="rating">{table.pengerjaan}</div>
           <div className="buttons">
             <Link to={"/laundry/" + pages + "/bon-" + table.id}>
@@ -72,20 +72,57 @@
     } 
 
     if (pages === 'transaksi') {
-      var idr = (table.ttl_keseluruhan).toLocaleString('en-IN', { 
-        style: 'currency', 
-        currency: 'IDR' 
-      });
+
+      if (table.pembayaran == null) {
+        var idrpembayaran =(0).toLocaleString('en-IN', { 
+          style: 'currency', 
+          currency: 'IDR' 
+        });
+      } else {
+        idrpembayaran = (table.pembayaran).toLocaleString('en-IN', { 
+          style: 'currency', 
+          currency: 'IDR' 
+        });
+      }
+
+      if (table.ttl_keseluruhan == null) {
+        var idrtotalkeseluruhan =(0).toLocaleString('en-IN', { 
+          style: 'currency', 
+          currency: 'IDR' 
+        });
+      } else {
+        idrtotalkeseluruhan = (table.ttl_keseluruhan).toLocaleString('en-IN', { 
+          style: 'currency', 
+          currency: 'IDR' 
+        });
+      }
+
+      if (table.kembalian == null) {
+        var idrkembalian =(0).toLocaleString('en-IN', { 
+          style: 'currency', 
+          currency: 'IDR' 
+        });
+      } else {
+        idrkembalian = (table.kembalian).toLocaleString('en-IN', { 
+          style: 'currency', 
+          currency: 'IDR' 
+        });
+      }
+
       return (
-        <div className="laundry-card-bon">
-          <p>Nama : {table.nama}</p>
-          <p>Tanggal Datang : {table.tgl_datang}</p>
-          <p>Tanggal Ambil : {table.tgl_ambil}</p>
-          <p>Total Keseluruhan : {idr}</p>
-          <p>Pembayaran : {table.pembayaran}</p>
-          <p>Jenis Pembayaran : {table.jns_pembayaran}</p>
-          <p>Kembalian : {table.kembalian}</p>
+        <div className="laundry-card-transaksi">
+          <p className="transaksi" >Nama : {table.nama}</p>
+          <p className="transaksi" >Tanggal Datang : {table.tgl_datang}</p>
+          <p className="transaksi" >Tanggal Ambil : {table.tgl_ambil}</p>
+          <p className="transaksi" >Total : {idrtotalkeseluruhan}</p>
+          <p className="transaksi" >Pembayaran : {idrpembayaran}</p>
+          <p className="transaksi" >Jenis Pembayaran : {table.jns_pembayaran}</p>
+          <p className="transaksi" >Kembalian : {idrkembalian}</p>
           <div className="buttons">
+
+            <Link to={"/laundry/transaksi-" + table.id+"/bon"}>
+              <i className="material-icons">star</i>
+            </Link>
 
             <Link to={"/laundry/transaksi-" + table.id+"/bon"}>
               <i className="material-icons">edit</i>
@@ -121,7 +158,7 @@
           <p className="bon" >Nama : {table.nama_konsumen}</p>
           {pelayananData && (
           <div>
-            <p className="bon" >Nama Pelayanan : {pelayananData.nama}</p>
+            <p className="bon" >Pelayanan : {pelayananData.nama}</p>
             <div className={`rating ${pelayananData.pengerjaan === 'Express' ? 'Express' : 'Normal'}`}>
           {pelayananData.pengerjaan}
           </div>
@@ -144,6 +181,24 @@
         </div>
       );
     }
+
+    if (pages === 'konsumen') {
+      return (
+        <div className="laundry-card-konsumen">
+          <img src="https://jurnalpost.com/wp-content/uploads/2022/07/tips-beli-sepatu.jpg" alt="pelayanan" width="100%" height="50%"></img>
+          <h4>Nama : {table.nama}</h4>
+          <p className="card-pelayanan">No. Telepon : {table.tlp}</p>
+          <p className="card-pelayanan">Jenis Kelamin : {table.kelamin}</p>
+          <div className="rating">{table.keanggotaan}</div>
+          <div className="buttons">
+            <Link to={"/laundry/" + pages + "/bon-" + table.id}>
+              <i className="material-icons">edit</i>
+            </Link>
+            <i className="material-icons" onClick={handleDelete}>delete</i>
+          </div>
+        </div>
+      )
+    } 
     
   }
 
