@@ -98,14 +98,19 @@ nav h1 {
   font-size: clamp(0.625rem, 0.3625rem + 0.5833vw, 1.0625rem);
   gap: 25px;
 }
+
 .laundry-card-bon {
   height: auto; /* The height will adjust based on the content */
   width: 1vp;
-  padding: 10px;
+  padding: 20% 10px 10% 10px;
   background: #fff;
   box-sizing: border-box;
   border-radius: 6px;
   position: relative;
+}
+
+p.bon {
+  margin-bottom: 7px;
 }
 
 .laundry-card-pelayanan {
@@ -118,7 +123,31 @@ nav h1 {
   position: relative;
 }
 
-.laundry-card-bon .progress {
+.progress-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.status {
+  z-index: +1;
+  position: absolute;
+  top: -5%;
+  left: 14%; /* Pusatkan horizontal */
+  transform: translateX(-50%); /* Geser ke kiri sejauh setengah lebar */
+  background-color: #12bca2;
+  color: #fff;
+  border-radius: 6px;
+  width: 30%;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  display: flex; /* Gunakan flexbox */
+  justify-content: center; /* Pusatkan horizontal dalam flexbox */
+}
+
+.progress {
   position: absolute;
   top: -10px;
   left: 27%; /* Pusatkan horizontal */
@@ -128,7 +157,7 @@ nav h1 {
   width: 55%;
   max-height: 1%;
   padding: 20px 0;
-  line-height: 0px;
+  line-height: 10px;
   text-align: center;
   display: flex; /* Gunakan flexbox */
   justify-content: center; /* Pusatkan horizontal dalam flexbox */
@@ -140,6 +169,49 @@ nav h1 {
 
 .laundry-card-bon .progress.selesai {
   background: green; /* Warna latar belakang untuk normal */
+}
+
+.pembayaran-container {
+  position: absolute;
+  bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pembayaran {
+  z-index: +1;
+  position: absolute;
+  padding-left: 5px;
+  padding-right: 5px;
+  bottom: 5%;
+  left: 19%; /* Pusatkan horizontal */
+  transform: translateX(-50%); /* Geser ke kiri sejauh setengah lebar */
+  background-color: #12bca2;
+  color: #fff;
+  border-radius: 6px;
+  width: auto;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  display: flex; /* Gunakan flexbox */
+  justify-content: center; /* Pusatkan horizontal dalam flexbox */
+}
+
+.status-pembayaran {
+  position: absolute;
+  height: 15%;
+  bottom: -5%;
+  left: 27%; /* Pusatkan horizontal */
+  transform: translateX(-50%); /* Geser ke kiri sejauh setengah lebar */
+  background-color: #6d15df;
+  color: #fff;
+  border-radius: 6px;
+  width: 55%;
+  padding-top: 15px;
+  text-align: center;
+  display: flex; /* Gunakan flexbox */
+  justify-content: center; /* Pusatkan horizontal dalam flexbox */
 }
 
 .laundry-card-bon .rating {

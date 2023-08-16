@@ -106,29 +106,33 @@
       } else {
         var progress = table.tgl_ambil
       }
+      if(table.pembayaran == null) {
+        var pembayaran = 'Belum Bayar'
+      } else {
+        var pembayaran = table.pembayaran
+      }
       return (
         <div className="laundry-card-bon">
-          <div className={`progress ${progress === 'Belum Selesai' ? 'belum' : 'selesai'}`}>
-          {progress}
+          <div className="status">Status</div>
+          <div className={`progress ${progress === 'Belum Selesai' ? 'belum' : 'selesai'}`}>     
+            {progress}
           </div>
-          <p>Status : </p>
-          <p>Nama : {table.nama_konsumen}</p>
+          <p className="bon" >Tanggal Datang : {table.tgl_datang}</p>  
+          <p className="bon" >Nama : {table.nama_konsumen}</p>
           {pelayananData && (
           <div>
-            <p>Nama Pelayanan : {pelayananData.nama}</p>
+            <p className="bon" >Nama Pelayanan : {pelayananData.nama}</p>
             <div className={`rating ${pelayananData.pengerjaan === 'Express' ? 'Express' : 'Normal'}`}>
           {pelayananData.pengerjaan}
           </div>
 
           </div>
           )}
-          <p>Jumlah : {table.jml}</p>
-          <p>Tanggal ambil : {table.tgl_ambil}</p>
-          <p>Berat : {table.berat}</p>
-          <p>Total : {totalidr}</p>
-          <p>Pembayaran : {table.pembayaran}</p>
-          <p>Jenis Pembayaran : {table.jns_pembayaran}</p>
-          <p>Kembalian : {table.kembalian}</p>
+          <p className="bon" >Jumlah : {table.jml}</p>
+          <p className="bon" >Berat : {table.berat}</p>
+          <p className="bon" >Total : {totalidr}</p>
+          <div className="pembayaran">Pembayaran</div>
+          <div className="status-pembayaran">{pembayaran}</div>
           
           <div className="buttons">
             <Link to={"/laundry/transaksi-" + table.id+"/bon"}>
@@ -136,6 +140,7 @@
             </Link>
             <i className="material-icons" onClick={handleDelete}>delete</i>
           </div>
+
         </div>
       );
     }

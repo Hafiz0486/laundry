@@ -202,7 +202,8 @@
             var kembalian
             var dibuat = new Date(Date.now())
 
-            if (pembayaran == 0) {
+            if (pembayaran == null) {
+            pembayaran = 0
             jns_pembayaran = null
             kembalian = 0
             tgl_pembayaran = null
@@ -436,8 +437,8 @@
                 {ukuranOptions.map((ukuran, optionIndex) => {
                     const selectedKategori = kategoriOptions.find(item => item.nama === form.nama);
                     if (
-                    (selectedKategori && selectedKategori.kategori === 'Kiloan' && ukuran === 'Normal') ||
-                    (selectedKategori && selectedKategori.kategori === 'Satuan' && ukuran !== 'Normal')
+                    (selectedKategori && selectedKategori.kategori === 'Kiloan' && ukuran === 'Berat') ||
+                    (selectedKategori && selectedKategori.kategori === 'Satuan' && ukuran !== 'Berat')
                     ) {
                     return (
                         <option key={optionIndex} value={ukuran}>

@@ -25,6 +25,7 @@ const Bon = () => {
         const { data, error } = await supabase
           .from(pages)
           .select()
+          .order('id')
           .eq('id_transaksi', id)
 
         if (error) {
