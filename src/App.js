@@ -19,23 +19,23 @@ function App() {
     <BrowserRouter basename="/laundry">
       <nav>
         <h1>Kamal Laundry</h1>
-        <Link to="/laundry">Home</Link>
-        <Link to="/laundry/konsumen">Konsumen</Link>
-        <Link to="/laundry/pelayanan">Pelayanan</Link>
-        <Link to="/laundry/transaksi">Transaksi</Link>
+        <Link to="">Home</Link>
+        <Link to="/konsumen">Konsumen</Link>
+        <Link to="/pelayanan">Pelayanan</Link>
+        <Link to="/transaksi">Transaksi</Link>
       </nav> 
       <Routes>
-        <Route path="/laundry" element={<Home />} />
-        <Route path="/laundry/konsumen" element={<Konsumen />} />
-        <Route path="/laundry/pelayanan" element={<Pelayanan />} />
-        <Route path="/laundry/transaksi" element={<Transaksi />} />
-        <Route path="/laundry/transaksi-:id/bon" element={<Bon />} />
+        <Route path="" element={<Home />} />
+        <Route path="/konsumen" element={<Konsumen />} />
+        <Route path="/pelayanan" element={<Pelayanan />} />
+        <Route path="/transaksi" element={<Transaksi />} />
+        <Route path="/transaksi-:id/bon" element={<Bon />} />
         
-        <Route path="/laundry/transaksi-:id_transaksi/bon/memperbarui-:id_bon" element={<Bon />} />
+        <Route path="/transaksi-:id_transaksi/bon/memperbarui-:id_bon" element={<Bon />} />
 
-        <Route path="/laundry/:pages/membuattransaksi" element={<MembuatTransaksi />} />
-        <Route path="/laundry/:pages/membuat" element={<Membuat />} />
-        <Route path="/laundry/:pages/memperbarui-:id" element={<Memperbarui />} />
+        <Route path="/:pages/membuattransaksi" element={<MembuatTransaksi />} />
+        <Route path="/:pages/membuat" element={<Membuat />} />
+        <Route path="/:pages/memperbarui-:id" element={<Memperbarui />} />
 
       </Routes>
     </BrowserRouter>

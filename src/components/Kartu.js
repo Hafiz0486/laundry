@@ -55,7 +55,7 @@
       });
       return (
         <div className="laundry-card-pelayanan">
-          <img src="https://drive.google.com/file/d/1aZPsNTijXnyX3tVYqOI0jhCNjdAPqjcC/view?usp=sharing" alt="pelayanan" width="100%" height="50%"></img>
+          <img src="" alt="pelayanan" width="100%" height="50%"></img>
           <h4>Pelayanan : {table.nama}</h4>
           <p className="card-pelayanan">kategori : {table.kategori}</p>
           <p className="card-pelayanan">Ukuran : {table.ukuran}</p>
@@ -185,7 +185,7 @@
     if (pages === 'konsumen') {
       return (
         <div className="laundry-card-konsumen">
-          <img src="https://drive.google.com/file/d/1aZPsNTijXnyX3tVYqOI0jhCNjdAPqjcC/view?usp=sharing" alt="pelayanan" width="100%" height="50%"></img>
+          <img src="" alt="pelayanan" width="100%" height="50%"></img>
           <h4>Nama : {table.nama}</h4>
           <p className="card-pelayanan">No. Telepon : {table.tlp}</p>
           <p className="card-pelayanan">Jenis Kelamin : {table.kelamin}</p>

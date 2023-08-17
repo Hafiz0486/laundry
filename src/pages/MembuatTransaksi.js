@@ -293,7 +293,7 @@
             }
             
             await insertDataToSupabase();
-            navigate("/laundry/" + pages);
+            navigate("/" + pages);
             
         }
 

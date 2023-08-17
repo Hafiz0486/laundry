@@ -73,15 +73,15 @@ const Membuat = () => {
       console.log(data)
       setFormError(nama+' ukuran '+ukuran+' pengerjaan '+pengerjaan+' Data Success Inserted')
       if (pages === 'pelayanan') {
-        navigate('/laundry/'+ pages)
+        navigate('/'+ pages)
       }
       
       if (pages === 'bon'){
-        navigate('/laundry/'+ pages)
+        navigate('/'+ pages)
       }
 
       if (pages === 'konsumen'){
-        navigate('/laundry/'+ pages)
+        navigate('/'+ pages)
       }
     }
   }
