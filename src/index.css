@@ -152,6 +152,7 @@ p.bon {
 .laundry-card-pelayanan {
   height: 290px; /* The height will adjust based on the content */
   width: clamp(1rem, 1rem);
+  height: auto;
   padding: 10px;
   background: #fff;
   box-sizing: border-box;

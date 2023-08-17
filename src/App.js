@@ -16,7 +16,7 @@ import MembuatTransaksi from "./pages/MembuatTransaksi"
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/laundry">
       <nav>
         <h1>Kamal Laundry</h1>
         <Link to="/laundry">Home</Link>
