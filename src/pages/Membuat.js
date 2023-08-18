@@ -75,15 +75,15 @@ const Membuat = () => {
       console.log(data)
       setFormError(nama+' ukuran '+ukuran+' pengerjaan '+pengerjaan+' Data Success Inserted')
       if (pages === 'pelayanan') {
-        navigate('/'+ pages)
+        navigate(pages)
       }
       
       if (pages === 'bon'){
-        navigate('/'+ pages)
+        navigate(pages)
       }
 
       if (pages === 'konsumen'){
-        navigate('/'+ pages)
+        navigate(pages)
       }
     }
   }
@@ -135,7 +135,7 @@ const Membuat = () => {
             onChange={(e) => setHarga(e.target.value)}
           />
   
-          <button>Membuat Pelayanan</button>
+          <button>Membuat Data Pelayanan</button>
   
           {formError && <p className="error">{formError}</p>}
         </form>
@@ -180,7 +180,7 @@ const Membuat = () => {
               onChange={(e) => setKelamin(e.target.value)}
             />
   
-            <button>Membuat Konsumen</button>
+            <button>Membuat Data Konsumen</button>
     
             {formError && <p className="error">{formError}</p>}
           </form>
