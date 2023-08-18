@@ -60,7 +60,7 @@ const Transaksi = () => {
           </div>
 
           <div className="tombol-membuat ">
-            <Link to={"transaksi/membuattransaksi"} className="membuat-bon" pages={pages}>Mamebuat Baru</Link>
+            <Link to={"/transaksi/membuattransaksi"} className="membuat-bon" pages={pages}>Mamebuat Baru</Link>
           </div>
 
           <div className="laundry-grid">

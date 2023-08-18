@@ -55,11 +55,11 @@ const Memperbarui = () => {
     if (data) {
       setFormError(null)
       if (pages === 'pelayanan') {
-        navigate('pelayanan')
+        navigate('/pelayanan')
       }
 
       if (pages === 'bon'){
-        navigate('bon')
+        navigate('/bon')
       }
     
     }
@@ -75,11 +75,11 @@ const Memperbarui = () => {
 
       if (error) {
         if (pages === 'pelayanan') {
-          navigate(pages +'/memperbarui-', { replace: true })
+          navigate('/'+ pages +'/memperbarui-', { replace: true })
         }
         
         if (pages === 'bon'){
-          navigate(pages +'/memperbarui-', { replace: true })
+          navigate('/'+ pages +'/memperbarui-', { replace: true })
         }
       }
       if (data) {

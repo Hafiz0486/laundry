@@ -120,11 +120,11 @@
           <p className="transaksi" >Kembalian : {idrkembalian}</p>
           <div className="buttons">
 
-            <Link to={"/laundry/transaksi-" + table.id+"/bon"}>
+            <Link to={"/transaksi-" + table.id+"/bon"}>
               <i className="material-icons">star</i>
             </Link>
 
-            <Link to={"/laundry/transaksi-" + table.id+"/bon"}>
+            <Link to={"/transaksi-" + table.id+"/bon"}>
               <i className="material-icons">edit</i>
             </Link>
 

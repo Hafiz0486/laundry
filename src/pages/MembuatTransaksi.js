@@ -293,7 +293,7 @@
             }
             
             await insertDataToSupabase();
-            navigate(pages);
+            navigate("/" + pages);
             
         }
 
