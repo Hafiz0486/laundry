@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom"
 import supabase from "../config/supabaseClient"
 import moment from "moment/moment"
 
+// insert bon, pelayanan
+
 const Membuat = () => { 
 
   const { pages } = useParams();
