@@ -1,10 +1,10 @@
   import supabase from "../config/supabaseClient"
-  import { Link } from 'react-router-dom'
+  import { useParams, Link } from 'react-router-dom'
   import { useEffect, useState } from 'react'
 
   // pages adalah table
   // tablequery adalah query table dari pages
-  const Kartu = ({ table, pages, onDelete }) => {
+  const Kartu = ({ table, pages, id_transaksi, onDelete }) => {
     const [pelayananData, setPelayananData] = useState(null);
     const [fetchPelayananError, setFetchPelayananError] = useState(null);
 
@@ -33,7 +33,8 @@
     // }, [table.id_pelayanan]);
 
     const handleDelete = async () => {
-      const { data, error } = await supabase
+      if(pages != 'transaksi') {
+        const { data, error } = await supabase
         .from(pages)
         .delete()
         .eq('id', table.id)
@@ -45,7 +46,39 @@
         console.log(data)
         onDelete(table.id)
       }
+      }
+      if (pages == 'transaksi') {
 
+        // Delete data bon yang memiliki id_transaksi yang akan dihapus
+        const { dataBon, errorBon } = await supabase
+        .from('bon')
+        .delete()
+        .eq('id_transaksi', table.id)
+      
+      if (errorBon) {
+        console.log(errorBon)
+      }
+      if (dataBon) {
+        console.log(dataBon)
+        onDelete(table.id)
+      }
+
+        const { dataTransaksi, errorTransaksi } = await supabase
+        .from(pages)
+        .delete()
+        .eq('id', table.id)
+      
+      if (errorTransaksi) {
+        console.log(errorTransaksi)
+      }
+      if (dataTransaksi) {
+        console.log(dataTransaksi)
+        onDelete(table.id)
+      }
+
+      }
+
+      window.location.reload();
     }
     
     if (pages === 'pelayanan') {
@@ -62,7 +95,7 @@
           <p className="card-pelayanan">Harga : {idr}</p>
           <div className="rating">{table.pengerjaan}</div>
           <div className="buttons">
-            <Link to={"/laundry/" + pages + "/bon-" + table.id}>
+            <Link to={"/" + pages + "/memperbarui-" + table.id}>
               <i className="material-icons">edit</i>
             </Link>
             <i className="material-icons" onClick={handleDelete}>delete</i>
@@ -124,7 +157,7 @@
               <i className="material-icons">star</i>
             </Link>
 
-            <Link to={"/transaksi-" + table.id+"/bon"}>
+            <Link to={"/"+pages+"/memperbarui-" + table.id}>
               <i className="material-icons">edit</i>
             </Link>
 
@@ -172,9 +205,11 @@
           <div className="status-pembayaran">{pembayaran}</div>
           
           <div className="buttons">
-            <Link to={"/laundry/transaksi-" + table.id+"/bon"}>
+
+            <Link to={"/transaksi-"+id_transaksi+"/bon/memperbarui-" + table.id}>
               <i className="material-icons">edit</i>
             </Link>
+
             <i className="material-icons" onClick={handleDelete}>delete</i>
           </div>
 
@@ -191,7 +226,7 @@
           <p className="card-pelayanan">Jenis Kelamin : {table.kelamin}</p>
           <div className="rating">{table.keanggotaan}</div>
           <div className="buttons">
-            <Link to={"/laundry/" + pages + "/bon-" + table.id}>
+            <Link to={"/" + pages + "/memperbarui-" + table.id}>
               <i className="material-icons">edit</i>
             </Link>
             <i className="material-icons" onClick={handleDelete}>delete</i>

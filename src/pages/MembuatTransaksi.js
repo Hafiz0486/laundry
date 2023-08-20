@@ -11,9 +11,9 @@
 
         const [nama, setNama] = useState('')
         const [ttl_keseluruhan, setTotalKeseluruhan] = useState('')
-        const [pembayaran, setPembayaran] = useState('')
+        const [pembayaran, setPembayaran] = useState(0)
         const [jns_pembayaran, setJenisPembyaran] = useState('')
-        const [kembalian, setKembalian] = useState('')
+        const [kembalian, setKembalian] = useState(0)
 
         const [idPelayananOptions, setIdPelayananOptions] = useState([]);
         const [ukuranOptions, setUkuranOptions] = useState([]);
@@ -110,14 +110,14 @@
                 }
             }
             
-        
+            calculateKembalian();
             // pemanggiln atau menjalankan fungsi yang sudah dibuat
             fetchNamaPelayananOptions();
             fetchHargaOptions();
             fetchKategoriOptions();
             fetchUkuranOptions();
             fetchPengerjaanOptions();
-        }, []);
+        }, [pembayaran, ttl_keseluruhan]);
 
         // fungsi agar pengguna dapat melakukan penginputan data
         const handleFormChange = (event, index) => {
@@ -182,36 +182,43 @@
 
             newData[index].total = calculateRowTotal(newData[index]);
 
-        // Calculate the overall "Total Keseluruhan"
-        const totalKeseluruhan = newData.reduce((total, row) => total + row.total, 0);
-        setTotalKeseluruhan(totalKeseluruhan);
+            // Calculate the overall "Total Keseluruhan"
+            const totalKeseluruhan = newData.reduce((total, row) => total + row.total, 0);
+            setTotalKeseluruhan(totalKeseluruhan);
+
+            calculateKembalian();
+
+            var trydate = new Date
 
             console.log("Selected:", selectedNamaPelayanan, selectedUkuran, selectedPengerjaan);
             console.log("Harga Data:", hargaData);
             console.log("New Data:", newData);
+            console.log("nama konsumen", nama, 
+            "total keseluruhan ", ttl_keseluruhan, 
+            "pembayaran", pembayaran, 
+            "jenis pembayaran", jns_pembayaran, 
+            "kembalian", kembalian,
+            "date", trydate.toISOString().split('T')[0])
             setFormFields(newData);
         }
 
         const submit = async (e) => {
             e.preventDefault();
             
-            var tgl_datang = new Date(Date.now())
-            // var ttl_keseluruhan = 0
-            var tgl_pembayaran = new Date()
-            var jns_pembayaran
-            var kembalian
-            var dibuat = new Date(Date.now())
+            var tgl_datang = new Date()
+            var dibuat = new Date()
+            tgl_datang = tgl_datang.toISOString().split('T')[0]
+            dibuat = dibuat.toISOString().split('T')[0]
 
-            if (pembayaran == null) {
-            pembayaran = 0
-            jns_pembayaran = null
-            kembalian = 0
-            tgl_pembayaran = null
+
+            if (pembayaran > 0) {
+                var tgl_pembayaran = new Date()
+                tgl_pembayaran = tgl_pembayaran.toISOString().split('T')[0]
             }
-            
-            const queriesTransaksi = {nama, tgl_datang, ttl_keseluruhan, tgl_pembayaran, jns_pembayaran, kembalian, dibuat}
 
-            // console.log(queriesTransaksi)
+            var queriesTransaksi = {nama, ttl_keseluruhan, pembayaran, tgl_pembayaran, jns_pembayaran, kembalian, tgl_datang, dibuat}
+
+            console.log(queriesTransaksi)
 
             const { dataTransaksi, errorTransaksi } = await supabase
             .from('transaksi')
@@ -311,6 +318,22 @@
             setFormFields([...formFields, object]);
         }
     
+    const calculateKembalian = () => {
+        if (pembayaran !== '' && ttl_keseluruhan !== '') {
+            const payment = pembayaran;
+            const total = ttl_keseluruhan;
+            
+            if ( total > payment) {
+                setKembalian(0)
+            } else {
+                const kembalianValue = payment - total;
+                setKembalian(kembalianValue); // You can format the result as needed
+            }
+            
+        } else {
+            setKembalian(0); // Reset kembalian if payment or total is not set
+        }
+    };        
 
         const removeFields = (index) => {
             const newData = [...formFields];
@@ -344,6 +367,7 @@
             }
           };
           
+    
     return (
     <div className="transaksi">
         <form className="information">
@@ -373,6 +397,7 @@
             value={pembayaran}
             onChange={(e) => setPembayaran(e.target.value)}
         />
+
 
         <p className="create-informasi" htmlFor={`jns_pembayaran`}>Jenis Pembayaran : </p>
         <input 
@@ -422,8 +447,6 @@
                 </select>
 
                 <p className="create-bon-fc">Kategori : <span className="create-bon-fc"> {form.kategori}</span></p>
-                
-
 
                 {/* Data ketiga ukuran */}
                 <p  className="create-bon-fc">Ukuran : </p>

@@ -31,7 +31,7 @@ function App() {
         <Route path="transaksi" element={<Transaksi />} />
         <Route path="transaksi-:id/bon" element={<Bon />} />
         
-        <Route path="transaksi-:id_transaksi/bon/memperbarui-:id_bon" element={<Bon />} />
+        <Route path="transaksi-:id_transaksi/bon/memperbarui-:id" element={<Memperbarui />} />
 
         <Route path=":pages/membuattransaksi" element={<MembuatTransaksi />} />
         <Route path=":pages/membuat" element={<Membuat />} />

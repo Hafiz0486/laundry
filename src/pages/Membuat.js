@@ -26,7 +26,7 @@ const Membuat = () => {
   const [pengerjaan, setPengerjaan] = useState('')
 
   const [keanggotaan, setKeanggotaan] = useState('')
-  const [tlp, setTelepon] = useState('')
+  const [telepon, setTelepon] = useState('')
   const [kelamin, setKelamin] = useState('')
 
   const [formError, setFormError] = useState(null)
@@ -52,7 +52,7 @@ const Membuat = () => {
         setFormError('Data is not complete.')
         return
       }
-      var listquery = { nama, keanggotaan, ukuran, pengerjaan, harga }
+      var listquery = { nama, kategori, ukuran, pengerjaan, harga }
     }
 
     if (pages === 'konsumen') {
@@ -164,11 +164,11 @@ const Membuat = () => {
               onChange={(e) => setKeanggotaan(e.target.value)}
             />
   
-            <label htmlFor="tlp">No. Telepon : </label>
+            <label htmlFor="telepon">No. Telepon : </label>
             <input 
               type="text" 
-              id="tlp"
-              value={tlp}
+              id="telepon"
+              value={telepon}
               onChange={(e) => setTelepon(e.target.value)}
             />
   
