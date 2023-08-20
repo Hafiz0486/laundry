@@ -206,7 +206,7 @@
           
           <div className="buttons">
 
-            <Link to={"/transaksi-"+id_transaksi+"/bon/memperbarui-" + table.id}>
+            <Link to={"/transaksi-"+id_transaksi+"/"+pages+"/memperbarui-" + table.id}>
               <i className="material-icons">edit</i>
             </Link>
 

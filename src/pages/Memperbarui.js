@@ -5,6 +5,7 @@ import supabase from "../config/supabaseClient"
 const Memperbarui = () => {
   const { pages } = useParams()
   const { id } = useParams()
+
   const navigate = useNavigate()
 
   // variable penampung field
@@ -111,13 +112,14 @@ const Memperbarui = () => {
         }
         
         if (pages === 'bon'){
-          navigate('/'+ pages +'/memperbarui-'+id, { replace: true })
+          // navigate('/'+ pages +'/memperbarui-'+id, { replace: true })
         }
 
         if (pages === 'transaksi'){
           navigate('/'+ pages +'/memperbarui-'+id, { replace: true })
         }
       }
+      
       if (data) {
 
         if (pages === 'konsumen') {
@@ -161,7 +163,7 @@ const Memperbarui = () => {
     fetchTableQuery()
   }, [id, navigate])
 
-  const [dateComponents, timeComponents] = tgl_masuk.split(' ')
+  // const [dateComponents, timeComponents] = tgl_masuk.split(' ')
   
   if (pages == 'konsumen') {
     return (
@@ -313,71 +315,72 @@ const Memperbarui = () => {
     }
   
     if (pages === 'bon') {
+
       return (
-        <div>test</div>
-        // <div className="page memperbarui">
-        //   <form onSubmit={handleSubmit}>
+
+        <div className="page memperbarui">
+          <form onSubmit={handleSubmit}>
     
-        //     <label htmlFor="nama">Nama : </label>
-        //     <input 
-        //       type="text" 
-        //       id="nama"
-        //       value={nama}
-        //       onChange={(e) => setNama(e.target.value)}
-        //     />
+            <label htmlFor="nama">Nama : </label>
+            <input 
+              type="text" 
+              id="nama"
+              value={nama}
+              onChange={(e) => setNama(e.target.value)}
+            />
     
-        //     <label htmlFor="tgl_masuk">Tanggal Masuk : </label>
-        //     <input 
-        //       type="date" 
-        //       id="tgl_masuk"
-        //       value={dateComponents}
-        //       onChange={(e) => setTglMasuk(e.target.value)}
-        //     />
+            <label htmlFor="tgl_masuk">Tanggal Masuk : </label>
+            <input 
+              type="date" 
+              id="tgl_masuk"
+              value={tgl_masuk}
+              onChange={(e) => setTglMasuk(e.target.value)}
+            />
     
-        //     <label htmlFor="tgl_ambil">Tanggal Ambil : </label>
-        //     <input 
-        //       type="date" 
-        //       id="tgl_ambil"
-        //       value={tgl_ambil}
-        //       onChange={(e) => setTglAmbil(e.target.value)}
-        //     />
+            <label htmlFor="tgl_ambil">Tanggal Ambil : </label>
+            <input 
+              type="date" 
+              id="tgl_ambil"
+              value={tgl_ambil}
+              onChange={(e) => setTglAmbil(e.target.value)}
+            />
     
-        //     <label htmlFor="pelayanan">Pelayanan : </label>
-        //     <textarea 
-        //       id="pelayanan"
-        //       value={pelayanan}
-        //       onChange={(e) => setPelayanan(e.target.value)}
-        //     />
+            <label htmlFor="pelayanan">Pelayanan : </label>
+            <textarea 
+              id="pelayanan"
+              value={pelayanan}
+              onChange={(e) => setPelayanan(e.target.value)}
+            />
     
-        //     <label htmlFor="jml">Jumlah : </label>
-        //     <input 
-        //       type="text" 
-        //       id="jml"
-        //       value={jml}
-        //       onChange={(e) => setJml(e.target.value)}
-        //     />
+            <label htmlFor="jml">Jumlah : </label>
+            <input 
+              type="text" 
+              id="jml"
+              value={jml}
+              onChange={(e) => setJml(e.target.value)}
+            />
     
-        //     <label htmlFor="kg">Berat (Kg) : </label>
-        //     <input 
-        //       type="text" 
-        //       id="kg"
-        //       value={kg}
-        //       onChange={(e) => setKg(e.target.value)}
-        //     />
+            <label htmlFor="kg">Berat (Kg) : </label>
+            <input 
+              type="text" 
+              id="kg"
+              value={kg}
+              onChange={(e) => setKg(e.target.value)}
+            />
     
-        //     <label htmlFor="harga">Harga : </label>
-        //     <input 
-        //       type="number"
-        //       id="harga"
-        //       value={harga}
-        //       onChange={(e) => setHarga(e.target.value)}
-        //     />
+            <label htmlFor="harga">Harga : </label>
+            <input 
+              type="number"
+              id="harga"
+              value={harga}
+              onChange={(e) => setHarga(e.target.value)}
+            />
     
-        //     <button>Memperbarui Data Bon</button>
+            <button>Memperbarui Data Bon</button>
     
-        //     {formError && <p className="error">{formError}</p>}
-        //   </form>
-        // </div>
+            {formError && <p className="error">{formError}</p>}
+          </form>
+        </div>
     
       )
     } 
