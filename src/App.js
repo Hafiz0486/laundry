@@ -8,6 +8,7 @@ import Pelayanan from "./pages/Pelayanan"
 import Transaksi from "./pages/Transaksi"
 
 import Bon from "./pages/Bon"
+import MemperbaruiBon from "./pages/MemperbaruiBon"
 
 import Memperbarui from "./pages/Memperbarui"
 import Membuat from "./pages/Membuat"
@@ -31,7 +32,7 @@ function App() {
         <Route path="transaksi" element={<Transaksi />} />
         <Route path="transaksi-:id/bon" element={<Bon />} />
         
-        <Route path="transaksi-:id_transaksi/:pages/memperbarui-:id" element={<Memperbarui />} />
+        <Route path="transaksi-:id_transaksi/:pages/memperbarui-:id" element={<MemperbaruiBon />} />
 
         <Route path=":pages/membuattransaksi" element={<MembuatTransaksi />} />
         <Route path=":pages/membuat" element={<Membuat />} />
