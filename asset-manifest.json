@@ -1,15 +1,17 @@
 {
   "files": {
-    "main.css": "/laundry/static/css/main.1e589fb9.css",
-    "main.js": "/laundry/static/js/main.20517010.js",
+    "main.css": "/laundry/static/css/main.599e1146.css",
+    "main.js": "/laundry/static/js/main.7ac32aed.js",
     "static/js/255.9fe3384c.chunk.js": "/laundry/static/js/255.9fe3384c.chunk.js",
+    "static/media/Kos Kosan - Haji Nawi.jpg": "/laundry/static/media/Kos Kosan - Haji Nawi.5d0f51ca228f7b9b12c0.jpg",
+    "static/media/Pak Amin.jpg": "/laundry/static/media/Pak Amin.f744a4b0f32b736c2ca4.jpg",
     "index.html": "/laundry/index.html",
-    "main.1e589fb9.css.map": "/laundry/static/css/main.1e589fb9.css.map",
-    "main.20517010.js.map": "/laundry/static/js/main.20517010.js.map",
+    "main.599e1146.css.map": "/laundry/static/css/main.599e1146.css.map",
+    "main.7ac32aed.js.map": "/laundry/static/js/main.7ac32aed.js.map",
     "255.9fe3384c.chunk.js.map": "/laundry/static/js/255.9fe3384c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1e589fb9.css",
-    "static/js/main.20517010.js"
+    "static/css/main.599e1146.css",
+    "static/js/main.7ac32aed.js"
   ]
 }
