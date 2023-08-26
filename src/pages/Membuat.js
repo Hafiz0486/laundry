@@ -17,7 +17,7 @@ const Membuat = () => {
   const [pelayanan, setPelayanan] = useState('')
   const [tgl_masuk, setTglMasuk] = useState('')
   const [tgl_ambil, setTglAmbil] = useState('')
-  const [jml, setJml] = useState('')
+  const [jumlah, setJumlah] = useState('')
   const [kg, setKg] = useState('')
   const [harga, setHarga] = useState('')
 

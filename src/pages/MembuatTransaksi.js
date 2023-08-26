@@ -24,7 +24,7 @@
 
         // variable array
         const [formFields, setFormFields] = useState([
-            { nama: '', kategori: '', ukuran: '', pengerjaan: '', jml: '', berat: '', harga: '', total: '' }
+            { nama: '', kategori: '', ukuran: '', pengerjaan: '', jumlah: '', berat: '', harga: '', total: '' }
         ]);
 
         const [defaultHarga, setDefaultHarga] = useState(0); // State untuk menyimpan harga default
@@ -128,7 +128,7 @@
             const selectedUkuran = newData[index].ukuran;
             const selectedPengerjaan = newData[index].pengerjaan;
             const selectedBerat = newData[index].berat;
-            const selectedJumlah = newData[index].jml;
+            const selectedJumlah = newData[index].jumlah;
 
             // Cari harga yang sesuai dari tabel pelayanan
             const hargaData = hargaOptions.find(
@@ -170,13 +170,13 @@
             newData[index].kategori = kategoriData.kategori;
 
             if (kategoriData.kategori === 'Kiloan') {
-                newData[index].jml = 0;
+                newData[index].jumlah = 0;
                 newData[index].berat = selectedBerat;
-                newData[index].ttl = defaultHarga * selectedBerat;
+                newData[index].total = defaultHarga * selectedBerat;
             } else {
                 newData[index].berat = 0;
-                newData[index].jml = selectedJumlah;
-                newData[index].ttl = defaultHarga * selectedJumlah;
+                newData[index].jumlah = selectedJumlah;
+                newData[index].total = defaultHarga * selectedJumlah;
             }
             }
 
@@ -265,9 +265,9 @@
                     const queriesBOn = formFields.map(item => ({ 
                     id_pelayanan: item.id_pelayanan,
                     nama_konsumen: nama,
-                    jml: item.jml,
+                    jumlah: item.jumlah,
                     berat: item.berat,
-                    total: item.ttl,
+                    total: item.total,
                     id_transaksi: id_transaksi,
                     }));
                 
@@ -310,7 +310,7 @@
             kategori: '',
             ukuran: '', // Ganti dengan ukuran default yang diinginkan
             pengerjaan: '',
-            jml: '',
+            jumlah: '',
             berat: '',
             harga: '',
             total: ''
@@ -363,7 +363,7 @@
             if (row.kategori === 'Kiloan') {
               return row.berat * row.harga;
             } else {
-              return row.jml * row.harga;
+              return row.jumlah * row.harga;
             }
           };
           
@@ -426,9 +426,9 @@
                 <form className="create-bon-card" onSubmit={(e) => submit(e, index)}>
             <div key={index}>
 
-                <form className='title'>
+                <div className='title'>
                 <h2 align="center" >Pelayanan : {index + 1}</h2>
-                </form>
+                </div>
 
                 {/* Data kedua nama pelayanan */}
                 <p  className="create-bon-fc">Nama Pelayanan</p>
@@ -492,13 +492,13 @@
                 
                 <br></br>
                 <br></br>
-                {/* Data kelima jml */}
-                <p  className='create-bon' htmlFor={`jml${index}`}>Jumlah : </p>
+                {/* Data kelima jumlah */}
+                <p  className='create-bon' htmlFor={`jumlah${index}`}>Jumlah : </p>
                 <input 
                 type="number" 
-                id={`jml${index}`}
-                name="jml"
-                value={form.jml}
+                id={`jumlah${index}`}
+                name="jumlah"
+                value={form.jumlah}
                 onChange={event => handleFormChange(event, index)}
                 disabled={form.kategori !== 'Satuan' || form.ukuran == '' || form.pengerjaan == ''}
                 />
@@ -526,12 +526,12 @@
                 />
 
                 {/* Data kedelapan total */}
-                <p className='create-bon' htmlFor={`ttl${index}`}>Total : </p>
+                <p className='create-bon' htmlFor={`total${index}`}>Total : </p>
                 <input 
                 type="number" 
-                id={`ttl${index}`}
-                name="ttl"
-                value={form.ttl}
+                id={`total${index}`}
+                name="total"
+                value={form.total}
                 onChange={event => handleFormChange(event, index)}
                 />
 

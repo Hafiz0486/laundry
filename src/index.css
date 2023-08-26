@@ -539,7 +539,7 @@ p.create-bon-fc {
   line-height: 30px;
 }
 
-form.title{
+.title{
   width: 100%;
   height: clamp(2.5rem, 1rem + 1vw, 1rem);
   padding: 10px;
