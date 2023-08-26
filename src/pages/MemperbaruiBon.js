@@ -14,13 +14,18 @@ const MemperbaruiBon = () => {
     const [berat, setBerat] = useState(0)
     const [harga, setHarga] = useState(0)
     const [total, setTotal] = useState(0)
+    const [id_pelayanan, setIdPelayanan] = useState(0)
 
     const [namaOptions, setNamaOptions] = useState([]);
+    const [perbandingan, setPerbandingan] =useState(0);
     const [ukuranOptions, setUkuranOptions] = useState([]); 
 
     const [hargaPerUnit, setHargaPerUnit] = useState(0);
 
     const navigate = useNavigate()
+
+    const [totalkeseluruhan, setTotalKeseluruhan] = useState(0)
+    const [totalawal, setTotalAwal] = useState(0)
 
     useEffect(() => {
         
@@ -37,17 +42,31 @@ const MemperbaruiBon = () => {
             }
             }
 
+        async function fetchTotalKeseluruhan() {
+            const { data, error } = await supabase
+                .from('transaksi')
+                .select('ttl_keseluruhan')
+                .eq('id', id_transaksi)
+                .single();
+            if (error) {
+                console.error('Error fetching nama pelayanan options:', error);
+            } else {
+                setTotalKeseluruhan(data.ttl_keseluruhan)
+            }
+        }
+
+        fetchTotalKeseluruhan()
         fetchNamaOptions()
     }, [])
     
-    
     useEffect(() => {
+        
         // Fetch the hargaPerUnit based on selected nama, ukuran, and pengerjaan
         async function fetchHargaPerUnit() {
             if (nama && ukuran && pengerjaan) {
                 const { data, error } = await supabase
                     .from('pelayanan')
-                    .select('harga')
+                    .select('id, harga')
                     .eq('nama', nama)
                     .eq('ukuran', ukuran)
                     .eq('pengerjaan', pengerjaan);
@@ -56,7 +75,15 @@ const MemperbaruiBon = () => {
                     console.error('Error fetching harga per unit:', error);
                 } else if (data.length > 0) {
                     setHargaPerUnit(data[0].harga);
+                    setIdPelayanan(data[0].id); 
+                } else {
+                    // Set hargaPerUnit to 0 if no matching data found
+                    setHargaPerUnit(0);
+                    setIdPelayanan(0)
                 }
+            } else {
+                // Set hargaPerUnit to 0 if any of the selection is missing
+                setHargaPerUnit(0);
             }
         }
 
@@ -64,6 +91,7 @@ const MemperbaruiBon = () => {
     }, [nama, ukuran, pengerjaan]);
 
     useEffect(() => {
+        
         // Calculate the total based on selected kategori, harga/berat, and jumlah
         let calculatedTotal = 0;
 
@@ -122,6 +150,52 @@ const MemperbaruiBon = () => {
 
     const handleSubmit = async (e) => {
     e.preventDefault()
+
+    // Fungsi update bon
+    // FUngsi update transaksi
+
+    var queryBon = { id_pelayanan, jumlah, berat, total}
+
+    async function updateBon() {
+        const { data, error } = await supabase
+        .from('bon')
+        .update(queryBon)
+        .eq('id', id)
+    
+        if (error) {
+            console.error('Error inserting data:', error);
+            } 
+        if (data) {
+            console.log('Data inserted:', data);
+            console.log(queryBon)
+            }
+        }
+
+    var ttl_keseluruhan = totalkeseluruhan - perbandingan
+
+    var transaksiQuery = {ttl_keseluruhan}
+
+    async function updateTransaksi() {
+        
+        const { dataTransaksi, errorTransaksi } = await supabase
+        .from('transaksi')
+        .update(transaksiQuery)
+        .eq('id', id_transaksi)
+        .single()
+
+        if (errorTransaksi) {
+            console.error('Error inserting data:', errorTransaksi);
+            } 
+            if (errorTransaksi) {
+            console.log('Data inserted:', dataTransaksi);
+            console.log(transaksiQuery)
+            }
+    }
+
+    
+    updateBon()
+    updateTransaksi()
+    // Akhir dari fungsi submit
     }
 
     useEffect(() => {
@@ -140,6 +214,7 @@ const MemperbaruiBon = () => {
                 setJumlah(data.jumlah)
                 setBerat(data.berat)
                 setTotal(data.total)
+                setTotalAwal(data.total)
 
                 const { data: pelayananData, error: pelayananError } = await supabase
                 .from("pelayanan")
@@ -166,7 +241,12 @@ const MemperbaruiBon = () => {
         
     }, [id_transaksi, id]);
     
-    
+    useEffect(() => {
+        const difference = totalawal - total;
+        setPerbandingan(difference);
+        console.log(difference)
+    }, [total]);
+
     return(
         <div className="transaksi">
             <div className="create-bon-card-container">
@@ -185,9 +265,10 @@ const MemperbaruiBon = () => {
             value={nama} // Tambahkan value dari state formFields
             onChange={(e) => {
                 setNama(e.target.value);
-                setJumlah(0);  // Set jumlah menjadi 0 saat nama berubah
+                setJumlah(0)  // Set jumlah menjadi 0 saat nama berubah
                 setBerat(0)
-                setPengerjaan('default');   // Set berat menjadi 0 saat nama berubah
+                setUkuran('default')
+                setPengerjaan('default')   // Set berat menjadi 0 saat nama berubah
             }}
             >
             <option className="create-bon" value="default">Pilih Pelayanan</option>
@@ -268,7 +349,11 @@ const MemperbaruiBon = () => {
             onChange={(e) => setTotal(e.target.value)}
             />
 
+            <button>Memperbarui Data Bon</button>
+  
+
             </form>
+            
             </div>
             
         </div>
