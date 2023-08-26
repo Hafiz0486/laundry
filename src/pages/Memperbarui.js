@@ -49,8 +49,10 @@ const Memperbarui = () => {
     }
 
     if (pages === 'transaksi') {
-      var listquery = { nama, ttl_keseluruhan, pembayaran, jns_pembayaran, kembalian}
+      var listquery = { nama, ttl_keseluruhan, pembayaran, jns_pembayaran, kembalian, update}
     }
+
+    update = update.toISOString().split('T')[0]
 
     const { data, error } = await supabase
       .from(pages)
@@ -80,6 +82,14 @@ const Memperbarui = () => {
     
     }
   }
+
+  useEffect(() => {
+    // Calculate kembalian whenever pembayaran or ttl_keseluruhan changes
+    const calculatedKembalian = parseFloat(pembayaran) - parseFloat(ttl_keseluruhan);
+    
+    // Update kembalian state
+    setKembalian(calculatedKembalian); // Rounding to 2 decimal places
+  }, [pembayaran, ttl_keseluruhan]);
 
   useEffect(() => {
     const fetchPelayananOptions = async () => {
@@ -120,7 +130,6 @@ const Memperbarui = () => {
           setKeanggotaan(data.keanggotaan)
           setTelepon(data.telepon)
           setKelamin(data.kelamin)
-          setUpdate(Date.now())
         }
 
         if (pages === 'pelayanan') {
@@ -128,7 +137,6 @@ const Memperbarui = () => {
           setKategori(data.kategori)
           setHarga(data.harga)
           setUkuran(data.ukuran)
-          setUpdate(Date.now())
         }
 
         if (pages === 'transaksi') {
@@ -137,7 +145,6 @@ const Memperbarui = () => {
           setPembayaran(data.pembayaran)
           setJenisPembayaran(data.jns_pembayaran)
           setKembalian(data.kembalian)
-          setUpdate(Date.now())
         }
 
       }
@@ -262,6 +269,7 @@ const Memperbarui = () => {
             id="ttl_keseluruhan"
             value={ttl_keseluruhan}
             onChange={(e) => setTotalKeseluruhan(e.target.value)}
+            disabled = {true}
           />
 
           <label htmlFor="pembayaran">Pembayaran : </label>
@@ -272,25 +280,26 @@ const Memperbarui = () => {
             onChange={(e) => setPembayaran(e.target.value)}
           />    
 
-          <label htmlFor="jns_pembayaran">Jenis Pembayaran : </label>
+          <p  className="create-bon-fc">Jenis Pembayaran</p>
           <select
             id="jns_pembayaran"
             value={jns_pembayaran}
             onChange={(e) => setJenisPembayaran(e.target.value)}
           >
-            <option value="default">Pilih Jenis Pembayaran</option>
-            <option value="cash">Cash</option>
-            <option value="transfer">Transfer</option>
+            <option value="default">Jenis Pembayaran</option>
+            <option value="Cash">Cash</option>
+            <option value="Transfer">Transfer</option>
           </select>
+
           <p></p>
 
-
           <label htmlFor="kembalian">Kembalian : </label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             id="kembalian"
             value={kembalian}
             onChange={(e) => setKembalian(e.target.value)}
+            className={parseFloat(kembalian) < 0 ? "red-text" : parseFloat(kembalian) > 0 ? "green-text" : ""}
           />
 
           <button>Memperbarui Data Transaksi</button>

@@ -1,5 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 
+/* Inside your CSS file */
+.image-spacing {
+  margin-right: 2%; /* Adjust the margin as needed */
+}
+
+.modal.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal.fullscreen .modal-content {
+  max-width: 30rem;
+  max-height: 100%;
+}
+
+.fullscreen-image {
+  max-height: 90vh; /* Adjust this value as needed */
+  max-width: 100%;
+  object-fit: contain;
+}
+
+
+
+.fullscreen-image.clickable {
+  cursor: pointer;
+}
+
+.red-text {
+  color: red;
+}
+
+.green-text {
+  color: green;
+}
+
 :root {
   --primary: #12bca2;
   --secondary: #6d15df;
@@ -22,6 +65,7 @@ p.card-pelayanan {
   margin-bottom: -5px;
   line-height: 25px;
 }
+
 
 h1 {
   font-size: clamp(1.125rem, 0.8625rem + 0.5833vw, 1.5625rem);
@@ -74,7 +118,6 @@ nav h1 {
 
 /* smoothie grid */
 .laundry-grid {
-  
   margin: 20px 0px 0px 0px;
   --grid-layout-gap: clamp(1.2rem, 1rem + 1vw, 1rem);
   --grid-column-count: 4; /* This gets overridden by an inline style. */
@@ -93,13 +136,17 @@ nav h1 {
   font-size: clamp(0.625rem, 0.3625rem + 0.5833vw, 1.0625rem);
 }
 
+p.card-konsumen {
+  margin-bottom: -2%;
+  line-height: 200%;
+}
+
 .laundry-card-konsumen {
-  height: 100%; /* The height will adjust based on the content */
-  width: clamp(1rem, 1rem);
-  padding: 10px 10px 10px 10px;
+  height: 80%;
+  padding: 2% 1% 2% 3%;
   background: #fff;
   box-sizing: border-box;
-  border-radius: 6px;
+  border-radius: px;
   position: relative;
 }
 
@@ -118,17 +165,18 @@ nav h1 {
 }
 
 
+
 .laundry-card-konsumen .buttons {
+  margin-top: 4%;
   text-align: right;
-  margin-top: 10px;
-  margin-bottom: 0px;
+  padding-right: 3%;
 }
 
 .laundry-card-konsumen i {
   color: #bbb;
   margin-left: 10px;
   font-size: 1.2em;
-  padding: 6px;
+  padding: 3%;
   background: #eee;
   border-radius: 50%;
   cursor: pointer;
@@ -150,7 +198,6 @@ p.bon {
 }
 
 .laundry-card-pelayanan {
-  height: 290px; /* The height will adjust based on the content */
   width: clamp(1rem, 1rem);
   height: auto;
   padding: 10px;
