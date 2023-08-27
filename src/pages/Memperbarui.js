@@ -1,15 +1,43 @@
 import { useEffect, useState } from "react"
 import { useParams, useNavigate } from 'react-router-dom'
 import supabase from "../config/supabaseClient"
+import ImageModal from "../components/ImageModal"
+
+const CDNURL = "https://gomqdnsdzpqgypcdvbnt.supabase.co/storage/v1/object/public/img/konsumen/"
 
 const Memperbarui = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalImageUrl, setModalImageUrl] = useState('');
+
+    // variable feth gambar
+    const [img1, setImg1] = useState(null)
+    const [img2, setImg2] = useState(null)
+
+    // variable penampung inputan
+    const [file1, setFile1] = useState(null);
+    const [file2, setFile2] = useState(null);
+
+    // variable prefill dan update gambar
+    const [gambar1, setGambar1] = useState(null);
+    const [gambar2, setGambar2] = useState(null);
+
+    const handleImageClick = (imageUrl) => {
+      setModalImageUrl(imageUrl);
+      setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+      setIsModalOpen(false);
+      setModalImageUrl('');
+    };
+
   const { pages } = useParams()
   const { id } = useParams()
 
   const navigate = useNavigate()
 
   // variable penampung field
-  const [nama, setNama] = useState('')
+  const [nama, setNama] = useState('');
   const [pelayanan, setPelayanan] = useState('')
   const [tgl_masuk, setTglMasuk] = useState('')
   const [tgl_ambil, setTglAmbil] = useState('')
@@ -21,14 +49,16 @@ const Memperbarui = () => {
   const [kategori, setKategori] = useState('')
   const [ukuran, setUkuran] = useState('')
 
-  const [keanggotaan, setKeanggotaan] = useState('')
-  const [telepon, setTelepon] = useState('')
-  const [kelamin, setKelamin] = useState('')
+  const [keanggotaan, setKeanggotaan] = useState('');
+  const [telepon, setTelepon] = useState('');
+  const [kelamin, setKelamin] = useState('');
 
-  const [ttl_keseluruhan, setTotalKeseluruhan] = useState(0)
-  const [pembayaran, setPembayaran] = useState(0)
-  const [jns_pembayaran, setJenisPembayaran] = useState('')
-  const [kembalian, setKembalian] = useState(0)
+  const [ttl_keseluruhan, setTotalKeseluruhan] = useState(0);
+  const [pembayaran, setPembayaran] = useState(0);
+  const [jns_pembayaran, setJenisPembayaran] = useState('');
+  const [kembalian, setKembalian] = useState(0);
+
+  
 
   const [pelayananOptions, setPelayananOptions] = useState([]);
   // fungsi untuk submit data
@@ -128,8 +158,10 @@ const Memperbarui = () => {
         if (pages === 'konsumen') {
           setNama(data.nama)
           setKeanggotaan(data.keanggotaan)
-          setTelepon(data.telepon)
+          setTelepon(data.telepon || '')
           setKelamin(data.kelamin)
+          setImg1(data.img1)
+          setImg2(data.img2)
         }
 
         if (pages === 'pelayanan') {
@@ -160,11 +192,13 @@ const Memperbarui = () => {
   
   
   if (pages == 'konsumen') {
+    const gambar1 = img1 ? CDNURL + img1 : CDNURL + 'Gambar Kosong.png';
+    const gambar2 = img2 ? CDNURL + img2 : CDNURL + 'Gambar Kosong.png';
     return (
       <div className="page membuat">
         <form onSubmit={handleSubmit}>
-  
-          <label htmlFor="nama">Nama : </label>
+
+          <p className="membuat">Nama : </p>
           <input 
             type="text" 
             id="nama"
@@ -172,7 +206,7 @@ const Memperbarui = () => {
             onChange={(e) => setNama(e.target.value)}
           />
 
-          <label htmlFor="keanggotaan">Keanggotaan : </label>
+          <p className="membuat">Keanggotaan : </p>
           <input 
             type="text" 
             id="keanggotaan"
@@ -180,21 +214,43 @@ const Memperbarui = () => {
             onChange={(e) => setKeanggotaan(e.target.value)}
           />
 
-          <label htmlFor="telepon">No. Telepon : </label>
+          <p className="membuat">No. Telepon : </p>
           <input 
-            type="text" 
+            type="number" 
             id="telepon"
             value={telepon}
             onChange={(e) => setTelepon(e.target.value)}
           />
 
-          <label htmlFor="kelamin">Jenis Kelamin : </label>
-          <input 
-            type="text" 
+          <p  className="membuat-option">Jenis Kelamin</p>
+          <select
+            className="membuat"
             id="kelamin"
             value={kelamin}
             onChange={(e) => setKelamin(e.target.value)}
+          >
+            <option className="membuat" value="default">Jenis Kelamin</option>
+            <option className="membuat" value="Laki-laki">Laki-laki</option>
+            <option className="membuat" value="Perempuan">Perempuan</option>
+          </select>
+
+          <br></br>
+          <br></br>
+
+          <p className="membuat">Gambar 1 : </p>
+          <input
+            type="file"
+            id="file"
+            onChange={(e) => setFile1(e.target.files[0])}
           />
+
+          <img
+            className="image-spacing"
+            src={gambar1}
+            width="48%"
+            height="50%"
+          />
+
 
           <button>Memperbarui Data Konsumen</button>
   

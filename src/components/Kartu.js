@@ -10,6 +10,7 @@
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalImageUrl, setModalImageUrl] = useState('');
     const [gambar1, setGambar1] = useState(null)
+    const [gambar2, setGambar2] = useState(null)
 
     console.log("CDNURL ", CDNURL,
                 "Image name ", table.img1)
@@ -29,6 +30,14 @@
 
     const [tables, setTables] = useState(null)
     const [fetchError, setFetchError] = useState(null)
+
+    useEffect(() => {
+      if (pages === 'konsumen') {
+        // Update gambar1 when pages is 'konsumen'
+        setGambar1(table.img1);
+        setGambar2(table.img2);
+      }
+    }, [pages, table.img1]);
 
     const handleDelete = async () => {
       if(pages != 'transaksi') {
@@ -79,7 +88,51 @@
 
       window.location.reload();
     }
-    
+   
+  if (pages === 'konsumen') {
+    const imageUrl1 = gambar1 ? CDNURL + gambar1 : CDNURL + 'Gambar Kosong.png';
+    const imageUrl2 = gambar2 ? CDNURL + gambar2 : CDNURL + 'Gambar Kosong.png';
+    return (
+      <div className="laundry-card-konsumen">
+
+        <img
+          className="image-spacing"
+          src={imageUrl1}
+          alt="pelayanan"
+          width="48%"
+          height="50%"
+          onClick={() => handleImageClick(imageUrl1)}
+        />
+        
+        <img
+          className="image-spacing"
+          src={imageUrl2}
+          alt="pelayanan"
+          width="48%"
+          height="50%"
+          onClick={() => handleImageClick(imageUrl2)}
+        />
+
+        <h4>Nama : {table.nama}</h4>
+        <p className="card-konsumen">No. Telepon : {table.tlp}</p>
+        <p className="card-konsumen">Jenis Kelamin : {table.kelamin}</p>
+        <div className="rating">{table.keanggotaan}</div>
+        <div className="buttons">
+          <Link to={"/" + pages + "/memperbarui-" + table.id}>
+            <i className="material-icons">edit</i>
+          </Link>
+          <i className="material-icons" onClick={handleDelete}>delete</i>
+        </div>
+
+        {isModalOpen && (
+          <ImageModal imageUrl={modalImageUrl} onClose={handleCloseModal} fullscreen />
+        )}
+
+
+      </div>
+    )
+  } 
+
   if (pages === 'pelayanan') {
     var idr = (table.harga).toLocaleString('en-IN', { 
       style: 'currency', 
@@ -165,6 +218,7 @@
       </div>
     )
   }
+
   if (pages === 'bon') {
     var totalidr = (table.total).toLocaleString('en-IN', { 
       style: 'currency', 
@@ -216,46 +270,7 @@
     );
   }
 
-  if (pages === 'konsumen') {
-    return (
-      <div className="laundry-card-konsumen">
 
-        <img
-          className="image-spacing"
-          src={CDNURL + table.img1}
-          alt="pelayanan"
-          width="48%"
-          height="50%"
-          onClick={() => handleImageClick(CDNURL + table.img1)}
-        />
-        {/* <img
-          className="image-spacing"
-          src={require(`../asset/img/konsumen/Pak Amin.jpg`)}
-          alt="pelayanan"
-          width="48%"
-          height="50%"
-          onClick={() => handleImageClick(require(`../asset/img/konsumen/Pak Amin.jpg`))}
-        /> */}
-
-        <h4>Nama : {table.nama}</h4>
-        <p className="card-konsumen">No. Telepon : {table.tlp}</p>
-        <p className="card-konsumen">Jenis Kelamin : {table.kelamin}</p>
-        <div className="rating">{table.keanggotaan}</div>
-        <div className="buttons">
-          <Link to={"/" + pages + "/memperbarui-" + table.id}>
-            <i className="material-icons">edit</i>
-          </Link>
-          <i className="material-icons" onClick={handleDelete}>delete</i>
-        </div>
-
-        {isModalOpen && (
-          <ImageModal imageUrl={modalImageUrl} onClose={handleCloseModal} fullscreen />
-        )}
-
-
-      </div>
-    )
-  } 
     
   }
 

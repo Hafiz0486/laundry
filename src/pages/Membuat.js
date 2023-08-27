@@ -123,13 +123,12 @@ const Membuat = () => {
   }
 
   // page input pelayanan
-
-  if (pages == 'pelayanan') {
+  if (pages == 'konsumen') {
     return (
       <div className="page membuat">
         <form onSubmit={handleSubmit}>
   
-          <label htmlFor="nama">Nama : </label>
+          <p className="membuat">Nama : </p>
           <input 
             type="text" 
             id="nama"
@@ -137,15 +136,79 @@ const Membuat = () => {
             onChange={(e) => setNama(e.target.value)}
           />
 
-          <label htmlFor="kategori">Kategori : </label>
+          <p className="membuat">Keanggotaan : </p>
           <input 
             type="text" 
+            id="keanggotaan"
+            value={keanggotaan}
+            onChange={(e) => setKeanggotaan(e.target.value)}
+          />
+
+          <p className="membuat">No. Telepon : </p>
+          <input 
+            type="number" 
+            id="telepon"
+            value={telepon}
+            onChange={(e) => setTelepon(e.target.value)}
+          />
+
+          <p  className="membuat-option">Jenis Kelamin</p>
+          <select
+            className="membuat"
+            id="kelamin"
+            value={kelamin}
+            onChange={(e) => setKelamin(e.target.value)}
+          >
+            <option className="membuat" value="default">Jenis Pembayaran</option>
+            <option className="membuat" value="Laki-laki">Laki-laki</option>
+            <option className="membuat" value="Perempuan">Perempuan</option>
+          </select>
+
+          <br></br>
+          <br></br>
+          <p className="membuat">Gambar 1 : </p>
+          <input
+            type="file"
+            id="file1"
+            onChange={(e) => setFile1(e.target.files[0])}
+          />
+
+          <button>Membuat Data Konsumen</button>
+  
+          {formError && <p className="error">{formError}</p>}
+        </form>
+      </div>
+      )
+  }
+
+  if (pages == 'pelayanan') {
+    return (
+      <div className="page membuat">
+        <form onSubmit={handleSubmit}>
+  
+          <label className="membuat">Nama : </label>
+          <input 
+            type="text" 
+            id="nama"
+            value={nama}
+            onChange={(e) => setNama(e.target.value)}
+          />
+
+          <p  className="membuat-option">Jenis Kelamin</p>
+          <select
+            className="membuat"
             id="kategori"
             value={kategori}
             onChange={(e) => setKategori(e.target.value)}
-          />
+          >
+            <option className="membuat" value="default">Pilih Kategori</option>
+            <option className="membuat" value="Kiloan">Kiloan</option>
+            <option className="membuat" value="Satuan">Satuan</option>
+          </select>
 
-          <label htmlFor="ukuran">Ukuran : </label>
+          <br></br>
+          <br></br>
+          <p className="membuat">Ukuran : </p>
           <input 
             type="text" 
             id="ukuran"
@@ -153,15 +216,21 @@ const Membuat = () => {
             onChange={(e) => setUkuran(e.target.value)}
           />
 
-          <label htmlFor="pengerjaan">Pengerjaan : </label>
-          <input 
-            type="text" 
+          <p  className="membuat-option">Jenis Pengerjaan</p>
+          <select
+            className="membuat"
             id="pengerjaan"
             value={pengerjaan}
             onChange={(e) => setPengerjaan(e.target.value)}
-          />
+          >
+            <option className="membuat" value="default">Jenis Pengerjaan</option>
+            <option className="membuat" value="Normal">Normal</option>
+            <option className="membuat" value="Express">Express</option>
+          </select>
+          <br></br>
+          <br></br>
 
-          <label htmlFor="harga">Harga : </label>
+          <p className="membuat">Harga : </p>
           <input 
             type="number"
             id="harga"
@@ -176,60 +245,6 @@ const Membuat = () => {
       </div>
       )
     }
-  
-    if (pages == 'konsumen') {
-      return (
-        <div className="page membuat">
-          <form onSubmit={handleSubmit}>
-    
-            <label htmlFor="nama">Nama : </label>
-            <input 
-              type="text" 
-              id="nama"
-              value={nama}
-              onChange={(e) => setNama(e.target.value)}
-            />
-  
-            <label htmlFor="keanggotaan">Keanggotaan : </label>
-            <input 
-              type="text" 
-              id="keanggotaan"
-              value={keanggotaan}
-              onChange={(e) => setKeanggotaan(e.target.value)}
-            />
-  
-            <label htmlFor="telepon">No. Telepon : </label>
-            <input 
-              type="text" 
-              id="telepon"
-              value={telepon}
-              onChange={(e) => setTelepon(e.target.value)}
-            />
-  
-            <label htmlFor="kelamin">Jenis Kelamin : </label>
-            <input 
-              type="text" 
-              id="kelamin"
-              value={kelamin}
-              onChange={(e) => setKelamin(e.target.value)}
-            />
-
-            <label htmlFor="file1">Gambar 1 : </label>
-            <input
-              type="file"
-              id="file1"
-              onChange={(e) => setFile1(e.target.files[0])}
-            />
-
-
-  
-            <button>Membuat Data Konsumen</button>
-    
-            {formError && <p className="error">{formError}</p>}
-          </form>
-        </div>
-        )
-      }
 
 }
 export default Membuat
