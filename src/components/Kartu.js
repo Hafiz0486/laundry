@@ -3,12 +3,16 @@
   import { useEffect, useState } from 'react'
   import ImageModal from "../components/ImageModal"
 
+  const CDNURL = "https://gomqdnsdzpqgypcdvbnt.supabase.co/storage/v1/object/public/img/konsumen/"
   // pages adalah table
   // tablequery adalah query table dari pages
   const Kartu = ({ table, pages, id_transaksi, onDelete }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalImageUrl, setModalImageUrl] = useState('');
+    const [gambar1, setGambar1] = useState(null)
 
+    console.log("CDNURL ", CDNURL,
+                "Image name ", table.img1)
     const handleImageClick = (imageUrl) => {
       setModalImageUrl(imageUrl);
       setIsModalOpen(true);
@@ -41,6 +45,7 @@
         onDelete(table.id)
       }
       }
+
       if (pages == 'transaksi') {
 
         // Delete data bon yang memiliki id_transaksi yang akan dihapus
@@ -214,23 +219,23 @@
   if (pages === 'konsumen') {
     return (
       <div className="laundry-card-konsumen">
-        {/* <img src={require(`../asset/img/konsumen/${table.gambarFileName}`)} alt="pelayanan" width="100%" height="50%"></img> */}
+
         <img
           className="image-spacing"
-          src={require(`../asset/img/konsumen/Kos Kosan - Haji Nawi.jpg`)}
+          src={CDNURL + table.img1}
           alt="pelayanan"
           width="48%"
           height="50%"
-          onClick={() => handleImageClick(require(`../asset/img/konsumen/Kos Kosan - Haji Nawi.jpg`))}
+          onClick={() => handleImageClick(CDNURL + table.img1)}
         />
-        <img
+        {/* <img
           className="image-spacing"
           src={require(`../asset/img/konsumen/Pak Amin.jpg`)}
           alt="pelayanan"
           width="48%"
           height="50%"
           onClick={() => handleImageClick(require(`../asset/img/konsumen/Pak Amin.jpg`))}
-        />
+        /> */}
 
         <h4>Nama : {table.nama}</h4>
         <p className="card-konsumen">No. Telepon : {table.tlp}</p>

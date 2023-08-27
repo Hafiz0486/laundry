@@ -1,6 +1,8 @@
 import { useEffect, useState, React } from "react"
 import { useParams, useNavigate } from "react-router-dom"
+import { createClient } from '@supabase/supabase-js';  // Import Supabase client
 import supabase from "../config/supabaseClient"
+import { v4 as uuidv4 } from 'uuid'
 import moment from "moment/moment"
 
 // insert bon, pelayanan
@@ -31,8 +33,12 @@ const Membuat = () => {
 
   const [formError, setFormError] = useState(null)
 
+  const [file1, setFile1] = useState(null);
+  const [img1, setImg1] = useState('');
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+
 
      // jika pages adalah table bon
      if (pages === 'bon') {
@@ -52,16 +58,44 @@ const Membuat = () => {
         setFormError('Data is not complete.')
         return
       }
-      var listquery = { nama, kategori, ukuran, pengerjaan, harga }
+      var listquery = { nama, kategori, ukuran, pengerjaan, harga, img1}
     }
 
     if (pages === 'konsumen') {
-      if (!nama || !keanggotaan ) {
-        setFormError('Data is not complete.')
-        return
+      if (!nama || !keanggotaan) {
+        setFormError('Data is not complete.');
+        return;
+      } else {
+        try {
+          if (file1) {
+            const { data, error } = await supabase
+              .storage
+              .from('img/konsumen')
+              .upload(file1.name, file1);
+    
+            if (error) {
+              if (error.message.includes("already exists")) {
+                setFormError('A file with the same name already exists.');
+              } else {
+                console.error("Error inserting image into storage:", error);
+              }
+              return;
+            }
+    
+            if (data) {
+              console.log("Image uploaded successfully:", data.Key);
+              // Don't use setImg1 here
+            }
+          }
+    
+        } catch (error) {
+          console.error("Error:", error);
+        }
+    
+        // Use file1.name directly in the listquery object
+        var listquery = { nama, keanggotaan, kelamin, img1: file1.name };
       }
-      var listquery = { nama, keanggotaan}
-    }
+    }    
 
     const { data, error } = await supabase
       .from(pages)
@@ -83,7 +117,7 @@ const Membuat = () => {
       }
 
       if (pages === 'konsumen'){
-        navigate('/'+ pages)
+        
       }
     }
   }
@@ -179,6 +213,15 @@ const Membuat = () => {
               value={kelamin}
               onChange={(e) => setKelamin(e.target.value)}
             />
+
+            <label htmlFor="file1">Gambar 1 : </label>
+            <input
+              type="file"
+              id="file1"
+              onChange={(e) => setFile1(e.target.files[0])}
+            />
+
+
   
             <button>Membuat Data Konsumen</button>
     
