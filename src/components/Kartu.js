@@ -96,18 +96,18 @@
       <div className="laundry-card-konsumen">
 
         <img
-          className="image-spacing"
+          className="image-consumer"
           src={imageUrl1}
-          alt="pelayanan"
+          alt="consumer"
           width="48%"
           height="50%"
           onClick={() => handleImageClick(imageUrl1)}
         />
         
         <img
-          className="image-spacing"
+          className="image-consumer"
           src={imageUrl2}
-          alt="pelayanan"
+          alt="consumer"
           width="48%"
           height="50%"
           onClick={() => handleImageClick(imageUrl2)}
@@ -138,9 +138,19 @@
       style: 'currency', 
       currency: 'IDR' 
     });
+    const imageUrl1 = gambar1 ? CDNURL + gambar1 : CDNURL + 'Gambar Kosong.png';
+
     return (
       <div className="laundry-card-pelayanan">
-        <img src="" alt="pelayanan" width="100%" height="50%"></img>
+        <img
+          className="image-service"
+          src={imageUrl1}
+          alt="service"
+          width="35%"
+          height="35%"
+          onClick={() => handleImageClick(imageUrl1)}
+        />
+
         <h4>Pelayanan : {table.nama}</h4>
         <p className="card-pelayanan">kategori : {table.kategori}</p>
         <p className="card-pelayanan">Ukuran : {table.ukuran}</p>

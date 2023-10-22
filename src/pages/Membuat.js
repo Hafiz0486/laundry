@@ -135,14 +135,16 @@ const Membuat = () => {
   // page input pelayanan
   if (pages == 'konsumen') {
     return (
-      <div className="page membuat">
-
-        <div className="tombol-kembali">
-          <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
-        </div> 
+        
+        <div className="page membuat">
+          
 
         <form onSubmit={handleSubmit}>
-  
+        <div className="tombol-kembali">
+          <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
+          </div>
+
+          <p className="title">Konsumen</p>
           <p className="membuat">Nama : </p>
           <input 
             type="text" 
@@ -198,14 +200,17 @@ const Membuat = () => {
 
   if (pages == 'pelayanan') {
     return (
-      <div className="page membuat">
 
-        <div className="tombol-kembali">
-          <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
-        </div> 
+      <div className="page membuat">
 
         <form onSubmit={handleSubmit}>
   
+        <div className="tombol-kembali">
+          <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
+          </div>
+
+          <p className="title">Pelayanan</p>
+
           <label className="membuat">Nama : </label>
           <input 
             type="text" 
@@ -263,6 +268,7 @@ const Membuat = () => {
           {formError && <p className="error">{formError}</p>}
         </form>
       </div>
+
       )
     }
 

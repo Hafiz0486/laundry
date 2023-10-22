@@ -201,13 +201,15 @@ const Memperbarui = () => {
     const gambar1 = img1 ? CDNURL + img1 : CDNURL + 'Gambar Kosong.png';
     const gambar2 = img2 ? CDNURL + img2 : CDNURL + 'Gambar Kosong.png';
     return (
+
       <div className="page membuat">
 
+        <form onSubmit={handleSubmit}>
         <div className="tombol-kembali">
           <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
-        </div> 
+          </div>
 
-        <form onSubmit={handleSubmit}>
+          <p className="title">Konsumen</p>
 
           <p className="membuat">Nama : </p>
           <input 
@@ -273,14 +275,17 @@ const Memperbarui = () => {
 
   if (pages == 'pelayanan') {
     return (
-      <div className="page create">
 
-        <div className="tombol-kembali">
-          <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
-        </div> 
+      <div className="page create">
 
         <form onSubmit={handleSubmit}>
   
+        <div className="tombol-kembali">
+          <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
+          </div>
+
+          <p className="title">Pelayanan</p>
+
           <label htmlFor="nama">Nama : </label>
           <input 
             type="text" 
@@ -318,20 +323,23 @@ const Memperbarui = () => {
           {formError && <p className="error">{formError}</p>}
         </form>
       </div>
-  
+
     )
   }
   
   if (pages == 'transaksi') {
     return (
+      
       <div className="page membuat">
-
-        <div className="tombol-kembali">
-          <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
-        </div> 
 
         <form onSubmit={handleSubmit}>
   
+        <div className="tombol-kembali">
+          <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
+          </div>
+
+          <p className="title">Transaksi</p>
+
           <label htmlFor="nama">Nama : </label>
           <input 
             type="text" 

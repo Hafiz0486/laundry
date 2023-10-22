@@ -385,11 +385,9 @@ const calculateKembalian = () => {
         
 
 return (
+    
 <div className="transaksi">
-    <div className="tombol-kembali">
-        <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
-    </div> 
-
+    
     <form className="information">
 
     <h1 align="center">Informasi</h1>
@@ -473,19 +471,19 @@ return (
             {/* Data ketiga ukuran */}
             <p  className="create-bon-fc">Ukuran : </p>
             <select
-className={`form-control custom-select`}
-id={`sel1`}
-name="ukuran"
-value={form.ukuran}
-onChange={(event) => handleFormChange(event, index)}
->
-<option value="default">Pilih Ukuran</option>
-{ukuranOptionsByNama[form.nama]?.map((ukuran, optionIndex) => (
-    <option key={optionIndex} value={ukuran}>
-        {ukuran}
-    </option>
-))}
-</select>
+            className={`form-control custom-select`}
+            id={`sel1`}
+            name="ukuran"
+            value={form.ukuran}
+            onChange={(event) => handleFormChange(event, index)}
+            >
+            <option value="default">Pilih Ukuran</option>
+            {ukuranOptionsByNama[form.nama]?.map((ukuran, optionIndex) => (
+                <option key={optionIndex} value={ukuran}>
+                    {ukuran}
+                </option>
+            ))}
+            </select>
 
             {/* Data keempat pengerjaan */}
             <p  className="create-bon-fc">Pengerjaan</p>

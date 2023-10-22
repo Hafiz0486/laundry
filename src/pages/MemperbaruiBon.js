@@ -28,7 +28,12 @@ const MemperbaruiBon = () => {
     const [totalkeseluruhan, setTotalKeseluruhan] = useState(0)
     const [totalawal, setTotalAwal] = useState(0)
 
+    
     useEffect(() => {
+
+        setUpdate(
+            ((new Date()).toISOString()).toLocaleString('id-ID')
+          )
         
         async function fetchNamaOptions() {
             const { data, error } = await supabase
@@ -155,9 +160,7 @@ const MemperbaruiBon = () => {
     // Fungsi update bon
     // FUngsi update transaksi
 
-    setUpdate(((new Date()).toISOString()).toLocaleString('id-ID'));
-
-    var queryBon = { id_pelayanan, jumlah, berat, total}
+    var queryBon = { id_pelayanan, jumlah, berat, total, update}
 
     async function updateBon() {
         const { data, error } = await supabase
@@ -198,6 +201,8 @@ const MemperbaruiBon = () => {
     
     updateBon()
     updateTransaksi()
+    {} 
+    navigate("/transaksi-" + id_transaksi + "/bon", { replace: true })
     // Akhir dari fungsi submit
     }
 
@@ -251,18 +256,22 @@ const MemperbaruiBon = () => {
     }, [total]);
 
     return(
+        
         <div className="transaksi">
 
-        <div className="tombol-kembali">
-          <Link to={"/transaksi-"+id_transaksi+"/bon"} className="membuat-pelayanan">Kembali</Link>
-        </div> 
+        
 
             <div className="create-bon-card-container">
             <form className="create-bon-card" onSubmit={handleSubmit}>
-            
+            <div className="tombol-kembali">
+            <Link to={"/transaksi-" + id_transaksi + "/bon"} className="membuat-pelayanan">Kembali</Link>
+            </div>
+
+            <p className="title">Pelayanan</p>
+
             <div className='title'>
 
-            <h2 align="center" >Id {id} Id Transaksi {id_transaksi}</h2>
+            <h2 align="center" >Id Transaksi {id_transaksi} Id Bon {id} </h2>
 
             </div>
 
@@ -317,7 +326,7 @@ const MemperbaruiBon = () => {
             <option className="create-bon" value="Express">Express</option>
             </select>
             
-<br></br>
+            <br></br>
             <p className='create-bon' htmlFor={`jumlah`}>Jumlah : </p>
             <input 
             type="number" 
