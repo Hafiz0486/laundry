@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from "react"
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate, Link } from "react-router-dom"
 import { createClient } from '@supabase/supabase-js';  // Import Supabase client
 import supabase from "../config/supabaseClient"
 import { v4 as uuidv4 } from 'uuid'
@@ -62,39 +62,48 @@ const Membuat = () => {
     }
 
     if (pages === 'konsumen') {
-      if (!nama || !keanggotaan) {
-        setFormError('Data is not complete.');
-        return;
-      } else {
+      // if (!nama || !keanggotaan) {
+      //   setFormError('Data is not complete.');
+      //   return;
+      // } else {
+
+
         try {
-          if (file1) {
-            const { data, error } = await supabase
-              .storage
-              .from('img/konsumen')
-              .upload(file1.name, file1);
-    
-            if (error) {
-              if (error.message.includes("already exists")) {
-                setFormError('A file with the same name already exists.');
-              } else {
-                console.error("Error inserting image into storage:", error);
+          if (file1 == null) {
+            img1 = "Gambar Kosong.png"
+          } else {
+            if (file1) {
+              const { data, error } = await supabase
+                .storage
+                .from('img/konsumen')
+                .upload(file1.name, file1);
+      
+              if (error) {
+                if (error.message.includes("already exists")) {
+                  setFormError('A file with the same name already exists.');
+                } else {
+                  console.error("Error inserting image into storage:", error);
+                }
+                return;
               }
-              return;
-            }
-    
-            if (data) {
-              console.log("Image uploaded successfully:", data.Key);
-              // Don't use setImg1 here
+      
+              if (data) {
+                console.log("Image uploaded successfully:", data.Key);
+                img1 = file1.name
+                // Don't use setImg1 here
+              }
             }
           }
+
+          
     
         } catch (error) {
           console.error("Error:", error);
         }
     
         // Use file1.name directly in the listquery object
-        var listquery = { nama, keanggotaan, kelamin, img1: file1.name };
-      }
+        var listquery = { nama, keanggotaan, telepon, kelamin, img1 };
+      // }
     }    
 
     const { data, error } = await supabase
@@ -105,9 +114,10 @@ const Membuat = () => {
       console.log(error)
       setFormError('Error when input to database.')
     }
+
     if (data) {
       console.log(data)
-      setFormError(nama+' ukuran '+ukuran+' pengerjaan '+pengerjaan+' Data Success Inserted')
+      
       if (pages === 'pelayanan') {
         navigate('/'+ pages)
       }
@@ -117,7 +127,7 @@ const Membuat = () => {
       }
 
       if (pages === 'konsumen'){
-        
+        navigate('/'+ pages)
       }
     }
   }
@@ -126,6 +136,11 @@ const Membuat = () => {
   if (pages == 'konsumen') {
     return (
       <div className="page membuat">
+
+        <div className="tombol-kembali">
+          <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
+        </div> 
+
         <form onSubmit={handleSubmit}>
   
           <p className="membuat">Nama : </p>
@@ -150,7 +165,7 @@ const Membuat = () => {
             id="telepon"
             value={telepon}
             onChange={(e) => setTelepon(e.target.value)}
-          />
+          />  
 
           <p  className="membuat-option">Jenis Kelamin</p>
           <select
@@ -159,7 +174,7 @@ const Membuat = () => {
             value={kelamin}
             onChange={(e) => setKelamin(e.target.value)}
           >
-            <option className="membuat" value="default">Jenis Pembayaran</option>
+            <option className="membuat" value="default">Jenis Kelamin</option>
             <option className="membuat" value="Laki-laki">Laki-laki</option>
             <option className="membuat" value="Perempuan">Perempuan</option>
           </select>
@@ -184,6 +199,11 @@ const Membuat = () => {
   if (pages == 'pelayanan') {
     return (
       <div className="page membuat">
+
+        <div className="tombol-kembali">
+          <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
+        </div> 
+
         <form onSubmit={handleSubmit}>
   
           <label className="membuat">Nama : </label>

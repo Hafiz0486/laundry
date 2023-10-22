@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate, Link } from "react-router-dom"
 import supabase from "../config/supabaseClient"
 
 const MembuatTransaksi = () => {
@@ -211,35 +211,29 @@ const MembuatTransaksi = () => {
 
         calculateKembalian();
 
-        var trydate = new Date
+        // var trydate = new Date
 
-        console.log("Selected:", selectedNamaPelayanan, selectedUkuran, selectedPengerjaan);
-        console.log("Harga Data:", hargaData);
-        console.log("New Data:", newData);
-        console.log("nama konsumen", nama, 
-        "total keseluruhan ", ttl_keseluruhan, 
-        "pembayaran", pembayaran, 
-        "jenis pembayaran", jns_pembayaran, 
-        "kembalian", kembalian,
-        "date", trydate.toISOString().split('T')[0])
+        // console.log("Selected:", selectedNamaPelayanan, selectedUkuran, selectedPengerjaan);
+        // console.log("Harga Data:", hargaData);
+        // console.log("New Data:", newData);
+        // console.log("nama konsumen", nama, 
+        // "total keseluruhan ", ttl_keseluruhan, 
+        // "pembayaran", pembayaran, 
+        // "jenis pembayaran", jns_pembayaran, 
+        // "kembalian", kembalian,
+        // "date", trydate.toISOString().split('T')[0])
         setFormFields(newData);
     }
 
     const submit = async (e) => {
         e.preventDefault();
-        
-        var tgl_datang = new Date()
-        var dibuat = new Date()
-        tgl_datang = tgl_datang.toISOString().split('T')[0]
-        dibuat = dibuat.toISOString().split('T')[0]
-
 
         if (pembayaran > 0) {
             var tgl_pembayaran = new Date()
             tgl_pembayaran = tgl_pembayaran.toISOString().split('T')[0]
         }
 
-        var queriesTransaksi = {nama, ttl_keseluruhan, pembayaran, tgl_pembayaran, jns_pembayaran, kembalian, tgl_datang, dibuat}
+        var queriesTransaksi = {nama, ttl_keseluruhan, pembayaran, tgl_pembayaran, jns_pembayaran, kembalian}
 
         console.log(queriesTransaksi)
 
@@ -281,33 +275,32 @@ const MembuatTransaksi = () => {
         }
         
 
-        async function createQueriesBOn() {
+        async function createQueriesBon() {
             const id_transaksi = await fetchLastIdTransaction();
         
             if (id_transaksi !== null) {
-                const queriesBOn = formFields.map(item => ({ 
+                const queriesBon = formFields.map(item => ({ 
                 id_pelayanan: item.id_pelayanan,
-                nama_konsumen: nama,
                 jumlah: item.jumlah,
                 berat: item.berat,
                 total: item.total,
                 id_transaksi: id_transaksi,
                 }));
             
-            return queriesBOn;
+            return queriesBon;
             } else {
-                console.log('Unable to create queriesBOn due to missing transaction ID.');
+                console.log('Unable to create querieBon due to missing transaction ID.');
                 return null;
             }
         }
         
         async function insertDataToSupabase() {
-        const queriesBOn = await createQueriesBOn();
+        const queriesBon = await createQueriesBon();
         
-        if (queriesBOn !== null) {
+        if (queriesBon !== null) {
             const { dataBon, errorBon } = await supabase
             .from('bon')
-            .insert(queriesBOn);
+            .insert(queriesBon);
         
             if (errorBon) {
             console.error('Error inserting data:', errorBon);
@@ -393,6 +386,10 @@ const calculateKembalian = () => {
 
 return (
 <div className="transaksi">
+    <div className="tombol-kembali">
+        <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
+    </div> 
+
     <form className="information">
 
     <h1 align="center">Informasi</h1>

@@ -148,6 +148,7 @@ p.card-konsumen {
   box-sizing: border-box;
   border-radius: px;
   position: relative;
+  margin-bottom: 20%;
 }
 
 .laundry-card-konsumen .rating {
@@ -186,7 +187,7 @@ p.card-konsumen {
   margin-top: 10px;
   height: auto; /* The height will adjust based on the content */
   width: clamp(1rem, 1rem);
-  padding: 20% 10px 10% 10px;
+  padding: 20% 10px 5% 10px;
   background: #fff;
   box-sizing: border-box;
   border-radius: 6px;
@@ -253,49 +254,6 @@ p.bon {
 
 .laundry-card-bon .progress.selesai {
   background: green; /* Warna latar belakang untuk normal */
-}
-
-.pembayaran-container {
-  position: absolute;
-  bottom: 0px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.pembayaran {
-  z-index: +1;
-  position: absolute;
-  padding-left: 5px;
-  padding-right: 5px;
-  bottom: 5%;
-  left: 19%; /* Pusatkan horizontal */
-  transform: translateX(-50%); /* Geser ke kiri sejauh setengah lebar */
-  background-color: #12bca2;
-  color: #fff;
-  border-radius: 6px;
-  width: auto;
-  height: 20px;
-  line-height: 20px;
-  text-align: center;
-  display: flex; /* Gunakan flexbox */
-  justify-content: center; /* Pusatkan horizontal dalam flexbox */
-}
-
-.status-pembayaran {
-  position: absolute;
-  height: 15%;
-  bottom: -5%;
-  left: 27%; /* Pusatkan horizontal */
-  transform: translateX(-50%); /* Geser ke kiri sejauh setengah lebar */
-  background-color: #6d15df;
-  color: #fff;
-  border-radius: 6px;
-  width: 55%;
-  padding-top: 15px;
-  text-align: center;
-  display: flex; /* Gunakan flexbox */
-  justify-content: center; /* Pusatkan horizontal dalam flexbox */
 }
 
 .laundry-card-bon .rating {

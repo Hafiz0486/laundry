@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import supabase from "../config/supabaseClient"
 import ImageModal from "../components/ImageModal"
 
@@ -57,16 +57,17 @@ const Memperbarui = () => {
   const [pembayaran, setPembayaran] = useState(0);
   const [jns_pembayaran, setJenisPembayaran] = useState('');
   const [kembalian, setKembalian] = useState(0);
-
-  
-
   const [pelayananOptions, setPelayananOptions] = useState([]);
+
   // fungsi untuk submit data
   const handleSubmit = async (e) => {
     e.preventDefault()
+    
+    // Memasukan data inputan ke variabel kontainer yang akan dimasukan ke table
 
+    // jika pages adalah table konsumen
     if (pages === 'konsumen') {
-      var listquery = { nama, keanggotaan, telepon, kelamin }
+      var listquery = { nama, keanggotaan, telepon, kelamin, update }
     }
 
     // jika pages adalah table pelayanan
@@ -75,21 +76,21 @@ const Memperbarui = () => {
         setFormError('Please fill in all the fields data pelayanan correctly.')
         return
       }
-      var listquery = { nama, kategori, ukuran, harga }
+      var listquery = { nama, kategori, ukuran, harga, update }
     }
 
+    // jika pages adalah table transaksi
     if (pages === 'transaksi') {
       var listquery = { nama, ttl_keseluruhan, pembayaran, jns_pembayaran, kembalian, update}
+      console.log(update)
     }
 
-    update = update.toISOString().split('T')[0]
 
     const { data, error } = await supabase
       .from(pages)
       .update(listquery)
       .eq('id', id)
-      console.log(nama, ttl_keseluruhan, pembayaran, jns_pembayaran, kembalian)
-      console.log(pages)
+
       console.log('Data:', data);
       console.log('Error:', error);
 
@@ -122,6 +123,10 @@ const Memperbarui = () => {
   }, [pembayaran, ttl_keseluruhan]);
 
   useEffect(() => {
+    setUpdate(
+      ((new Date()).toISOString()).toLocaleString('id-ID')
+    )
+
     const fetchPelayananOptions = async () => {
       const { data, error } = await supabase
       .from('pelayanan')
@@ -177,6 +182,7 @@ const Memperbarui = () => {
           setPembayaran(data.pembayaran)
           setJenisPembayaran(data.jns_pembayaran)
           setKembalian(data.kembalian)
+          console.log(data.nama, data.ttl_keseluruhan, data.pembayaran, data.jns_pembayaran, data.kembalian)
         }
 
       }
@@ -196,6 +202,11 @@ const Memperbarui = () => {
     const gambar2 = img2 ? CDNURL + img2 : CDNURL + 'Gambar Kosong.png';
     return (
       <div className="page membuat">
+
+        <div className="tombol-kembali">
+          <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
+        </div> 
+
         <form onSubmit={handleSubmit}>
 
           <p className="membuat">Nama : </p>
@@ -263,6 +274,11 @@ const Memperbarui = () => {
   if (pages == 'pelayanan') {
     return (
       <div className="page create">
+
+        <div className="tombol-kembali">
+          <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
+        </div> 
+
         <form onSubmit={handleSubmit}>
   
           <label htmlFor="nama">Nama : </label>
@@ -309,6 +325,11 @@ const Memperbarui = () => {
   if (pages == 'transaksi') {
     return (
       <div className="page membuat">
+
+        <div className="tombol-kembali">
+          <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
+        </div> 
+
         <form onSubmit={handleSubmit}>
   
           <label htmlFor="nama">Nama : </label>

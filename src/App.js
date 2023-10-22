@@ -26,6 +26,7 @@ function App() {
         <Link to="transaksi">Transaksi</Link>
       </nav> 
       <Routes>
+
         <Route path="" element={<Home />} />
         <Route path="konsumen" element={<Konsumen />} />
         <Route path="pelayanan" element={<Pelayanan />} />

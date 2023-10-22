@@ -114,14 +114,14 @@
         />
 
         <h4>Nama : {table.nama}</h4>
-        <p className="card-konsumen">No. Telepon : {table.tlp}</p>
+        <p className="card-konsumen">No. Telepon : {table.telepon}</p>
         <p className="card-konsumen">Jenis Kelamin : {table.kelamin}</p>
         <div className="rating">{table.keanggotaan}</div>
         <div className="buttons">
           <Link to={"/" + pages + "/memperbarui-" + table.id}>
-            <i className="material-icons">edit</i>
+            <i className="material-icons"title="Edit" >edit</i>
           </Link>
-          <i className="material-icons" onClick={handleDelete}>delete</i>
+          <i className="material-icons" title="Hapus" onClick={handleDelete}>delete</i>
         </div>
 
         {isModalOpen && (
@@ -148,9 +148,9 @@
         <div className="rating">{table.pengerjaan}</div>
         <div className="buttons">
           <Link to={"/" + pages + "/memperbarui-" + table.id}>
-            <i className="material-icons">edit</i>
+            <i className="material-icons" title="Edit" >edit</i>
           </Link>
-          <i className="material-icons" onClick={handleDelete}>delete</i>
+          <i className="material-icons" title="Hapus" onClick={handleDelete}>delete</i>
         </div>
       </div>
     )
@@ -205,22 +205,26 @@
         <p className="transaksi" >Kembalian : {idrkembalian}</p>
         <div className="buttons">
 
-          <Link to={"/transaksi-" + table.id+"/bon"}>
-            <i className="material-icons">star</i>
-          </Link>
+        <Link to={"/transaksi-" + table.id + "/bon"}>
+          <i className="material-icons" title="Detail">
+            star
+          </i>
+        </Link>
 
-          <Link to={"/"+pages+"/memperbarui-" + table.id}>
-            <i className="material-icons">edit</i>
-          </Link>
+        <Link to={"/"+pages+"/memperbarui-" + table.id}>
+          <i className="material-icons" title="Edit">
+            edit
+          </i>
+        </Link>
 
-          <i className="material-icons" onClick={handleDelete}>delete</i>
+          <i className="material-icons" title="Hapus" onClick={handleDelete}>delete</i>
         </div>
       </div>
     )
   }
 
   if (pages === 'bon') {
-    var totalidr = (table.total).toLocaleString('en-IN', { 
+    var totalidr = (table.total).toLocaleString('id-ID', { 
       style: 'currency', 
       currency: 'IDR' 
     });
@@ -229,11 +233,7 @@
     } else {
       var progress = table.tgl_ambil
     }
-    if(table.pembayaran == null) {
-      var pembayaran = 'Belum Bayar'
-    } else {
-      var pembayaran = table.pembayaran
-    }
+
     return (
       <div className="laundry-card-bon">
         <div className="status">Status</div>
@@ -254,16 +254,14 @@
         <p className="bon" >Jumlah : {table.jml}</p>
         <p className="bon" >Berat : {table.berat}</p>
         <p className="bon" >Total : {totalidr}</p>
-        <div className="pembayaran">Pembayaran</div>
-        <div className="status-pembayaran">{pembayaran}</div>
         
         <div className="buttons">
 
           <Link to={"/transaksi-"+id_transaksi+"/"+pages+"/memperbarui-" + table.id}>
-            <i className="material-icons">edit</i>
+            <i className="material-icons" title="Edit" >edit</i>
           </Link>
 
-          <i className="material-icons" onClick={handleDelete}>delete</i>
+          <i className="material-icons" title="Hapus" onClick={handleDelete}>delete</i>
         </div>
 
       </div>

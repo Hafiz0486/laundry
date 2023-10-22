@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate, Link } from "react-router-dom"
 import supabase from "../config/supabaseClient"
 
 const MemperbaruiBon = () => {
@@ -21,6 +21,7 @@ const MemperbaruiBon = () => {
     const [ukuranOptions, setUkuranOptions] = useState([]); 
 
     const [hargaPerUnit, setHargaPerUnit] = useState(0);
+    const [update, setUpdate] = useState('')
 
     const navigate = useNavigate()
 
@@ -154,6 +155,8 @@ const MemperbaruiBon = () => {
     // Fungsi update bon
     // FUngsi update transaksi
 
+    setUpdate(((new Date()).toISOString()).toLocaleString('id-ID'));
+
     var queryBon = { id_pelayanan, jumlah, berat, total}
 
     async function updateBon() {
@@ -249,6 +252,11 @@ const MemperbaruiBon = () => {
 
     return(
         <div className="transaksi">
+
+        <div className="tombol-kembali">
+          <Link to={"/transaksi-"+id_transaksi+"/bon"} className="membuat-pelayanan">Kembali</Link>
+        </div> 
+
             <div className="create-bon-card-container">
             <form className="create-bon-card" onSubmit={handleSubmit}>
             
