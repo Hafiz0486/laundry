@@ -1,4 +1,7 @@
 import { BrowserRouter, HashRouter, Routes, Route, Link } from "react-router-dom"
+import React from 'react';
+
+import LogIn from "./pages/LogIn";
 
 // pages
 import Home from "./pages/Home"
@@ -22,6 +25,7 @@ function App() {
       <nav>
         <h1>Kamal Laundry</h1>
         <Link to="">Home</Link>
+        <Link to="login">Log In</Link>
         <Link to="konsumen">Konsumen</Link>
         <Link to="pelayanan">Pelayanan</Link>
         <Link to="transaksi">Transaksi</Link>
@@ -29,6 +33,7 @@ function App() {
       <Routes>
 
         <Route path="" element={<Home />} />
+        <Route path="login" element={<LogIn />} />
         <Route path="konsumen" element={<Konsumen />} />
         <Route path="pelayanan" element={<Pelayanan />} />
         <Route path="transaksi" element={<Transaksi />} />

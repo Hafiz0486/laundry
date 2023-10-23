@@ -134,6 +134,22 @@ p.title {
   background-color: #ffffff;
 }
 
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form-container {
+  text-align: center;
+  max-width: 400px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
 /* smoothie grid */
 .laundry-grid {
   margin-top: clamp(1.2rem, 1rem + 1vw, 1rem);
