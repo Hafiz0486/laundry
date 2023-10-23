@@ -1,7 +1,7 @@
 {
   "homepage": "https://Hafiz0486.github.io/laundry",
   "name": "Kamal Laundry",
-  "version": "1.0.0",
+  "version": "1.0.14",
   "private": true,
   "dependencies": {
     "@supabase/supabase-js": "^1.35.7",

@@ -115,8 +115,8 @@ const Membuat = () => {
       setFormError('Error when input to database.')
     }
 
-    if (data) {
-      console.log(data)
+      if (data) {
+        console.log(data)
       
       if (pages === 'pelayanan') {
         navigate('/'+ pages)

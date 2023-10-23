@@ -51,8 +51,10 @@ const Bon = () => {
             <Link to={"/transaksi"} className="membuat-pelayanan">Kembali</Link>
           </div> 
 
+          {/* transaksi-:id_transaksi/:pages/membuat */}
+
           <div className="tombol-membuat">
-            <Link to={"/"+ pages +"/membuat"} pages={pages} className="membuat-pelayanan">Membuat Baru</Link>
+            <Link to={"/transaksi-"+id+"/"+pages+"/membuat"} className="membuat-pelayanan">Membuat Baru</Link>
           </div> 
 
           <div className="laundry-grid">

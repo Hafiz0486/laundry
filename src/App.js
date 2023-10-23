@@ -14,6 +14,7 @@ import Memperbarui from "./pages/Memperbarui"
 import Membuat from "./pages/Membuat"
 
 import MembuatTransaksi from "./pages/MembuatTransaksi"
+import MembuatBon from "./pages/MembuatBon"
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="transaksi-:id/bon" element={<Bon />} />
         
         <Route path="transaksi-:id_transaksi/:pages/memperbarui-:id" element={<MemperbaruiBon />} />
+        <Route path="transaksi-:id_transaksi/:pages/membuat" element={<MembuatBon />} />
 
         <Route path=":pages/membuattransaksi" element={<MembuatTransaksi />} />
         <Route path=":pages/membuat" element={<Membuat />} />

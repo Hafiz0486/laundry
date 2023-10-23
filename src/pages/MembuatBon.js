@@ -2,18 +2,17 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from "react-router-dom"
 import supabase from "../config/supabaseClient"
 
-const MembuatTransaksi = () => {
+const MembuatBon = () => {
     // variable yng dibutuhkan
 
-    const { pages } = useParams();
+    const { pages, id_transaksi } = useParams();
 
     const navigate = useNavigate()
+    const [tables, setTables] = useState(null)
+    const [fetchError, setFetchError] = useState(null)
 
-    const [nama, setNama] = useState('')
+    const [ttl_awal, setTotalAwal] = useState()
     const [ttl_keseluruhan, setTotalKeseluruhan] = useState('')
-    const [pembayaran, setPembayaran] = useState(0)
-    const [jns_pembayaran, setJenisPembayaran] = useState('')
-    const [kembalian, setKembalian] = useState(0)
 
     const [idPelayananOptions, setIdPelayananOptions] = useState([]);
     const [ukuranOptions, setUkuranOptions] = useState([]);
@@ -35,8 +34,6 @@ const MembuatTransaksi = () => {
 
     // pengambilan data dari tabel pelayanan yang dibutuhkan
     useEffect(() => {
-
-        
 
         // pembuatan fungsi pengambilan data
         // Ambil data nama pelayanan dari tabel pelayanan di Supabase
@@ -114,15 +111,32 @@ const MembuatTransaksi = () => {
                 setIdPelayananOptions(idPelayananMap);
             }
         }
-        
-        calculateKembalian();
+
+        async function fetchTransaksi() {
+            const { data, error } = await supabase
+                .from('transaksi')
+                .select()
+                .eq('id', id_transaksi);
+            
+            if (error) {
+                setFetchError('Could not fetch the bon');
+                setTables(null);
+            }
+            if (data) {
+                setTables(data);
+                setFetchError(null);
+                setTotalAwal(data[0]?.ttl_keseluruhan || 0); // Set ttl_keseluruhan here
+            }
+        }
+      
         // pemanggiln atau menjalankan fungsi yang sudah dibuat
+        fetchTransaksi()
         fetchNamaPelayananOptions();
         fetchHargaOptions();
         fetchKategoriOptions();
         fetchUkuranOptions();
         fetchPengerjaanOptions();
-    }, [pembayaran, ttl_keseluruhan]);
+    }, [id_transaksi]);
 
     async function fetchUkuranOptionsByNama(namaPelayanan) {
         const { data, error } = await supabase
@@ -209,8 +223,6 @@ const MembuatTransaksi = () => {
         const totalKeseluruhan = newData.reduce((total, row) => total + row.total, 0);
         setTotalKeseluruhan(totalKeseluruhan);
 
-        calculateKembalian();
-
         // var trydate = new Date
 
         // console.log("Selected:", selectedNamaPelayanan, selectedUkuran, selectedPengerjaan);
@@ -228,96 +240,65 @@ const MembuatTransaksi = () => {
     const submit = async (e) => {
         e.preventDefault();
 
-        if (pembayaran > 0) {
-            var tgl_pembayaran = new Date()
-            tgl_pembayaran = tgl_pembayaran.toISOString().split('T')[0]
-        }
+        console.log("total awal", ttl_awal)
+        console.log("total keseluruhan", ttl_keseluruhan)
 
-        var queriesTransaksi = {nama, ttl_keseluruhan, pembayaran, tgl_pembayaran, jns_pembayaran, kembalian}
+        var ttl_akhir = ttl_keseluruhan + ttl_awal
 
-        console.log(queriesTransaksi)
+        console.log("Total akhir", ttl_akhir)
 
+        var queriesTransaksi = {ttl_keseluruhan : ttl_akhir}
+        
         const { dataTransaksi, errorTransaksi } = await supabase
-        .from('transaksi')
-        .insert([queriesTransaksi]);
-
-        if (errorTransaksi) {
-        console.error('Error inserting data:', errorTransaksi);
-        } else {
-        console.log('Data inserted:', dataTransaksi);
-        
-        }
-        
-        async function fetchLastIdTransaction() {
-        try {
-            const { data, error } = await supabase
             .from('transaksi')
-            .select('id')
-            .order('id', { ascending: false })
-            .limit(1);
-            
-            if (error) {
-            throw error;
-            }
-            
-            if (data.length > 0) {
-            const id_transaksi = data[0].id;
-            console.log('Last transaction ID:', id_transaksi);
-            return id_transaksi;
+            .update([queriesTransaksi])
+            .eq('id', id_transaksi)
+
+            if (errorTransaksi) {
+            console.error('Error inserting data:', errorTransaksi);
             } else {
-            console.log('No transactions found.');
-            return null;
-            }
-        } catch (error) {
-            console.error('Error fetching transaction data:', error);
-            return null;
-        }
-        }
+            console.log('Data inserted:', dataTransaksi);
         
+        }
 
         async function createQueriesBon() {
-            const id_transaksi = await fetchLastIdTransaction();
         
-            if (id_transaksi !== null) {
-                const queriesBon = formFields.map(item => ({ 
-                id_pelayanan: item.id_pelayanan,
-                jumlah: item.jumlah,
-                berat: item.berat,
-                total: item.total,
-                id_transaksi: id_transaksi,
-                }));
-            
-            return queriesBon;
-            } else {
-                console.log('Unable to create querieBon due to missing transaction ID.');
-                return null;
-            }
-        }
+            const queriesBon = formFields.map(item => ({ 
+            id_pelayanan: item.id_pelayanan,
+            jumlah: item.jumlah,
+            berat: item.berat,
+            total: item.total,
+            id_transaksi: id_transaksi,
+            }));
         
-        async function insertDataToSupabase() {
-        const queriesBon = await createQueriesBon();
-        
-        if (queriesBon !== null) {
-            const { dataBon, errorBon } = await supabase
-            .from('bon')
-            .insert(queriesBon);
-        
-            if (errorBon) {
-            console.error('Error inserting data:', errorBon);
-            } 
-            if (dataBon) {
-            console.log('Data inserted:', dataBon);
-            
-            }
-        } else {
-            console.log('No data to insert.');
+        return queriesBon;
+   
         }
 
-        }
-        
-        await insertDataToSupabase();
-        navigate("/" + pages);
-        
+        async function insertDataToSupabase() {
+            const queriesBon = await createQueriesBon();
+            
+            if (queriesBon !== null) {
+                const { dataBon, errorBon } = await supabase
+                .from('bon')
+                .insert(queriesBon);
+            
+                if (errorBon) {
+                console.error('Error inserting data:', errorBon);
+                } 
+                if (dataBon) {
+                console.log('Data inserted:', dataBon);
+                
+                }
+            } else {
+                console.log('No data to insert.');
+            }
+    
+            }
+            
+            await insertDataToSupabase();
+            navigate("/transaksi-" + id_transaksi + "/bon");
+
     }
 
     const addFields = () => {
@@ -332,24 +313,7 @@ const MembuatTransaksi = () => {
         total: ''
         };
         setFormFields([...formFields, object]);
-    }
-
-const calculateKembalian = () => {
-    if (pembayaran !== '' && ttl_keseluruhan !== '') {
-        const payment = pembayaran;
-        const total = ttl_keseluruhan;
-        
-        if ( total > payment) {
-            setKembalian(0)
-        } else {
-            const kembalianValue = payment - total;
-            setKembalian(kembalianValue); // You can format the result as needed
-        }
-        
-    } else {
-        setKembalian(0); // Reset kembalian if payment or total is not set
-    }
-};        
+    }  
 
 const removeFields = (index) => {
     // Cek apakah ada lebih dari satu form sebelum mengizinkan penghapusan
@@ -391,56 +355,6 @@ return (
     
 <div className="transaksi">
     
-    <form className="information">
-
-    <h1 align="center">Informasi</h1>
-    <p className="create-informasi" htmlFor="nama">Nama Konsumen : </p>
-    <input 
-        type="text" 
-        id="nama"
-        value={nama}
-        onChange={(e) => setNama(e.target.value)}
-    />
-    
-    <p className="create-informasi" htmlFor="ttl_keseluruhan">Total Keseluruhan : </p>
-    <input 
-        type="number" 
-        id="ttl_keseluruhan"
-        value={ttl_keseluruhan}
-        onChange={(e) => setTotalKeseluruhan(e.target.value)}
-    />
-
-    <p className="create-informasi" htmlFor={`pembayaran`}>Pembayaran : </p>
-    <input 
-        type="number" 
-        id={`pembayaran`}
-        name="pembayaran"
-        value={pembayaran}
-        onChange={(e) => setPembayaran(e.target.value)}
-    />
-
-
-    <p className="create-informasi" htmlFor={`jns_pembayaran`}>Jenis Pembayaran : </p>
-    <select
-        id="jns_pembayaran"
-        value={jns_pembayaran}
-        onChange={(e) => setJenisPembayaran(e.target.value)}
-    >
-        <option value="default">Jenis Pembayaran</option>
-        <option value="Cash">Cash</option>
-        <option value="Transfer">Transfer</option>
-        </select>
-
-    <p className="create-informasi" htmlFor={`kembalian`}>Kembalian : </p>
-    <input 
-        type="number" 
-        id={`kembalian`}
-        name="kembalian"
-        value={kembalian}
-        onChange={(e) => setKembalian(e.target.value)}
-    />
-    </form>
-    
     {/* Form bon */}
 
     <div className="create-bon-grid" >
@@ -450,7 +364,7 @@ return (
         <div key={index}>
 
             <div className='title'>
-            <h2 align="center" >Pelayanan : {index + 1}</h2>
+            <h2 align="center" >{id_transaksi} Pelayanan : {index + 1}</h2>
             </div>
 
             {/* Data kedua nama pelayanan */}
@@ -564,4 +478,4 @@ return (
 );
 }
 
-export default MembuatTransaksi
+export default MembuatBon
