@@ -6,7 +6,7 @@
   const CDNURL = "https://gomqdnsdzpqgypcdvbnt.supabase.co/storage/v1/object/public/img/konsumen/"
   // pages adalah table
   // tablequery adalah query table dari pages
-  const Kartu = ({ table, pages, id_transaksi, onDelete }) => {
+  const Kartu = ({ table, telepon, pages, id_transaksi, onDelete }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalImageUrl, setModalImageUrl] = useState('');
     const [gambar1, setGambar1] = useState(null)
@@ -90,8 +90,10 @@
     }
    
   if (pages === 'konsumen') {
+    
     const imageUrl1 = gambar1 ? CDNURL + gambar1 : CDNURL + 'Gambar Kosong.png';
     const imageUrl2 = gambar2 ? CDNURL + gambar2 : CDNURL + 'Gambar Kosong.png';
+    
     return (
       <div className="laundry-card-konsumen">
 
@@ -114,7 +116,7 @@
         />
 
         <h4>Nama : {table.nama}</h4>
-        <p className="card-konsumen">No. Telepon : {table.telepon}</p>
+        <p className="card-konsumen">No. Telepon : {telepon}</p>
         <p className="card-konsumen">Jenis Kelamin : {table.kelamin}</p>
         <div className="rating">{table.keanggotaan}</div>
         <div className="buttons">
@@ -245,13 +247,13 @@
     }
 
     return (
+      
       <div className="laundry-card-bon">
         <div className="status">Status</div>
         <div className={`progress ${progress === 'Belum Selesai' ? 'belum' : 'selesai'}`}>     
           {progress}
         </div>
         <p className="bon" >Tanggal Datang : {table.tgl_datang}</p>  
-        <p className="bon" >Nama : {table.nama_konsumen}</p>
         {pelayananData && (
         <div>
           <p className="bon" >Pelayanan : {pelayananData.nama}</p>
@@ -261,7 +263,7 @@
 
         </div>
         )}
-        <p className="bon" >Jumlah : {table.jml}</p>
+        <p className="bon" >Jumlah : {table.jumlah}</p>
         <p className="bon" >Berat : {table.berat}</p>
         <p className="bon" >Total : {totalidr}</p>
         

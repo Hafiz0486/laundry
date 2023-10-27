@@ -11,6 +11,7 @@ const pages = 'konsumen'
 const Konsumen = () => {
   const [fetchError, setFetchError] = useState(null)
   const [tables, setTables] = useState(null)
+  const [telepon, setTelepon] = useState()
 
   const handleDelete = (id) => {
     setTables(prevTable => {
@@ -34,9 +35,14 @@ const Konsumen = () => {
         if (data) {
           setTables(data)
           setFetchError(null)
+          if (data.telepon != '' ) {
+            setTelepon("******")
+          }
         }
       }
       fetchTables()
+
+      
     
   }, [])
 
@@ -51,7 +57,7 @@ const Konsumen = () => {
 
           <div className="laundry-grid">
             {tables.map(table => (
-              <Kartu key={table.id} table={table} pages={pages} onDelete={handleDelete} />
+              <Kartu key={table.id} table={table} pages={pages} telepon={telepon} onDelete={handleDelete} />
             ))}
           </div>
           

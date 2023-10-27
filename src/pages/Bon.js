@@ -46,7 +46,7 @@ const Bon = () => {
       {fetchError && (<p>{fetchError}</p>)}
       {tables && (
         <div className="services">
-
+          
           <div className="tombol-membuat">
             <Link to={"/transaksi"} className="membuat-pelayanan">Kembali</Link>
           </div> 
@@ -56,6 +56,8 @@ const Bon = () => {
           <div className="tombol-membuat">
             <Link to={"/transaksi-"+id+"/"+pages+"/membuat"} className="membuat-pelayanan">Membuat Baru</Link>
           </div> 
+
+          <p className="nama-konsumen" >Nama :asdas</p>
 
           <div className="laundry-grid">
             {tables.map(table => (

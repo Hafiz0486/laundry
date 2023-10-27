@@ -100,15 +100,15 @@ const Memperbarui = () => {
     if (data) {
       setFormError(null)
       if (pages === 'pelayanan') {
-        navigate('/pelayanan')
+        navigate('/laundry/pelayanan')
       }
 
       if (pages === 'konsumen'){
-        navigate('/konsumen')
+        navigate('/laundry/konsumen')
       }
 
       if (pages === 'transaksi'){
-        navigate('/transaksi')
+        navigate('/laundry/transaksi')
       }
     
     }
@@ -146,15 +146,15 @@ const Memperbarui = () => {
 
       if (error) {
         if (pages === 'konsumen'){
-          navigate('/'+ pages +'/memperbarui-'+id, { replace: true })
+          navigate('/laundry/'+ pages +'/memperbarui-'+id, { replace: true })
         }
 
         if (pages === 'pelayanan') {
-          navigate('/'+ pages +'/memperbarui-'+id, { replace: true })
+          navigate('/laundry/'+ pages +'/memperbarui-'+id, { replace: true })
         }
 
         if (pages === 'transaksi'){
-          navigate('/'+ pages +'/memperbarui-'+id, { replace: true })
+          navigate('/laundry/'+ pages +'/memperbarui-'+id, { replace: true })
         }
       }
       
@@ -335,7 +335,7 @@ const Memperbarui = () => {
         <form onSubmit={handleSubmit}>
   
         <div className="tombol-kembali">
-          <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
+          <Link to={"/laundry/" + pages} className="membuat-pelayanan">Kembali</Link>
           </div>
 
           <p className="title">Transaksi</p>

@@ -66,6 +66,7 @@ input:disabled {
 }
 
 
+
 p.card {
   margin-bottom: -5px;
   line-height: 10px;
@@ -139,6 +140,10 @@ p.title {
   justify-content: center;
   align-items: center;
   height: 100vh;
+}
+
+.brosur {
+  margin: 1% 1% 1% 1%;
 }
 
 .form-container {
