@@ -119,15 +119,15 @@ const Membuat = () => {
         console.log(data)
       
       if (pages === 'pelayanan') {
-        navigate('/'+ pages)
+        navigate('/laundry/'+ pages)
       }
       
       if (pages === 'bon'){
-        navigate('/'+ pages)
+        navigate('/laundry/'+ pages)
       }
 
       if (pages === 'konsumen'){
-        navigate('/'+ pages)
+        navigate('/laundry/'+ pages)
       }
     }
   }
@@ -140,8 +140,8 @@ const Membuat = () => {
           
 
         <form onSubmit={handleSubmit}>
-        <div className="tombol-kembali">
-          <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
+          <div className="tombol-kembali">
+          <Link to={"/laundry/" + pages} className="membuat-pelayanan">Kembali</Link>
           </div>
 
           <p className="title">Konsumen</p>
@@ -206,7 +206,7 @@ const Membuat = () => {
         <form onSubmit={handleSubmit}>
   
         <div className="tombol-kembali">
-          <Link to={"/" + pages} className="membuat-pelayanan">Kembali</Link>
+          <Link to={"/laundry/" + pages} className="membuat-pelayanan">Kembali</Link>
           </div>
 
           <p className="title">Pelayanan</p>

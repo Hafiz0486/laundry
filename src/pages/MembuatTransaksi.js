@@ -393,6 +393,10 @@ return (
     
     <form className="information">
 
+    <div className="tombol-kembali">
+        <Link to={"/laundry/" + pages} className="membuat-pelayanan">Kembali</Link>
+    </div>
+    
     <h1 align="center">Informasi</h1>
     <p className="create-informasi" htmlFor="nama">Nama Konsumen : </p>
     <input 

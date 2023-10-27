@@ -1,8 +1,6 @@
 import { BrowserRouter, HashRouter, Routes, Route, Link } from "react-router-dom"
 import React from 'react';
 
-import LogIn from "./pages/LogIn";
-
 // pages
 import Home from "./pages/Home"
 
@@ -21,30 +19,28 @@ import MembuatBon from "./pages/MembuatBon"
 
 function App() {
   return (
-    <BrowserRouter basename="/laundry/">
+    <BrowserRouter>
       <nav>
         <h1>Kamal Laundry</h1>
-        <Link to="">Home</Link>
-        <Link to="login">Log In</Link>
-        <Link to="konsumen">Konsumen</Link>
-        <Link to="pelayanan">Pelayanan</Link>
-        <Link to="transaksi">Transaksi</Link>
+        <Link to="/laundry">Home</Link>
+        <Link to="/laundry/konsumen">Konsumen</Link>
+        <Link to="/laundry/pelayanan">Pelayanan</Link>
+        <Link to="/laundry/transaksi">Transaksi</Link>
       </nav> 
       <Routes>
 
-        <Route path="" element={<Home />} />
-        <Route path="login" element={<LogIn />} />
-        <Route path="konsumen" element={<Konsumen />} />
-        <Route path="pelayanan" element={<Pelayanan />} />
-        <Route path="transaksi" element={<Transaksi />} />
-        <Route path="transaksi-:id/bon" element={<Bon />} />
+        <Route path="/laundry" element={<Home />} />
+        <Route path="/laundry/konsumen" element={<Konsumen />} />
+        <Route path="/laundry/pelayanan" element={<Pelayanan />} />
+        <Route path="/laundry/transaksi" element={<Transaksi />} />
+        <Route path="/laundry/transaksi-:id/bon" element={<Bon />} />
         
-        <Route path="transaksi-:id_transaksi/:pages/memperbarui-:id" element={<MemperbaruiBon />} />
-        <Route path="transaksi-:id_transaksi/:pages/membuat" element={<MembuatBon />} />
+        <Route path="/laundry/transaksi-:id_transaksi/:pages/memperbarui-:id" element={<MemperbaruiBon />} />
+        <Route path="/laundry/transaksi-:id_transaksi/:pages/membuat" element={<MembuatBon />} />
 
-        <Route path=":pages/membuattransaksi" element={<MembuatTransaksi />} />
-        <Route path=":pages/membuat" element={<Membuat />} />
-        <Route path=":pages/memperbarui-:id" element={<Memperbarui />} />
+        <Route path="/laundry/:pages/membuattransaksi" element={<MembuatTransaksi />} />
+        <Route path="/laundry/:pages/membuat" element={<Membuat />} />
+        <Route path="/laundry/:pages/memperbarui-:id" element={<Memperbarui />} />
 
       </Routes>
     </BrowserRouter>

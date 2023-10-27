@@ -118,7 +118,7 @@
         <p className="card-konsumen">Jenis Kelamin : {table.kelamin}</p>
         <div className="rating">{table.keanggotaan}</div>
         <div className="buttons">
-          <Link to={"/" + pages + "/memperbarui-" + table.id}>
+          <Link to={"/laundry/" + pages + "/memperbarui-" + table.id}>
             <i className="material-icons"title="Edit" >edit</i>
           </Link>
           <i className="material-icons" title="Hapus" onClick={handleDelete}>delete</i>
@@ -157,7 +157,7 @@
         <p className="card-pelayanan">Harga : {idr}</p>
         <div className="rating">{table.pengerjaan}</div>
         <div className="buttons">
-          <Link to={"/" + pages + "/memperbarui-" + table.id}>
+          <Link to={"/laundry/" + pages + "/memperbarui-" + table.id}>
             <i className="material-icons" title="Edit" >edit</i>
           </Link>
           <i className="material-icons" title="Hapus" onClick={handleDelete}>delete</i>
@@ -215,13 +215,13 @@
         <p className="transaksi" >Kembalian : {idrkembalian}</p>
         <div className="buttons">
 
-        <Link to={"/transaksi-" + table.id + "/bon"}>
+        <Link to={"/laundry/transaksi-" + table.id + "/bon"}>
           <i className="material-icons" title="Detail">
             star
           </i>
         </Link>
 
-        <Link to={"/"+pages+"/memperbarui-" + table.id}>
+        <Link to={"/laundry/"+pages+"/memperbarui-" + table.id}>
           <i className="material-icons" title="Edit">
             edit
           </i>
@@ -267,7 +267,7 @@
         
         <div className="buttons">
 
-          <Link to={"/transaksi-"+id_transaksi+"/"+pages+"/memperbarui-" + table.id}>
+          <Link to={"/laundry/transaksi-"+id_transaksi+"/"+pages+"/memperbarui-" + table.id}>
             <i className="material-icons" title="Edit" >edit</i>
           </Link>
 

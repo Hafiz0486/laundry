@@ -264,7 +264,7 @@ const MemperbaruiBon = () => {
             <div className="create-bon-card-container">
             <form className="create-bon-card" onSubmit={handleSubmit}>
             <div className="tombol-kembali">
-            <Link to={"/transaksi-" + id_transaksi + "/bon"} className="membuat-pelayanan">Kembali</Link>
+            <Link to={"/laundry/transaksi-" + id_transaksi + "/bon"} className="membuat-pelayanan">Kembali</Link>
             </div>
 
             <p className="title">Pelayanan</p>
